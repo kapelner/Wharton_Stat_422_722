@@ -1,0 +1,317 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=1.2in]{geometry}
+\usepackage{hyperref}
+\usepackage{datetime}
+%\usepackage[auth-sc,affil-sl]{authblk}
+\usepackage{color}
+\usepackage{placeins}
+\usepackage{enumerate}
+\usepackage{natbib}
+
+\definecolor{black}{rgb}{0,0,0}
+\definecolor{blue}{rgb}{0,0,0.7}
+\newcommand{\inblue}[1]{\color{blue}\textbf{#1} \color{black}}
+\definecolor{green}{rgb}{0.133,0.545,0.133}
+\newcommand{\ingreen}[1]{\color{green}\textbf{#1} \color{black}}
+\definecolor{yellow}{rgb}{1,0.549,0}
+\newcommand{\inyellow}[1]{\color{yellow}\textbf{#1} \color{black}}
+\definecolor{red}{rgb}{1,0.133,0.133}
+\newcommand{\inred}[1]{\color{red}\textbf{#1} \color{black}}
+\definecolor{purple}{rgb}{0.58,0,0.827}
+\newcommand{\inpurple}[1]{\color{purple}\textbf{#1} \color{black}}
+\definecolor{brown}{rgb}{0.55,0.27,0.07}
+\newcommand{\inbrown}[1]{\color{brown}\textbf{#1} \color{black}}
+
+\newcommand{\coursewebpage}{\href{https://github.com/kapelner/Wharton_Stat_422_722}{course homepage}}
+
+\newcommand{\qu}[1]{``#1''}
+
+
+\title{Statistics 422/722 Predictive Analytics \\ Spring 2017 Course Syllabus}
+
+\author{The Wharton School at the University of Pennsylvania}
+
+%\affil{}
+\settimeformat{ampmtime}
+\date{\small document last updated \today ~\currenttime }
+
+\begin{document}
+\maketitle
+
+\begin{table}[htp]
+\centering
+\begin{tabular}{rl}
+Professor &  Adam Kapelner \\
+Contact & \url{kapelner@wharton.upenn.edu} \\
+Section A (401) Time / Loc & Tuesday 6--9PM / JMHH 250 \\
+Section B (403) Time / Loc & Wednesday 4:30--7:30PM / JMHH 240 \\
+Office Hours / Loc & TBA \\
+Teaching Assistant & Gemma Moran \\
+Course Homepage & \href{https://github.com/kapelner/Wharton_Stat_422_722}{https://github.com/kapelner/Wharton\_Stat\_422\_722} \\
+\end{tabular}
+\end{table}
+
+\section*{Course Overview} 
+
+Statistics 422/722 is an introduction to predictive analytics with an emphasis on applications, especially those in business. This seven-week course introduces students to the statistical techniques that extend the ideas of regression analysis introduced in STAT 102/613. Digressing from traditional approaches that focus on carefully modeling how one or two chosen measurements relate to a response, we will take a ``modern'' approach applicable to managerial decision making in the presence of large data sets.  
+
+We will first introduce modeling from a philosophical point of view and define the main terms and main concepts. We will then review least squares regression from 102/613 and place it into this new context, we will round out our regression toolbox by learning how to build models for predicting categorical responses. Equipped with a solid foundation, we will switch our approach to the point of view of predictive modeling using automatic tools with a focus on predicting a response under new data. If, for example, we can show a bank how to predict who will default on a loan better than their existing system, the bank can increase profits. Similarly, if we help a company identify those in the market most interested in its products, then it can construct a much more focused product launch.
+
+We will end the class with so called \qu{black-box} models which feature better predictive accuracy but less interpretability. We will talk about this tradeoff and hopefully try to get a glimpse into how the black-box models work.
+
+As the business world rapidly progresses towards a paradigm of data-driven decision making, the \textit{primary goal} of this course is on understanding both the power and limitations of regression analysis. The course is designed to allow future managers--both data scientists and not-- to communicate effectively with the data science team within an organization.
+
+We are going to let software do the number crunching for us -- our value-add comes from how to choose to tackle the problem and what insights we can draw from the model results. \\
+  
+A tentative list of topics is below
+
+\begin{itemize}
+\item Modeling, Mathematical Modeling, Statistical Modeling, Causal Models
+\item An introduction to: AI, Machine Learning, Deep Learning and Linear Regression
+\item Framework for assessing model fit, $p$ values, $R^2$, $t$-tests, AIC
+\item Classification, the Logistic Regression Models
+\item Automatic Model Selection and High Dimensional Linear Regression
+\item Assessing prediction quality
+\item Classification and Regression Trees
+\item Basic machine learning
+\end{itemize}
+
+
+\section*{Course Materials}
+
+
+\paragraph{Textbook:} There is no required textbook. However there will be readings from \cite{silver2012} and there is a rather lengthy optional reading list at the end of this syllabus
+
+
+\paragraph{Lecture Slides:} The lecture slides and notes I put on the board will be primary for learning material in this course.
+
+\paragraph{Computer Software:} We will also be using \texttt{JMP} version 12 pro, software that you either already own from 102/613 or have access to by using the Wharton computer labs. While most of the features we will need for this course are available in the standard edition of JMP, a few features require the Pro edition. JMP Pro can be downloaded from Canvas. Mac and Windows versions are available. Instructions are provided on Canvas. Manuals for JMP can be found \href{http://www.jmp.com/support/help/Fitting_Linear_Models.shtml}{here}. I will reference appropriate chapters in each slide deck. Spending some quality time with the manuals is part of learning any software tool.
+
+We will also make use of \texttt{R} which is a free, open source statistical programming language and console. It is the de factor choice for statistical programming today. You can download it from: \url{http://cran.mirrors.hoobly.com/}. I do not expect you to do \textit{any} programming. I will be giving you \texttt{R} code to run and expect you to interpret the results based on concepts explained during the course.
+
+\texttt{Python} would be my next recommendation as it is also very popular among data scientists. But we have limited time so I will likely not get to any Python examples.
+
+Also, please note that Microsoft Excel \textit{will not be sufficient} for executing many of the analyses in the course, but you may use it as you wish to help explore and clean data or generate output. 
+
+\paragraph{Calculator:} You can use a TI-84, 85, 89 or any calculator which you wish for exams.
+
+\section*{Announcements}
+
+Announcements will be made via email. Course grades will be posted on 
+
+\section*{Lectures}
+
+I recommend not using your computer / tablet / phone during lectures --- only pen / pencil and paper. Classes are 180 minutes and run from Tuesday, January 17 until Wednesday, March 1. There will be 7 lecture periods with the last two hours of the last class being the final exam (the first hour will be a Q\&A session).
+
+\section*{Assignments}
+
+\subsection*{Homework}
+
+There will be 3 or 4 homework assignments plus one project. 
+
+Homeworks will be assigned and placed on the \coursewebpage~ and will usually be due a week later in class. Homework will be \textbf{graded} out of 100. There may be extra credit and thus scores can be $> 100$. I and the TA and the grader will be doing the grading. We reserve the right to grade an \textit{arbitrary subset of the assignment} which is determined after the homework is handed in. But you will still be penalized for leaving questions blank regardless of whichever we grade.
+
+Homework must be printed, neat and stapled (\textbf{it cannot be emailed to me}). Homework can be given to me in class or delivered to my cardboard drop box in the Statistics department (4th floor of Huntsman Hall).
+
+Graded homework will be returned in class. Regrades are handled during office hours or right after class is over. Scores for homeworks are finalized one week after the graded copies are handed back. Thereafter there will be no changes and no re-grading. Do not delay checking your graded homeworks. I (and the TAs) are not perfect and we do make mistakes. It is your obligation to find our mistakes and report them.
+
+\ingreen{You are highly recommended to work with each other and help each other.} You must, however, submit your own solutions, \textit{with your own write-up} and in \textit{your own words}. There can be no collaboration on the actual \textit{writing}. The university honor code is something I take very seriously.
+
+
+\subsection*{Forecasting Competition}
+
+Kaggle, a startup based in San Francisco, offers a solution to clients requiring predictive models for their businesses by holding forecasting competitions. Any data scientist is allowed to build and submit forecasting models and the winning model receives a monetary prize in addition to being implemented by the sponsoring company.  
+
+We will have our own forecasting competition. You will be required to submit nothing but your predictions on a data set. This is meant to be a chance to get creative in predictive modeling without needing to worry about model interpretability. 
+
+
+\subsection*{The Project}
+
+There will also be a project with a writeup. It will likely be related to the forecasting competition.
+
+\subsection*{Philosophy of Homework}
+
+Homework is an important part of this course. Success in Statistics and Mathematics courses comes from experience in working with and thinking about the concepts. It's kind of like weightlifting; you have to lift weights to build muscles. My job as an instructor is to provide assistance through your \href{http://en.wikipedia.org/wiki/Zone_of_proximal_development}{zone of proximal development}. You can grow more in a class than you can alone but the growth comes from you. To this effect, homework problems are color coded \ingreen{green} for easy, \inyellow{yellow} for harder, \inred{red} for challenging and \inpurple{purple} for extra credit. You need to know how to do all the greens by yourself. If you've been to class and took notes, they are a joke. Yellows and reds: feel free to work with others. Only do extra credits if you have already finished the assignment.
+
+%\subsection*{Time Spent on Homework }
+%
+%This is a three credit course. Thus, the amount of work outside of the 2.5hr in-class time per week is 6-9 hours. I will aim for 6hr of homework per week on average. However, doing the homework well is your sole responsibility since I will make sure that by doing the homework you will study and understand the concepts in the lectures.
+
+\subsection*{Late Homework}
+
+Late homework will be penalized 10 points per day for a maximum of five days. Do not ask for extensions; just hand in the homework late. After five days, \textbf{you can hand it in whenever you want} until the last day of class, Wednesday, March 1. I realize things come up. Do not abuse this policy; you will fall behind.
+
+\subsection*{Homework and Project \LaTeX~Bonus Points}
+
+Beautiful presentation counts. Thus, \ingreen{there will be abonus} added to your homework grade for typesetting your assignment writeup using the \LaTeX ~system. The bonus will be  1--10 points based on the elegance of your presentation and thus the bonus points are arbitrarily determined by me. \LaTeX~is a good skill to know no matter what kind of career you are in.
+
+If you would like to use \LaTeX, I recommend using \href{http://overleaf.com}{overleaf} to write up your homeworks (make sure you upload both the hw\#.tex and the preamble.tex file Pprovided on the \coursewebpage ~for each homework assignment). Overleaf has the advantage of (a) not having to install anything on your computer and not having to maintain your \LaTeX ~installation (b) allowing easy collaboration with others (c) \ingreen{always having a backup of your work since it's always on the cloud} but it can be quite slow. For speed you may insist on having \LaTeX ~running on your computer, you can download it for Windows \href{http://www.miktex.org/download}{here} and for MAC \href{http://www.tug.org/mactex/}{here}. For editing and producing PDF's, I recommend \TeX works which can be downloaded \href{http://www.tug.org/texworks/#Getting_TeXworks}{here}.
+
+If you are handing in homework this way, read the comments in the code; there are two lines to comment out and you should replace my name with yours and write your section. The easiest way to use overleaf is to copy the raw text from hwxx.tex and preamble.tex into two new overleaf tex files with the same name. If you are asked to make drawings, you can take a picture of your handwritten drawing and insert them as figures or leave space using the \qu{$\backslash$vspace} command and draw them in after printing or attach them stapled.
+
+Since this is completely extra credit and independent of the course material and goals, do not ask me or the TA for help in setting up your computer with \LaTeX~ in class or in office hours. Also, \textbf{never share your \LaTeX~code with other students} --- it is cheating.
+
+%\subsection*{Homework Extra Credit}
+%
+%There will be many extra credit questions sprinkled throughout the homeworks. They will be worth a variable number of points arbitrarily assigned based on my perceived difficulty of the exercise. Homework scores in the 140's are not unheard of. They are a good boost to your grade; I once had a student go from a B to and A- based on these bonuses.
+
+%\subsection*{Homework Redo Policy}
+%
+%After a homework is graded and (a) you do not have a ZERO on the homework and (b) your HW grade is failing (i.e. under 65), you may hand in a homework \qu{redo} at any time before the final date to hand in homeworks (see above under \qu{Late Homework}). 
+%
+%You must redo the \textit{entire} homework. If it was handwritten, you must copy all the answers and redo the wrong questions. Then, you must hand in \textit{both} the old homework and the new homework with the redone homework clearly marked as a \qu{redo.}
+%
+%I will remark the redone homework possibly marking questions that I did not mark previously. I will then record your final score as the average of the old and new scores. \LaTeX~bonus still will be applied. If the original homework was handed in late, the same late penalty applies to the redone homework.
+%
+%\subsection*{Homework \#0}
+%
+%For your first homework (due immediately). You must:
+%
+%\begin{enumerate}[(1)]
+%\item email me at \href{kapelner@qc.cuny.edu}{kapelner@qc.cuny.edu} from the email address you wish to be contacted at for this course (most commonly this is a gmail address) and in the email,
+%\item you must say \qu{My name is $<$Your Full Name as appears in the registrar$>$},
+%\item you must answer the multiple choice quiz at the end of the syllabus (see page \pageref{quiz}) and
+%\item you attach a picture of you so I can memorize and know your name. (You can also say \qu{I opt-out of picture} and state your reason).
+%\end{enumerate}
+%
+%I will email you back a password you can use to check the \href{http://gradesly.com}{course grading site} once the site is up (which should be a couple weeks into the semester). \\
+%
+%This assignment is due Tuesday, Sept 1, 2015 5PM and will receive a grade of 0 or 100 with the usual 10 point penalty for lateness.
+
+
+\section*{Final Examination}
+
+The final examination will be mostly in the style of the homeworks. If you can do all the green and yellow problems on the homeworks, the exam should not present any challenge. I will \textit{never} give you exam problems on concepts which you have not seen at home on one of the weekly homework assignments. 
+
+The final exam will be in class during the last two hours of the last lecture period (i.e. 2/28/17 7-9PM for Section A and 5:30-7:30PM 3/1/17 for Section B). The first hour will be a general Q\&A session or material that is not covered on the exam.
+
+
+%\subsection*{Exam Schedule}\label{subsec:exam_schedule}
+%
+%\begin{itemize}
+%\itemsep -0.0em 
+%\item Midterm examination I will be Thursday September 22 in class
+%\item Midterm examination II will be Tuesday November 15 in class
+%\item The final examination will be Thursday December 15 in KY320. Section A has the exam from 11AM-1PM and section B has the exam from 1:45PM-3:45PM.
+%\end{itemize}
+
+\subsection*{Exam Materials}
+
+I allow you to bring any calculator you wish but it cannot be your phone. The only other items allowed are pencil and eraser. I do not recommend using pen but it is allowed
+
+I also allow \qu{cheat sheets} for the final exam: you are allowed to bring three 8.5'' $\times$ 11'' sheet of paper (front and back). On these sheets you can write or print anything you would like which you believe will help you on the exam. You must hand in your cheat sheets if you are in Section A.
+
+%\subsection*{Cheating on Exams}
+%
+%If I catch you cheating, you can either take a zero on the exam, or you can roll the dice before the University Honor Council who may choose to suspend you.
+
+
+%\subsection*{Missing Exams}
+%
+%There are no make-up exams. If you miss the exam, you get a zero. If you are sick, I need documentation of your visit to a hospital or doctor. Expect my TA to call the doctor or hospital to verify the legitimacy of your note. If you need to leave the country for an emergency, I will expect proper documentation as well.
+
+
+%\subsection*{Missing the Final}
+%
+%Automatic WU grade. You can get an F by coming and \qu{taking} the final.
+
+\subsection*{Special Services}
+
+If you are a student who takes exams at the special services center, I need to see your blue slip one week before the exam to make proper arrangements with the center.
+
+\section*{Class Participation (and attendance)}
+
+Given that this course is only 7 lectures with 150 students, I cannot learn your names. Thus, I do not think it is fair to use class participation or attendance into the grade calculation.
+
+
+\section*{Grading and Grading Policy}\label{sec:grading}
+
+Your course grade will be calculated based on the percentages as follows: 
+
+\begin{table}[h]
+\centering
+\begin{tabular}{l|l}
+Homework & 30\% \\
+Final Examination & 40\% \\
+Forecasting Competition Accuracy & 15\% \\
+Project & 15\%
+\end{tabular}
+\end{table}
+\FloatBarrier
+
+%The semester is split into three periods (1) from the beginning until midterm I (2) from midterm I to midterm II (3) from midterm II until the final. The material in each of the periods is tested evenly; thus, it counts the same towards your grade. Since there is 75\% of the grade allotted to exams, there is 25\% allotted to each period. Thus, the final is upweighted towards the material covered in the third period. In summary, the final will have 5/35 points $\approx$ 14\% for the first period's material, 5/35 points $\approx$ 14\% for the second period's material and 25/35 points $\approx$ 71\% for the last period's material. A good strategy for the final is to just study the material after Midterm II and minimal studying for the previous material.
+
+\noindent Course grades are given on an approximate Wharton school curve.
+
+%\subsection*{Previous semesters' grade distributions}
+%
+%Below is a history of previous semesters' grade distributions with approximate cutoffs.
+%
+%\begin{table}[h]
+%\centering
+%\begin{tabular}{l|cccccccccccc}
+%Grade & F   & D      & D+   & C-    & C     & C+    & B-    & B     & B+   & A-    & A      & A+ \\ \hline
+%$n$   & 11    & 0      & 0     & 6      & 6     & 6      & 5     & 5     & 4     & 5      & 6      & 0 \\
+%\%ile & --- & ---  &  ---        & 21    & 32   & 46    & 57   & 66   & 75 & 82 & 91 & --- \\ \hline
+%\end{tabular}
+%\caption{Math 241 Fall, 2015. Total enrollment out of three sections save no-shows was $n=56$.}
+%\end{table}
+%\FloatBarrier
+%\begin{table}[h]
+%\centering
+%\begin{tabular}{l|cccccccccccc}
+%Grade & F   & D      & D+   & C-    & C     & C+    & B-    & B     & B+   & A-    & A      & A+ \\ \hline
+%$n$   & 3    & 3      & 4      & 4      & 6     & 4      & 3     & 6      & 3     & 4      & 3      & 0 \\
+%\%ile & --- & 7.1  &  16.7 & 23.8 & 33.3 & 47.6 & 57.1 & 64.3 & 76.2 &  81.0 & 92.9 & --- \\ \hline
+%\end{tabular}
+%\caption{Math 241 Spring, 2015. Total enrollment out of two sections save no-shows was $n=42$.}
+%\end{table}
+%\FloatBarrier
+%\begin{table}[h]
+%\centering
+%\begin{tabular}{l|cccccccccccc}
+%Grade & F & D & D+ & C- & C & C+ & B- & B & B+ & A- & A & A+ \\ \hline
+%$n$ & 6 & 5 & 1 & 5 & 4 & 4 & 4 & 6 & 4 & 2 & 6 & 1 \\
+%\%ile & --- & 14.6 &  25.0 & 35.4 & 43.8 & 52.1 & 62.5 & 75.0 & 66.6 &  83.3 & 87.5 & 100 \\ \hline
+%\end{tabular}
+%\caption{Math 241 Fall, 2014. Total enrollment out of two sections save no-shows was $n=48$.}
+%\end{table}
+%\FloatBarrier
+%
+%I am not obligated to mirror these grade distribution and cutoffs this semester. Grade distributions vary from semester-to-semester based on the relative difficulty of exams, student ability and randomness in raw score clustering. The above is meant for informational purposes only. Do not come to me expecting a negotiation of your grade based on a previous semester's cutoff.
+%
+%\subsection*{The Computer Science C- requirement}
+%
+%This class is a required course for the Computer Science major and requires a minimum of a C- to earn credit for the major. I cannot assign grades based on student need. What I can do is let you know if you are in danger of getting a grade lower than C- after the first exam and after the second exam. The second exam is scheduled on the day of the Withdraw deadline and I will do my best to have them graded well before the deadline. 
+%
+%If you are below the 25\%ile and you are a CS major, you are on the border of passing your requirement. If you do not plan on studying hard for the final and improving your grade, you may choose to withdraw, thereby allowing you to focus on other classes only to retake Math 241 in the future (and this time earn a stellar grade).
+
+\subsection*{Checking your grade and class standing}
+
+You can always check your grades in real-time using the \href{http://wharton.gradesly.com}{grading site}. You will enter in your email and the password I will provide to you via email.
+
+\section*{Use of Canvas}
+I will not be using canvas to post assignments, instead, see the \coursewebpage. However, you are encouraged to use the discussion board to post questions and comments about the course. I encourage you all to reply to your fellow classmates inquiries, as one of the best ways to learn is through teaching another. The course staff will do its best to provide answers as well. I may also post pertinent questions I receive via email in addition to my reply, leaving the original student's identity anonymous. 
+
+ If you are not a Wharton student and need access to Canvas, you can create an account by visiting \url{accounts.wharton.upenn.edu} once the semester begins.
+
+
+\section*{Auditing}
+
+Auditors are welcome only with a permit from the professor as there are limited seats in the rooms and people sitting on the steps poses a fire risk. If you are auditing, you are encouraged to do all homework assignments and we will even grade them. 
+
+
+\subsection*{Course Acknowledgments}
+
+Special thanks to Justin Bleich who shared his course materials with me and discussed my curriculum.
+
+\nocite{*}
+\bibliographystyle{apalike}
+%\renewcommand\bibname{Required Reading List}
+%\bibliography{reqs}
+
+\bibliography{refs}
+
+
+\end{document}
