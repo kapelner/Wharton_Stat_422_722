@@ -33,41 +33,42 @@
 
 \textbf{forecast (n.)} early 15c., "\textit{forethought, prudence}," probably from forecast (v.). Meaning "conjectured estimate of a future course" is from 1670s. \\~\\
 
+I will be using predict and forecast interchangeably.
+
 \end{frame}
 
 
 \begin{frame}\frametitle{Examples}
 
-We do this all the time, sometimes unknowingly: \\~\\
+We make predictions all the time, sayomg things like: \\~\\
 
-\qu{Apple stock will go up tomorrow},
-\qu{This condo will sell for \$500K}, 
-\qu{Going skiing this weekend will make me happy}, \\~\\
+\begin{itemize}
+\item \qu{Apple stock will go up tomorrow},
+\item \qu{This condo will sell for \$500K}
+\end{itemize}
 
-How? \\~\\
+sometimes unknowingly
 
-We use a \textit{model}.
+\begin{itemize}
+\item \qu{Going skiing this weekend will make me happy}, \\~\\
+\end{itemize}
+
+How do we make predictions? \pause We use a \textit{model}.
 
 \end{frame}
 
 \begin{frame}\frametitle{Define: model}
 
-\qu{a functional decription of a system} and an example model is:
+\qu{a functional decription of a system}  \pause \\~\\ An example model is:
 
 \begin{quotation}
-Absolute power corrupts absolutely
+Early to bed and early to rise make a man healthy, wealthy and wise.
 \end{quotation}
 
-All models have \textbf{input(s)} and \textbf{output(s)}. What are the input(s) and output(s) above? \\~\\
+All models have \textbf{input(s)} that are then somehow related to its \textbf{output(s)}. What are the input(s) and output(s) above? \\~\\
 
-Input: Power? Corruption? Likely: a person's amount of power. \\
-Output: Person? Power? Corruption: Likely: that person's amount of corruption.\\~\\
-
-The model can be rephrased less poetically as:
-
-\begin{quotation}
-If a person has a lot of power then that person will be very corrupt.
-\end{quotation}
+Inputs: \pause bedtime schedule, waking schedule \\
+Outputs: \pause health, wealth and wisdom \\~\\
 
 \end{frame}
 
@@ -75,50 +76,128 @@ If a person has a lot of power then that person will be very corrupt.
 \begin{frame}\frametitle{Observations and their Features}
 
 \small
-Here, the inputs and outputs are \textit{features} or \textit{attributes} or \textit{chracteristics} of a person. \\~\\
+Here, the inputs and outputs are 
 
-Generally, inputs and outputs are features of the \textit{unit of analysis} or \textit{the observation} or \textit{the subject}. \ingray{Note: I will be using \qu{observation} or the name of the unit itself: \qu{person}, \qu{car}, etc.} \\~\\
+\begin{itemize}
+\item \textit{features} or 
+\item \textit{attributes} or 
+\item \textit{characteristics} of
+\end{itemize}
 
-Thus the model relates some \textit{feature(s) of the observation} to other \textit{feature(s) of the observation}. Here, we are relating a person's power to that person's corruption.
+a person. \\~\\
+
+Generally, inputs and outputs are features of the 
+
+\begin{itemize}
+\item \textit{unit of analysis} or 
+\item \textit{the observation} or 
+\item \textit{the subject}.
+\end{itemize} 
+
+%\ingray{Note: I will be using \qu{observation} or the name of the unit itself: \qu{person}, \qu{car}, etc.} Here, the observation is a person.
+
+Thus the model relates some \textit{feature(s) of the observation} to other \textit{feature(s) of the observation}. Here, we are relating specific people's bedtime schedule and waking schedule to their health, wealth and wisdom.
 \end{frame}
 
 \begin{frame}\frametitle{Features as Measurements}
-Our model:
+Models phrased in language such as:
 
 \begin{quotation}
-If a person has a lot of power then that person will be very corrupt
+Early to bed and early to rise make a man healthy, wealthy and wise.
 \end{quotation}
 
-Extremely imprecise, vague, ill-defined and thus unusable and of course, untestable. \\~\\
+are usually ambiguous, imprecise, vague and ill-defined. Why? \pause What does \qu{early to bed} mean? What does \qu{early to rise} mean? What does \qu{healthy} mean? What does \qu{wealthy} mean? What does \qu{wise} mean? Without resolving these ambiguities, \pause the model is unusable and of course, untestable. \\~\\ \pause
 
-In order to make this precise and defined, there is a necessity to use numbers. Thus, features of the observation must be \textit{measured}. Thus the model relates some \textit{measured feature(s) of the observation} to other \textit{measured feature(s) of the observation}.  
+In order to make this precise and defined, there is a necessity to use numbers. \pause Thus, features of the observation must be \textit{measured} (to be defined later). \pause Thus the model relates some \textit{measured feature(s) of the observation} to other \textit{measured feature(s) of the observation}.  
+	
+\end{frame}
+
+\begin{frame}\frametitle{The Model as a Functional Relationship}
+
+\small
+The relationship is a function taking in inputs (within the parentheses) and \qu{returning} the outputs (the equal sign). For any observation that is:
+
+\beqn
+\substack{\text{the measured} \\ \text{outputs of an} \\ \text{observation}} = \text{model}\parens{\substack{\text{the measured} \\ \text{inputs of an} \\ \text{observation}}}
+\eeqn
+
+It is traditional to put the outputs on the left hand side. This is assumed that the outputs were measured. This type of observation is called 
+
+\begin{itemize}
+\item old 
+\item historical
+\item known
+\end{itemize}
+
+In our aphorism model, for the observation being a known person named Joe:
+
+\tiny 
+\beqn
+\threevec{\text{a measured quantity of Joe's health}}{\text{a measured quantity of Bob's wealth}}{\text{a measured quantity of Joe's wisdom}} = \text{model}\parens{\twovec{\text{a measured quantity of Joe's bedtime}}{\text{a measured quantity of Joe's waketime}}}
+\eeqn
+\normalsize
+
 	
 \end{frame}
 
 
-Now we can define prediction a bit better. For a new / heretofore unseen / future / unknown observation, unit (here, person), 
+\begin{frame}\frametitle{Updated Definition of Prediction}
+
+\small 
+Now we can hone our definition of prediction. For a 
+
+\begin{itemize}
+\item new 
+\item heretofore unseen 
+\item future
+\end{itemize}
+
+observation, where the inputs have been measured / assessed but the output has not been measured / assessed,
 
 \beqn
-\underbrace{\text{prediction}}_{\substack{\text{the guessed} \\ \text{output} \\ \text{measurement}}} = \text{model}(\underbrace{\text{observation}}_{\substack{\text{the measured} \\ \text{inputs}}})
+\underbrace{\substack{\text{the \emph{guessed}} \\ \text{output} \\ \text{measurements}}}_{\text{prediction}} = \text{model}\parens{\substack{\text{the measured} \\ \text{inputs of an} \\ \text{observation}}}
 \eeqn
 
-The above emphasizes the functional relationship of the observation and prediction through the model. Here,
-
+\tiny 
 \beqn
-\substack{\text{a guessed} \\ \text{amount of} \\ \text{corruption for Bob}}  = \text{model}\parens{\substack{\text{Bob's measured} \\ \text{ amount of power}}}
+\threevec{\text{a guessed quantity of Bob's health}}{\text{a guessed quantity of Bob's wealth}}{\text{a guessed quantity Bob's wisdom}} = \text{model}\parens{\twovec{\text{a measured quantity of bedtime}}{\text{a measured quantity of waketime}}}
 \eeqn
+\normalsize
 
+%square brackets denote vector notation with each element indicating a separate dimension.
 
 \end{frame}
 
 
-\begin{frame}\frametitle{}
+\begin{frame}\frametitle{Measurements as Variables}
 
-	
+Instead of 
+
+\begin{quotation}
+Early to bed and early to rise make a man healthy, wealthy and wise.
+\end{quotation}
+
+we have
+
+
+
+Instead of \qu{a measured quantity ...} we can use an algebraic \textit{variable} (e.g. the symbol $x$) to denote the numerical quantity and now we have:
+
+ \beqn
+\threevec{\yhat_1}{\yhat_2}{\yhat_3} = \text{model}\parens{\twovec{x_1}{x_2}}
+\eeqn
+
+We will use the hat symbol ($\hat{~}$) to indicate a prediction. 
 \end{frame}
 
 
-\begin{frame}\frametitle{}
+\begin{frame}\frametitle{Mathematical Model}
+
+Now that we have numbers and an equal sign, we have now created a \textit{mathematical model} where the \textit{model} now will be represented as a function, $f$ where the inputs and outputs are specified implicitly.
+
+ \beqn
+\threevec{\yhat_1}{\yhat_2}{\yhat_3} = f\parens{x_1, x_2}
+\eeqn
 
 	
 \end{frame}
