@@ -265,7 +265,7 @@ The output is called the
 
 \begin{itemize}
 \item \textit{response} (the model \qu{responds} to inputs)
-\item \textit{outcome} (the result of inputs)
+\item \textit{outcome} / \textit{outcome metric} (the result of inputs)
 \item \sout{\textit{endpoint}} (only used in clinical trial context)
 \end{itemize}
 
@@ -282,7 +282,7 @@ and they are what we use to predict. I will try to use \qu{response} and \qu{pre
 
 \end{frame}
 
-\begin{frame}\frametitle{Define the measurements}
+\begin{frame}\frametitle{Many possible models}
 
 \small
 \begin{quotation}
@@ -296,7 +296,7 @@ What is the response metric? \pause What does \qu{healthy} mean?\\
 \item Healthy for ages 25-65? Since we can expect health in infanthood and adolescence but not in elderly years
 \end{itemize}
 
-One also gets a feeling from the wording, there is either \qu{healthy} or \qu{not healthy}. Thus the response metric will be \textit{categorical}. \\\vspace{0.2cm}
+One also gets a feeling from the wording, there is either \qu{healthy} or \qu{not healthy}. Thus the response metric will be the \textit{categorical} data type. \\\vspace{0.2cm}
 
 Categorical measurements consist of discrete, mutually exclusive \textit{levels}. Here, \{healthy, not healthy\}. Generally, \{a, b, c, $\ldots$\}. Metrics with a large number of levels are difficult to model --- keep it low.\\\vspace{0.2cm}
 
@@ -314,16 +314,162 @@ We still need a clear definition. Ideas? How about: healthy means no incidence o
 
 \begin{frame}\frametitle{Define the predictors clearly}
 
-Input \#1: bedtime schedule \\~\\
+$x_1$: bedtime schedule \\~\\
 
-Definition? \pause Average bedtime. \pause How to measure / assess? Survey? Difficult... Other ideas? How about bedtimes for every single night from ages 25--65? 14,965 features. Problem?
-	
+Definition? \pause Average bedtime. \pause How to measure / assess? Survey? \\~\\	
+
+%Difficult... Other ideas? How about bedtimes for every single night from ages 25--65? 14,965 features. Bad idea...
+
+
+$x_2$: waketime schedule \\~\\	
+
+Definition? \pause Average time to rise in the morning assessed via survey\\~\\	
+
+Thus, $x_1$ and $x_2$ are a variant of a \textit{timestamp} data type.
+
 \end{frame}
 
+\begin{frame}\frametitle{Example Historical Data}
 
-\end{document}
+\begin{table}
+\centering
+\begin{tabular}{ccc}
+Healthy? 1 = yes ($y$) & Average Bedtime ($x_1$) & Average Waketime ($x_2$) \\ \hline
+1 & 9:32PM & 6:42AM \\
+0 & 11:55PM & 7:53AM \\
+0 & 10:33PM & 7:02AM \\
+\vdots
+\end{tabular}
+\end{table}
+
+	
+\end{frame}
 
 \begin{frame}\frametitle{}
 
 	
 \end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\end{document}
+
+
