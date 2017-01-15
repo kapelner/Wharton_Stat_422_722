@@ -22,7 +22,7 @@
 %immediately create a title page
 \frame{\titlepage}
 
-\section{Introduction}
+\section{Model Vocab}
 
 \begin{frame}\frametitle{Define: Prediction and Forecast}
 
@@ -40,14 +40,14 @@ I will be using predict and forecast interchangeably.
 
 \begin{frame}\frametitle{Examples}
 
-We make predictions all the time, sayomg things like: \\~\\
+We make predictions all the time, saying things like: \\~\\
 
 \begin{itemize}
 \item \qu{Apple stock will go up tomorrow},
 \item \qu{This condo will sell for \$500K}
 \end{itemize}
 
-sometimes unknowingly
+and sometimes unknowingly
 
 \begin{itemize}
 \item \qu{Going skiing this weekend will make me happy}, \\~\\
@@ -62,36 +62,43 @@ How do we make predictions? \pause We use a \textit{model}.
 \qu{a functional decription of a system}  \pause \\~\\ An example model is:
 
 \begin{quotation}
-Early to bed and early to rise make a man healthy, wealthy and wise.
+Early to bed and early to rise makes a man healthy, wealthy and wise.
 \end{quotation}
 
-All models have \textbf{input(s)} that are then somehow related to its \textbf{output(s)}. What are the input(s) and output(s) above? \\~\\
+All models have \textbf{input(s)} and \textbf{output(s)}. In the model above, what are the... \\~\\
 
-Inputs: \pause bedtime schedule, waking schedule \\
-Outputs: \pause health, wealth and wisdom \\~\\
+Inputs? \pause bedtime schedule, waking schedule, ... \\
+Outputs? \pause health, wealth and wisdom \\~\\
 
 \end{frame}
 
 
-\begin{frame}\frametitle{Observations and their Features}
+\begin{frame}\frametitle{Synonyms for Inputs and Outputs}
 
 \small
 Here, the inputs and outputs are 
 
 \begin{itemize}
-\item \textit{features} or 
-\item \textit{attributes} or 
-\item \textit{characteristics} of
+\item \textit{features} 
+\item \textit{attributes} 
+\item \textit{characteristics}
+\item \textit{variables} / \textit{variates}
 \end{itemize}
 
-a person. \\~\\
+of a person. A person features health, a person has the characteristic of going to bed early. \\~\\
 
-Generally, inputs and outputs are features of the 
+
+\end{frame}
+
+\begin{frame}\frametitle{What are \qu{observations}?}
+
+Here, we have features of a person. Generally, inputs and outputs are features of the 
 
 \begin{itemize}
-\item \textit{unit of analysis} or 
-\item \textit{the observation} or 
-\item \textit{the subject}.
+\item \textit{observation} or 
+\item \textit{unit} or 
+\item \textit{record} or 
+\item \textit{subject}.
 \end{itemize} 
 
 %\ingray{Note: I will be using \qu{observation} or the name of the unit itself: \qu{person}, \qu{car}, etc.} Here, the observation is a person.
@@ -99,41 +106,60 @@ Generally, inputs and outputs are features of the
 Thus the model relates some \textit{feature(s) of the observation} to other \textit{feature(s) of the observation}. Here, we are relating specific people's bedtime schedule and waking schedule to their health, wealth and wisdom.
 \end{frame}
 
-\begin{frame}\frametitle{Features as Measurements}
+
+
+
+
+
+\begin{frame}\frametitle{Ambiguity of Models Defined by Words}
+
+\small
 Models phrased in language such as:
 
 \begin{quotation}
-Early to bed and early to rise make a man healthy, wealthy and wise.
+Early to bed and early to rise makes a man healthy, wealthy and wise.
 \end{quotation}
 
-are usually ambiguous, imprecise, vague and ill-defined. Why? \pause What does \qu{early to bed} mean? What does \qu{early to rise} mean? What does \qu{healthy} mean? What does \qu{wealthy} mean? What does \qu{wise} mean? Without resolving these ambiguities, \pause the model is unusable and of course, untestable. \\~\\ \pause
+are usually ambiguous, imprecise, vague and ill-defined. Why? \pause 
 
-In order to make this precise and defined, there is a necessity to use numbers. \pause Thus, features of the observation must be \textit{measured} (to be defined later). \pause Thus the model relates some \textit{measured feature(s) of the observation} to other \textit{measured feature(s) of the observation}.  
+\begin{itemize}
+\item What does \qu{early to bed} mean? 
+\item What does \qu{early to rise} mean? 
+\item What does \qu{healthy} mean? 
+\item What does \qu{wealthy} mean? 
+\item What does \qu{wise} mean?
+\end{itemize}
+
+Without resolving these ambiguities, \pause the model is unusable and of course, untestable. \\~\\ \pause
+\vspace{-0.3cm}
+
+In order to make this precise and defined, there is a necessity to use numbers. \pause Thus, features of the observation must be \textit{measured} (to be defined later). \pause 
 	
 \end{frame}
 
 \begin{frame}\frametitle{The Model as a Functional Relationship}
 
 \small
-The relationship is a function taking in inputs (within the parentheses) and \qu{returning} the outputs (the equal sign). For any observation that is:
+
+Thus the model relates some \textit{measured feature(s) of the observation} to other \textit{measured feature(s) of the observation}. The relationship is a function taking in inputs (within the parentheses) and \qu{returning} the outputs (the equal sign). For any observation,
 
 \beqn
 \substack{\text{the measured} \\ \text{outputs of an} \\ \text{observation}} = \text{model}\parens{\substack{\text{the measured} \\ \text{inputs of an} \\ \text{observation}}}
 \eeqn
 
-It is traditional to put the outputs on the left hand side. This is assumed that the outputs were measured. This type of observation is called 
+\ingrey{It is traditional to put the outputs on the left hand side.} This is assumed that the outputs were measured. This type of observation is called 
 
 \begin{itemize}
-\item old 
-\item historical
+\item old or
+\item historical or
 \item known
 \end{itemize}
 
-In our aphorism model, for the observation being a known person named Joe:
+and predictions here are not needed (obviously). In our aphorism model, for the observation being a known person named Joe:
 
 \tiny 
 \beqn
-\threevec{\text{a measured quantity of Joe's health}}{\text{a measured quantity of Bob's wealth}}{\text{a measured quantity of Joe's wisdom}} = \text{model}\parens{\twovec{\text{a measured quantity of Joe's bedtime}}{\text{a measured quantity of Joe's waketime}}}
+\threevec{\text{a measured quantity of Joe's health}}{\text{a measured quantity of Joe's wealth}}{\text{a measured quantity of Joe's wisdom}} = \text{model}\parens{\threevec{\text{a measured quantity of Joe's bedtime}}{\text{a measured quantity of Joe's waketime}}{\vdots}}
 \eeqn
 \normalsize
 
@@ -147,8 +173,8 @@ In our aphorism model, for the observation being a known person named Joe:
 Now we can hone our definition of prediction. For a 
 
 \begin{itemize}
-\item new 
-\item heretofore unseen 
+\item new or
+\item heretofore unseen or
 \item future
 \end{itemize}
 
@@ -160,7 +186,7 @@ observation, where the inputs have been measured / assessed but the output has n
 
 \tiny 
 \beqn
-\threevec{\text{a guessed quantity of Bob's health}}{\text{a guessed quantity of Bob's wealth}}{\text{a guessed quantity Bob's wisdom}} = \text{model}\parens{\twovec{\text{a measured quantity of bedtime}}{\text{a measured quantity of waketime}}}
+\threevec{\text{a guessed quantity of Bob's health}}{\text{a guessed quantity of Bob's wealth}}{\text{a guessed quantity Bob's wisdom}} = \text{model}\parens{\threevec{\text{a measured quantity of Bob's bedtime}}{\text{a measured quantity of Bob's waketime}}{\vdots}}
 \eeqn
 \normalsize
 
@@ -171,52 +197,126 @@ observation, where the inputs have been measured / assessed but the output has n
 
 \begin{frame}\frametitle{Measurements as Variables}
 
-Instead of 
-
-\begin{quotation}
-Early to bed and early to rise make a man healthy, wealthy and wise.
-\end{quotation}
-
-we have
+Instead of \qu{a measured quantity ...} we can use algebraic \textit{variables} to denote the numerical quantities. It is traditional to use $x$'s to represent inputs and $y$'s to represent outputs. Here would be the relationship for Joe:
 
 
-
-Instead of \qu{a measured quantity ...} we can use an algebraic \textit{variable} (e.g. the symbol $x$) to denote the numerical quantity and now we have:
-
- \beqn
-\threevec{\yhat_1}{\yhat_2}{\yhat_3} = \text{model}\parens{\twovec{x_1}{x_2}}
+\beqn
+\threevec{y_1}{y_2}{y_3} = \text{model}\parens{\threevec{x_1}{x_2}{\vdots}}
 \eeqn
 
-We will use the hat symbol ($\hat{~}$) to indicate a prediction. 
+and for Bob:
+
+
+\beqn
+\threevec{\yhat_1}{\yhat_2}{\yhat_3} = \text{model}\parens{\threevec{x_1}{x_2}{\vdots}}
+\eeqn
+
+We will use the \qu{hat} symbol ($\hat{~}$) to indicate a prediction of the response $\yhat$ to distinguish it from a known value of the response $y$.
+
 \end{frame}
 
 
 \begin{frame}\frametitle{Mathematical Model}
 
-Now that we have numbers and an equal sign, we have now created a \textit{mathematical model} where the \textit{model} now will be represented as a function, $f$ where the inputs and outputs are specified implicitly.
+Now that we have numbers for inputs / outputs and an equal sign relating them, we have created a \textit{mathematical model}. The \textit{model} now will be represented as a function, $f$. For an old observation,
 
- \beqn
-\threevec{\yhat_1}{\yhat_2}{\yhat_3} = f\parens{x_1, x_2}
+\beqn
+\threevec{y_1}{y_2}{y_3} = f\parens{x_1, x_2, \ldots} 
 \eeqn
 
+and a new observation,
+
+\beqn
+\threevec{\yhat_1}{\yhat_2}{\yhat_3} = f\parens{x_1, x_2, \ldots} 
+\eeqn
 	
 \end{frame}
 
 
-\begin{frame}\frametitle{}
+\begin{frame}\frametitle{Focus: models with univariate responses.}
 
+Although general models have any number of outputs, this semester we will only consider models with one output. Thus, we will be looking at models such as
+
+\begin{quotation}
+Early to bed and early to rise makes a man healthy.
+\end{quotation}
+
+We picked the most interesting output. So, for an old observation,
+
+\beqn
+y = f\parens{x_1, x_2, \ldots} 
+\eeqn
+
+and a new observation,
+
+\beqn
+\yhat = f\parens{x_1, x_2, \ldots} 
+\eeqn
+	
+\end{frame}
+%%%http://medcitynews.com/2015/04/lack-sleep-amount-time-spent-working-correlate-rich-poor-suffer-unhealthy-pattern/
+
+\begin{frame}\frametitle{More Vocabulary}
+
+\small
+Even though inputs and outputs are features of an observation, they each go by special names that emphasize their roles. \\~\\
+
+The output is called the
+
+\begin{itemize}
+\item \textit{response} (the model \qu{responds} to inputs)
+\item \textit{outcome} (the result of inputs)
+\item \sout{\textit{endpoint}} (only used in clinical trial context)
+\end{itemize}
+
+and they are the target of prediction --- what we want to ultimately predict. \\~\\
+
+Inputs then can go by the following terms of art:
+
+\begin{itemize}
+\item \textit{covariates} (because the vary with the response, co-vary)
+\item \textit{predictors} (since they will be the inputs used to make predictions)
+\end{itemize}
+
+and they are what we use to predict. I will try to use \qu{response} and \qu{predictors} in this course.
+
+\end{frame}
+
+\begin{frame}\frametitle{Define the measurements}
+
+\small
+\begin{quotation}
+Early to bed and early to rise makes a man healthy.
+\end{quotation}
+
+What is the response metric? \pause What does \qu{healthy} mean?\\
+
+\begin{itemize}
+\item Healthy for his whole life? Unlikely the model means this...
+\item Healthy for ages 25-65? Since we can expect health in infanthood and adolescence but not in elderly years
+\end{itemize}
+
+One also gets a feeling from the wording, there is either \qu{healthy} or \qu{not healthy}. Thus the response metric will be \textit{categorical}. \\\vspace{0.2cm}
+
+Categorical measurements consist of discrete, mutually exclusive \textit{levels}. Here, \{healthy, not healthy\}. Generally, \{a, b, c, $\ldots$\}. Metrics with a large number of levels are difficult to model --- keep it low.\\\vspace{0.2cm}
+
+I there are two levels, it is called \textit{binary} and the model would be called a \qu{binary response model}.
 	
 \end{frame}
 
+\begin{frame}\frametitle{Define the response clearly}
 
-\begin{frame}\frametitle{}
+Response: Healthy for ages 25--65 \\~\\
 
+We still need a clear definition. Ideas? How about: healthy means no incidence of a \qu{major} disease between the ages of 25--65? This can be assessed with medical records. 
 	
 \end{frame}
 
+\begin{frame}\frametitle{Define the predictors clearly}
 
-\begin{frame}\frametitle{}
+Input \#1: bedtime schedule \\~\\
 
+Definition? \pause Average bedtime. \pause How to measure / assess? Survey? Difficult... Other ideas? How about bedtimes for every single night from ages 25--65? 14,965 features. Problem?
 	
 \end{frame}
 
