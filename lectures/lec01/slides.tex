@@ -59,11 +59,13 @@ How do we make predictions? \pause We use a \textit{model}.
 
 \begin{frame}\frametitle{Define: model}
 
-\qu{a functional decription of a system}  \pause \\~\\ An example model is:
+Model: a functional decription of a system  \pause \\~\\ An example model is:
 
 \begin{quotation}
 Early to bed and early to rise makes a man healthy, wealthy and wise.
 \end{quotation}
+
+\ingrey{aphorism: (2) a concise statement of a scientific principle (and scientific principles are \textit{models} of the observable universe)} \\~\\
 
 All models have \textbf{input(s)} and \textbf{output(s)}. In the model above, what are the... \\~\\
 
@@ -314,7 +316,7 @@ One also gets a feeling from the wording, there is either \qu{healthy} or \qu{no
 
 Categorical measurements consist of discrete, mutually exclusive \textit{levels}. Here, \{healthy, not healthy\}. Generally, \{a, b, c, $\ldots$\}. Metrics with a large number of levels are difficult to model --- keep it low.\\\vspace{0.2cm}
 
-I there are two levels, it is called \textit{binary} and the model would be called a \qu{binary response model} (or classification) with elements 0 and 1.
+I there are two levels, it is called \textit{binary} or \textit{dichotomous} and the model would be called a \textit{binary response model} (or a classification) with elements 0 and 1.
 	
 \end{frame}
 
@@ -431,68 +433,218 @@ Mathematical models such as
 y = f(x_1, x_2, \ldots)
 \eeqn
 
+can become more forgiving to errors in $f$ by allowing for $Y$ to be modeled non-deterministically as a random variable (r.v.), uppercase $Y$. For our case of binary classification, this r.v. is the Bernoulli:
+
+\beqn
+Y \sim \bernoulli{f(x_1, x_2, \ldots)} := \begin{cases} 
+1 ~~\text{with probability~} f(x_1, x_2, \ldots) \\
+0 ~~\text{otherwise}
+\end{cases} 
+\eeqn
+
+Since the response is now a r.v., we call this a \emph{statistical model}.
+	
+\end{frame}
+
+\begin{frame}\frametitle{A Statistical Model}
+
+A more conceivable model $f$ is:
+
+\begin{figure}
+\centering
+\includegraphics[width=3.2in]{stat_class_model_health}
+\end{figure}
+
+Are there still reasons for $x_1$ and $x_2$ to be rigid binary values e.g. 1 if $x_2 <$ 6:30AM? No... but we haven't spoke about model fits nor parameters.... wait...
+
+\end{frame}
+
+\begin{frame}\frametitle{Is Health Dichotomous?}
+\small
+
+So, we should really update the text of the aphorism to reflect the introduction of the random variable response. It should read:
+
+\begin{quotation}
+Early to bed and early to rise makes a man \emph{more likely to be} healthy.
+\end{quotation}
+
+However this seems to still suggest someone is either healthy or not healthy. Didn't the author of the aphorism, to be more accurate, say... 
+
+\begin{quotation}
+Early to bed and early to rise makes a man \emph{healthier}.
+\end{quotation}
+
+which is deterministic:
+
+\beqn
+y = f(x_1, x_2)
+\eeqn 
+
+we need some way to measure a quantity of healthiness on a continuous scale. Open problem. How can you shrink-wrap health into a single number? Diversion...
+
+\end{frame}
+
+\begin{frame}\frametitle{QOL: a Response Metric?}
+
+\footnotesize
+One such scale is found in \href{http://europepmc.org/abstract/med/6460487}{Flanagan (1978)} invented the precursor to the modern \qu{Quality of Life Scale} (QOLS) metric based on assessing 7-point Likert scales. It takes 5 minutes and scores range from 16--112. Here are the categories:
+
+\vspace{-0.2cm}
+\begin{figure}
+\centering
+\includegraphics[width=3.2in]{qol_table.png}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}\frametitle{Making Up Metrics}
+
+Yes, metrics are essentially \qu{made up}. Good ones are engineered to carefully capture the information sought. Examples:
+
+\begin{itemize}
+\item \href{https://www.cato.org/human-freedom-index}{The Human Freedom Index}
+\item \href{https://en.wikipedia.org/wiki/Democracy-Dictatorship_Index}{Democracy-Dictatorship Index}
+\item S\&P 500
+\item Visual Acuity 20/20, 20/40, etc
+\end{itemize}
+
+It is most important for these metrics to be monotonic (i.e. higher always means better or worse). 
+
+We also would appreciate these metrics being approximately linear. So an increase of 1 \qu{point} on the scale means the same increase/decrease in quality. But that is usually too much to ask.
+
 
 	
 \end{frame}
 
-\begin{frame}\frametitle{}
+\begin{frame}\frametitle{Back to Modeling}
 
+We now are considering health as a continuous number (the data type is called \qu{continuous}) but the model is still deterministic. How to we reengineer the aphorism to allow for stochasticity (randomness)?
+
+\begin{quotation}
+Early to bed and early to rise makes a man \emph{healthier on average}.
+\end{quotation}
+	
+We can then build a statistical model:
+
+\beqn
+Y \sim g\parens{f(x_1, x_2), \sigsq, \ldots}
+\eeqn
+
+where $f(x_1, x_2)$ now represents the mean health for these inputs, $\sigsq$ is now variance around that mean, and the ellipses is a technicality dealing with higher moments such as skew, etc that we will ignore for the purposes of this class. Thus, health scores are realized randomly but the mean health scores do not.
+
+\end{frame}
+
+\begin{frame}\frametitle{Regression Models}
+
+\small
+When the response is continuous, the statistical model is called a \textit{regression model}. What does regression mean? Loosely, when you hear regression, you know you're modeling some continuous response (e.g. price, blood pressure, lens power). The typical way these models are written are:
+
+\beqn
+Y = f(x_1, x_2) + \errorrv
+\eeqn
+
+The equals sign makes us feel like we're back in a deterministic model. But we're not; the $\errorrv$ is a r.v. known as the \qu{noise}. (The British call it the \qu{errors} but that is confusing!) This r.v. necessarily must have no mean, $\expe{\errorrv} = 0$. Can you explain why? \\~\\
+
+Where does $\errorrv$ come from?? Philosophical question... one we will return to soon.
+
+\end{frame}
+
+\begin{frame}\frametitle{Conditional Expectation}
+
+The model can be written even another way to belabor this point:
+
+\beqn
+Y = \cexpe{Y}{x_1, x_2} + \errorrv
+\eeqn
+
+where $\cexpe{Y}{x_1, x_2}$ is called the \qu{conditional expectation function} or the \qu{conditional mean function} and of course,
+
+\beqn
+\cexpe{Y}{x_1, x_2} = f(x_1, x_2)
+\eeqn
+
+What does this look like?
 	
 \end{frame}
 
-\begin{frame}\frametitle{}
+\begin{frame}\frametitle{A mock $\cexpe{Y}{x_1, x_2}$ Illustration}
 
+\begin{figure}
+\centering
+\includegraphics[width=3.45in]{cef.png}
+\end{figure}
 	
 \end{frame}
 
-\begin{frame}\frametitle{}
+\begin{frame}\frametitle{Generalizing the Inputs}
 
+\begin{quotation}
+Early to bed and early to rise makes a man healthier on average.
+\end{quotation}
+
+\qu{early to bed} and \qu{early to rise} seem to smack of binary inputs. Either it's early or it's late... no in-between values. Again, it's probably not what the original author had in mind.\\~\\ %%%move this above
+
+Let's reengineer the aphorism again to allow for grey area:
+
+\begin{quotation}
+\emph{The earlier} to bed and the \emph{earlier to} rise makes a man healthier on average.
+\end{quotation}
+
+\end{frame}
+
+\begin{frame}\frametitle{Bedtime and Waketime Again}
+
+We began with the average bedtime and waketime and recorded it as a datetime.
+
+We now need to use continuous measures for $x_1$ and $x_2$. How can we do this? Should we use 9:42PM, 10:14PM, etc. as before? What is later 11:55PM or 1:02AM?
+
+We should not use timestamps as they fail the monotonicity property that we desire to capture \qu{lateness}.
+
+What should we do? Maybe just one number defined as the number of hours after an absurd average bedtime like 5PM? Thus, 9PM $\rightarrow x_1 = 4$ and 2AM $\rightarrow x_1 = 9$, etc. Ditto for waketime to avoid the problem of people on average waking up after 12:59PM.
 	
 \end{frame}
 
-\begin{frame}\frametitle{}
+\begin{frame}\frametitle{The Average Is Misleading}
 
+We are using average bedtime and waketime. What's wrong with an average?
+
+\begin{figure}
+\centering
+\includegraphics[width=4.5in]{two_dist}
+\end{figure}
+
+%par(mfrow = c(1, 2))
+%res = 1000
+%xs = 5 + seq(-4, 4, length.out = res)
+%plot(5 + xs, dnorm(xs, 5, 1), type = 'l', xlab = '', ylab = '')
+%plot(5 + xs, dnorm(xs, 5, 0.25), type = 'l', xlab = '', ylab = '')
+%
 	
+These are two bedtime distributions over many, many years. They both have the same average: 10PM. Who do you think is healthier on average? The person on the right. Why?
 \end{frame}
 
-\begin{frame}\frametitle{}
+\begin{frame}\frametitle{Designing Better Inputs}
 
-	
-\end{frame}
 
-\begin{frame}\frametitle{}
+How can we get more \qu{information} out of a person's bedtime and waketime that is relevant to predicting health outcomes?
 
-	
-\end{frame}
+We likely don't know which piece of the distribution will be helpful, so let's just add all the information. Let's bin by maybe 20min and record the probabilities over many years of being in that bin. For instance, 5 year bins for these two people may look like:
 
-\begin{frame}\frametitle{}
+%par(mfrow = c(1, 2))
+%n = 5 * 365
+%x1 = rnorm(n, 5, 1)
+%x2 = rnorm(n, 5, 0.25)
+%hist(x1, prob = TRUE, xlim = c(1,9), xlab = 'bedtimes', ylab = 'probability density estimate', main = '')
+%hist(x2, prob = TRUE, xlim = c(1,9), xlab = 'bedtimes', ylab = 'probability density estimate', main = '')
+%	
 
-	
-\end{frame}
+\begin{figure}
+\centering
+\includegraphics[width=4.5in]{two_hists}
+\end{figure}
 
-\begin{frame}\frametitle{}
+All bin values can be used as inputs. So in this model, $p > 2$. It could be almost 100.
 
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
 \end{frame}
 
 \begin{frame}\frametitle{}

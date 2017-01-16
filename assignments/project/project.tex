@@ -24,14 +24,14 @@ In short, you will be predicting apartment selling prices in Queens, NY. You wil
 \item deciding which features (predictors) will be of use to you,
 \item cleaning up data errors (if they exist),
 \end{itemize}
-\item deciding which model and which model fitting technique to use
+\item deciding which model and which model-fitting technique to use
 \item handling missing data (if they exist)
 \item making predictions on apartments currently listed for sale
 \end{itemize}
 
-We will be using the \emph{raw data representation} found at \href{http://www.mlsli.com/}{MLSI}. The limitation on the data population for what \emph{you will be asked to predict} will be \qu{Queens, NY} as location and home types \qu{Condos / co-ops} up to a maximum sale price of \$1M.
+We will be using the \emph{raw data representation} found at \href{http://www.mlsli.com/}{MLSI}. The limitation on the data population for what \emph{you will be asked to predict} will be \qu{Queens, NY} as location and home types \qu{Condo / homeowner assoc.} and \qu{Co-op} up to a maximum sale price of \$1M.
 
-You will be responsible for both (a) a writeup of your data science endeavors and (b) predictions for future data where you will be in competition with one another.
+You will be responsible for both (a) writing a report about your data science endeavors and (b) predictions for future data where you will be in competition with one another.
 
 \subsection{Motivation}
 
@@ -59,7 +59,7 @@ West Queens			&11368& 11369& 11370& 11372& 11373& 11377& 11378 \\\hline
 \end{tabular}
 \end{table}
 
-You can then enter all these zipcodes into an MLSI search, plus the Co-op and Condo and $\leq \$1$M restriction, or you can use my search in my account. \href{https://secure.mlsli.com/Account/CustomerLogin.aspx}{Login to MLSI} by using the login \texttt{kapelner@wharton.upenn.edu} and password \texttt{stat422} and then go to \href{http://www.mlsli.com/listing/listingsearch.aspx?ListingSearch=1455845}{this link} to load the saved search. As of the time of this writing, there are $\approx$1,200 sold properties. And under \qu{Status}, if you uncheck \qu{Sold} and check \qu{Active}, you will see $\approx$1,000 currently on the market. Of these, you will predict some of them (we will get to this part later).
+You can then enter all these zipcodes into an MLSI search, plus the Co-op and Condo and $\leq \$1$M restriction, or you can use my search in my account. \href{https://secure.mlsli.com/Account/CustomerLogin.aspx}{Login to MLSI} by using the login \texttt{kapelner@wharton.upenn.edu} and password \texttt{stat422} and then go to \href{http://www.mlsli.com/listing/listingsearch.aspx?ListingSearch=1455845}{this link} to load the saved search. As of the time of this writing, there are $\approx$1,200 sold properties. And under \qu{Status}, if you uncheck \qu{Sold} and check \qu{Active}, you will see $\approx$1,000 currently on the market. Of these, you will predict some of them (we will get to this part later).\\
 
 As you can see, I'm not providing you with a CSV, JMP or RData file --- this is part of your job (and likely the most important part). This is too much work for one person to do. I suggest a number of things:
 
@@ -77,7 +77,7 @@ In your writeup, you will write about your observations by
 \item explaining the degree to which you feel this sample is representative of the population.
 \end{itemize}
 
-\noindent If I see no work done on this front by week two of the course, then I will divvy up responsibilities among the class.
+\noindent If I see no work done on this front by week two of the course, then I will divvy up responsibilities among the class.\\
 
 \noindent Then, you will list the predictors you used and provide
 
@@ -147,5 +147,7 @@ You will upload a file named \texttt{<Your Penn ID>.csv} to canvas by Friday, Fe
 I will then wait until the grading deadline. Approximately 8 apartments are sold per day. The listing URL sheet has 500 apartments representing about 1/6 of the market. Thus we can expect 1.3 apartments to sell per day and thus we will have about 18 data points to evaluate our future predictions against.
 
 You will be graded on your out-of-sample $R^2$ value. How to allocate the points I have not determined yet.
+
+If you finish in the top five among the two sections of Stat 422/722, I (or the TA) will try to reproduce your results via your submitted data frame and your crystal clear writeup explaining your modeling technique. Reproducible work / research is a becoming more and more demanded these days.
 
 \end{document}
