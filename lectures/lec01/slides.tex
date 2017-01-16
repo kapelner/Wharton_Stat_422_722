@@ -22,7 +22,7 @@
 %immediately create a title page
 \frame{\titlepage}
 
-\section{Model Vocab}
+\section{Models, Response and Predictors}
 
 \begin{frame}\frametitle{Define: Prediction and Forecast}
 
@@ -100,6 +100,7 @@ Here, we have features of a person. Generally, inputs and outputs are features o
 \item \textit{observation} or 
 \item \textit{unit} or 
 \item \textit{record} or 
+\item \textit{object} or 
 \item \textit{subject}.
 \end{itemize} 
 
@@ -625,7 +626,7 @@ These are two bedtime distributions over many, many years. They both have the sa
 
 \begin{frame}\frametitle{Designing Better Inputs}
 
-
+\small
 How can we get more \qu{information} out of a person's bedtime and waketime that is relevant to predicting health outcomes?
 
 We likely don't know which piece of the distribution will be helpful, so let's just add all the information. Let's bin by maybe 20min and record the probabilities over many years of being in that bin. For instance, 5 year bins for these two people may look like:
@@ -647,8 +648,107 @@ All bin values can be used as inputs. So in this model, $p > 2$. It could be alm
 
 \end{frame}
 
+\begin{frame}\frametitle{Flexible Inputs $p=2 \rightarrow p \approx 100$}
+
+\begin{itemize}
+\item Advantage: We can fit more exact rules like if the proportion of times went to bed past 1AM is 10\% ... then health drops considerably and then more so for 2AM
+\item Disadvantage: It makes the model hard to fit and interpret. There are a lot of \qu{degrees of freedom} now (a term you've heard before). A lot more in this later as this is the most important topic in this course.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}\frametitle{Summary}
+
+Models relate inputs to outputs. Inputs and outputs are measurements or assessments on objects / observations.  Here, we consider only one output and name it the response. All the inputs we then consider to be predictors that explain the response via the model $f$. 
+
+Data frames have rows that are observations and columns that are predictors (with one column that is a response). 
+
+Each predictor and the response have a certain data type. If the data type of the response is categorical (or binary as in two categories), we have a classification model. If the data type of the response is a continuous metric, we have a regression model.
+	
+\end{frame}
+
+\section{Model Fitting}
+
+\begin{frame}\frametitle{The Aphorism Revisited}
+
+\small
+\begin{quotation}
+Early to bed and early to rise makes a man healthy.
+\end{quotation}
+
+which may imply binary $x_1$, $x_2$ and $y$ and thus $f$ likely looks like:
+
+\begin{figure}
+\centering
+\includegraphics[width=2in]{simple_health}
+\end{figure}
+
+New question: where did this model come from??
+	
+\end{frame}
+
+\begin{frame}\frametitle{History}
+
+\begin{quotation}
+As the olde englysshe prouerbe sayth in this wyse. Who soo woll ryse erly shall be holy helthy \& zely.\\
+~~- The Book of St. Albans, 1486
+\end{quotation}
+	
+\begin{quotation}
+Earely to bed and earely to rise, makes a man healthy, wealthy, and wise. \\
+~~- John Clarke's Paroemiologia Anglo-Latina, 1639 (collection of proverbs) \\
+~~ -Benjamin Franklin, 1735 (popularized it in America)
+\end{quotation}
+
+Over 500 years English speakers have been using this. A better question: how did this model evolve?
+
+\end{frame}
+
+\begin{frame}\frametitle{Supervised Machine Learning}
+
+Likely, many individuals independently \textit{observed} people (the unit of observation), assessed their healthiness level over their lives and assessed their bedtime and waketime habits and found a simple pattern relating these inputs to the response.
+	
+\end{frame}
+
 \begin{frame}\frametitle{}
 
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\section{Correlation  $\not \Rightarrow$  Causation}
+
+\begin{frame}\frametitle{A \qu{Causal} Model}
+
+\begin{quotation}
+The earlier to bed and the earlier to rise \emph{makes} a man healthier on average.
+\end{quotation}
+
+What does the language suggest by using the verb \qu{to make}? It suggests that the \qu{earlier to bed and the earlier to rise} \textit{causes} \qu{a man [to be] healthier on average}.
 	
 \end{frame}
 
