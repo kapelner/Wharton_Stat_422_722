@@ -5,7 +5,7 @@
 
 
 
-\title{STAT 422/722 Spring 2016 PROJECT}
+\title{STAT 422/722 Spring 2017 PROJECT}
 
 \author{Professor Adam Kapelner}
 
@@ -15,7 +15,6 @@
 \maketitle
 
 \section{Introduction}
-
 
 In short, you will be predicting apartment selling prices in Queens, NY. You will be responsible for:
 
@@ -30,13 +29,37 @@ In short, you will be predicting apartment selling prices in Queens, NY. You wil
 \item making predictions on apartments currently listed for sale
 \end{itemize}
 
-We will be using the raw data representation found at \href{http://zillow.com}{Zillow}. The limitation on the data population for what \emph{you will be asked to predict} will be \qu{Queens, NY} as location and home types \qu{Apartments} and/or \qu{Condos / co-ops} up to a maximum listing price of \$1M. Thus, historical data will be a subset of the \href{http://www.zillow.com/homes/recently_sold/Queens-New-York-NY/condo,apartment_duplex_type/270915_rid/0-999958_price/0-3790_mp/globalrelevanceex_sort/40.891456,-73.526344,40.453479,-74.264488_rect/10_zm/}{this search} although you may want to alter the query to include higher prices.
+We will be using the \emph{raw data representation} found at \href{http://www.mlsli.com/}{MLSI}. The limitation on the data population for what \emph{you will be asked to predict} will be \qu{Queens, NY} as location and home types \qu{Condos / co-ops} up to a maximum sale price of \$1M.
 
-You will be responsible for both (a) a writeup and (b) predictions for future data.
+You will be responsible for both (a) a writeup of your data science endeavors and (b) predictions for future data where you will be in competition with one another.
+
+\subsection{Motivation}
+
+I picked this project because I know you can all do better than \url{zillow.com} who make their own secret-sauce predictions that they whimsically call \qu{zestimates}. However, in Queens, zestimates are quite lame (e.g. \href{http://www.zillow.com/homes/recently_sold/Queens-New-York-NY/condo,apartment_duplex_type/2096496075_zpid/270915_rid/globalrelevanceex_sort/40.890158,-73.462143,40.452172,-74.200287_rect/10_zm/}{this one}). I imagine the collective brainpower of all of you plus the elementary concepts and tools from this class can produce better estimates.\footnote{At the very least, I imagine you can score a pretty good job interview at Zillow if your predictive performance is any good.}
 
 \section{The Writeup}
 
 \subsection{Gathering Data}
+
+Your data will come from the following zip codes in mainland Queens.\footnote{For those of you who know Queens, we are leaving out the Rockaways, a peninsula near JFK airport that is geographically distinct from the rest of the neighborhoods.}
+
+\begin{table}[htp]
+\centering\small
+\begin{tabular}{l|ccccccccc}
+\hline
+Northeast Queens		&11361& 11362,& 11363& 11364 \\
+North Queens		&11354& 11355& 11356& 11357& 11358& 11359& 11360 \\
+Central Queens		&11365& 11366& 11367 \\
+Jamaica				&11412& 11423& 11432& 11433& 11434& 11435& 11436 \\
+Northwest Queens	&11101& 11102& 11103& 11104& 11105& 11106 \\
+West Central Queens	&11374& 11375& 11379& 11385 \\
+Southeast Queens		&11004& 11005& 11411& 11413& 11422& 11426& 11427& 11428& 11429 \\
+Southwest Queens	&11414& 11415& 11416& 11417& 11418& 11419& 11420& 11421 \\
+West Queens			&11368& 11369& 11370& 11372& 11373& 11377& 11378 \\\hline
+\end{tabular}
+\end{table}
+
+You can then enter all these zipcodes into an MLSI search, plus the Co-op and Condo and $\leq \$1$M restriction, or you can use my search in my account. \href{https://secure.mlsli.com/Account/CustomerLogin.aspx}{Login to MLSI} by using the login \texttt{kapelner@wharton.upenn.edu} and password \texttt{stat422} and then go to \href{http://www.mlsli.com/listing/listingsearch.aspx?ListingSearch=1455845}{this link} to load the saved search. As of the time of this writing, there are $\approx$1,200 sold properties. And under \qu{Status}, if you uncheck \qu{Sold} and check \qu{Active}, you will see $\approx$1,000 currently on the market. Of these, you will predict some of them (we will get to this part later).
 
 As you can see, I'm not providing you with a CSV, JMP or RData file --- this is part of your job (and likely the most important part). This is too much work for one person to do. I suggest a number of things:
 
@@ -49,29 +72,28 @@ As you can see, I'm not providing you with a CSV, JMP or RData file --- this is 
 In your writeup, you will write about your observations by
 
 \begin{itemize}
-\item indicating how many you have
-\item describing how you sampled them
-\item explaining the degree to which you feel this sample is representative of the population
+\item indicating how many you have,
+\item describing how you sampled them (and if this is not a simple random sample explain in detail why not) and
+\item explaining the degree to which you feel this sample is representative of the population.
 \end{itemize}
 
-
-\noindent If I see no work done on this front by week two, then I will divvy up responsibilities among the class. 
+\noindent If I see no work done on this front by week two of the course, then I will divvy up responsibilities among the class.
 
 \noindent Then, you will list the predictors you used and provide
 
 \begin{itemize}
-\item how many you have
-\item their names
-\item their data types
-\item a description of the information captured
-\item a report on missingness and the missingness mechanism
-\item a description about how the measurements were taken
+\item how many you have,
+\item their names,
+\item their data types,
+\item a description of the information captured,
+\item a report on missingness and the missingness mechanism and
+\item a description about how the measurements were taken.
 \end{itemize}
 
 
 \textbf{There are no collaboration limits on this part of the project.} But you will be responsible for submitting an electronic copy of your data frame to canvas at the time that the project is due. (More details on upload specifics coming soon).
 
-Building a dataset from scratch is a big job, but highly educational. You will see just how valuable creativity in this domain is and you will never look at data the same again.
+Building a dataset from scratch is a big job, but highly educational. You will see just how valuable creativity in this domain is and you will never look at data the same way again.
 
 \subsection{Building a Model}
 
@@ -105,7 +127,7 @@ There are a few other things that need to be reported on:
 
 \section{The Prediction Competition}
 
-You will then have one day to predict the selling prices of a 500 apartments currently on the market (found in the \href{https://docs.google.com/spreadsheets/d/12cOzcQlz9WCayasqB-sx_9E6gjQH0-eCuryqJUucZ50/edit#gid=0}{listing URLs} Google sheet).
+You will then have one day to predict the selling prices of a 500 apartments currently on the market (found in the \href{https://docs.google.com/spreadsheets/d/12cOzcQlz9WCayasqB-sx_9E6gjQH0-eCuryqJUucZ50/edit#gid=0}{listing URLs} Google sheet). This list will be complete one week before the competition but not before then as we want to have the most up-to-date listings.
 
 You will upload a file named \texttt{<Your Penn ID>.csv} to canvas by Friday, Feb 24 5PM. (More details on upload specifics coming soon). The number of lines in your CSV will be the same number of lines in the listing URLs sheet. Each line will consist of a single prediction value (in dollars without the dollar symbol or commas). For instance:
 

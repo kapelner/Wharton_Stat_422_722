@@ -211,23 +211,61 @@ and for Bob:
 \threevec{\yhat_1}{\yhat_2}{\yhat_3} = \text{model}\parens{\threevec{x_1}{x_2}{\vdots}}
 \eeqn
 
-We will use the \qu{hat} symbol ($\hat{~}$) to indicate a prediction of the response $\yhat$ to distinguish it from a known value of the response $y$.
+We will use the \qu{hat} symbol ($\hat{~}$) to indicate a prediction of the output $\yhat$ to distinguish it from a known value of the output $y$.
+
+\end{frame}
+
+\begin{frame}\frametitle{More Vocabulary}
+
+\small
+Even though measured inputs and outputs are features of an observation, they each go by special names that emphasize their roles. \\~\\
+
+Each output $y$ is called a
+
+\begin{itemize}
+\item \textit{response} (the model \qu{responds} to inputs)
+\item \textit{outcome} / \textit{outcome metric} (the result of inputs)
+\item \sout{\textit{endpoint}} (only used in clinical trial context)
+\end{itemize}
+
+and they are the target of prediction --- what we want to ultimately predict. \\~\\
+
+Inputs $x$'s then can go by the following terms of art:
+
+\begin{itemize}
+\item \textit{covariates} (because the vary with the response, co-vary)
+\item \textit{predictors} (since they will be the inputs used to make predictions)
+\end{itemize}
+
+and they are what we make use of to predict. I will try to use \qu{response} and \qu{predictors} in this course.
 
 \end{frame}
 
 
 \begin{frame}\frametitle{Mathematical Model}
 
-Now that we have numbers for inputs / outputs and an equal sign relating them, we have created a \textit{mathematical model}. The \textit{model} now will be represented as a function, $f$. For an old observation,
+Now that we have predictors and responses measured an numeric and an equal sign relating them. We have officially created a \textit{mathematical model}. The word \qu{model} now will be represented as a function, $f$. So for an old observation,
 
 \beqn
 \threevec{y_1}{y_2}{y_3} = f\parens{x_1, x_2, \ldots} 
 \eeqn
 
-and a new observation,
+and for a new observation,
 
 \beqn
 \threevec{\yhat_1}{\yhat_2}{\yhat_3} = f\parens{x_1, x_2, \ldots} 
+\eeqn
+
+It is said that the \qu{model explains the response}. What does this mean?
+	
+\end{frame}
+
+\begin{frame}\frametitle{Science is based on Mathematical Models}
+
+We have become quite successful at shrink-wrapping interesting variables in the world around us
+
+\beqn
+F
 \eeqn
 	
 \end{frame}
@@ -256,31 +294,7 @@ and a new observation,
 \end{frame}
 %%%http://medcitynews.com/2015/04/lack-sleep-amount-time-spent-working-correlate-rich-poor-suffer-unhealthy-pattern/
 
-\begin{frame}\frametitle{More Vocabulary}
 
-\small
-Even though inputs and outputs are features of an observation, they each go by special names that emphasize their roles. \\~\\
-
-The output is called the
-
-\begin{itemize}
-\item \textit{response} (the model \qu{responds} to inputs)
-\item \textit{outcome} / \textit{outcome metric} (the result of inputs)
-\item \sout{\textit{endpoint}} (only used in clinical trial context)
-\end{itemize}
-
-and they are the target of prediction --- what we want to ultimately predict. \\~\\
-
-Inputs then can go by the following terms of art:
-
-\begin{itemize}
-\item \textit{covariates} (because the vary with the response, co-vary)
-\item \textit{predictors} (since they will be the inputs used to make predictions)
-\end{itemize}
-
-and they are what we use to predict. I will try to use \qu{response} and \qu{predictors} in this course.
-
-\end{frame}
 
 \begin{frame}\frametitle{Many possible models}
 
@@ -296,11 +310,11 @@ What is the response metric? \pause What does \qu{healthy} mean?\\
 \item Healthy for ages 25-65? Since we can expect health in infanthood and adolescence but not in elderly years
 \end{itemize}
 
-One also gets a feeling from the wording, there is either \qu{healthy} or \qu{not healthy}. Thus the response metric will be the \textit{categorical} data type. \\\vspace{0.2cm}
+One also gets a feeling from the wording, there is either \qu{healthy} or \qu{not healthy}. Thus the response metric will be the \textit{categorical} data type and the model would be called a \textit{classification} model. \\\vspace{0.2cm}
 
 Categorical measurements consist of discrete, mutually exclusive \textit{levels}. Here, \{healthy, not healthy\}. Generally, \{a, b, c, $\ldots$\}. Metrics with a large number of levels are difficult to model --- keep it low.\\\vspace{0.2cm}
 
-I there are two levels, it is called \textit{binary} and the model would be called a \qu{binary response model}.
+I there are two levels, it is called \textit{binary} and the model would be called a \qu{binary response model} (or classification) with elements 0 and 1.
 	
 \end{frame}
 
@@ -329,10 +343,14 @@ Thus, $x_1$ and $x_2$ are a variant of a \textit{timestamp} data type.
 
 \end{frame}
 
-\begin{frame}\frametitle{Example Historical Data}
+\begin{frame}\frametitle{Dataframes}
+
+\small
+The historical \textit{data frame} or \textit{dataset} or even more colloquially, the \qu{data} looks like:
 
 \begin{table}
 \centering
+\small
 \begin{tabular}{ccc}
 Healthy? 1 = yes ($y$) & Average Bedtime ($x_1$) & Average Waketime ($x_2$) \\ \hline
 1 & 9:32PM & 6:42AM \\
@@ -342,30 +360,77 @@ Healthy? 1 = yes ($y$) & Average Bedtime ($x_1$) & Average Waketime ($x_2$) \\ \
 \end{tabular}
 \end{table}
 
+Dataframes have $n$ observations and $p$ predictors. Here $n = \pause 3$ (only those viewable above) and $p = 2$. Thus, it is a matrix with $n$ rows and $p + 1$ columns. The \qu{+1} is for the response which is not a predictor. \\
+
+What would a new observation look like? Tony went to bed on average 9:53PM and awoke on average at 6:13AM. Did he have a healthy life or not?
+
+We don't know the model yet...
 	
 \end{frame}
 
-\begin{frame}\frametitle{}
+\begin{frame}\frametitle{Mathematical Models are Deterministic}
 
+\small
+\begin{quotation}
+Early to bed and early to rise makes a man healthy.
+\end{quotation}
+
+which, after measuring inputs and outputs and mathematizing, becomes $y = f(x_1, x_2)$.\\
+
+\begin{minipage}{0.4\textwidth}
+\footnotesize
+From the wording, it seems the model is unequivocal and deterministic. This means \pause that for any input values (the measured values of $x_1$ and $x_2$), the output (the response) will have only one unique value.\\
+\vspace{0.2cm}
+Thus the functional form likely looks like a \textit{decision tree model}.
+\end{minipage}%
+\begin{minipage}{0.6\textwidth}
+\begin{figure}
+\centering
+\includegraphics[width=2in]{simple_health}
+\end{figure}
+\end{minipage}
 	
 \end{frame}
 
-\begin{frame}\frametitle{}
+\begin{frame}\frametitle{Is the Model \textit{Really} Deterministic?}
 
-	
+This is an ancient question... it touches on the free will vs. determinism debate. We will punt on the philosophy and ask: is this model deterministic? \pause NO. \\~\\
+
+Thus, this model is wrong. Why? We can find at least one person who does not have a matching response when inputs are evaluated in $f$. Seems obvious but...
+
 \end{frame}
 
-\begin{frame}\frametitle{}
+\begin{frame}\frametitle{Smoking and Lung Cancer}
 
-	
+\small
+Consider the model with the binary input 
+
+\begin{itemize}
+\item[$y$:] contract lung cancer at some point (1) or not (0)
+\item[$x_1$:] smoke 10 pack years or more at some point in a lifetime (1) or not (0) and the response 
+\end{itemize}
+
+Do you think the model should look like the below?\vspace{-0.2cm}
+
+\begin{figure}
+\centering
+\includegraphics[width=1.4in]{smoking}
+\end{figure}
+\vspace{-0.2cm}
+No... in fact \qu{only} 16\% of smokers get lung cancer compared to about 0.4\% of non-smokers. Thus, the simpel model above is wrong because some responses (that is features of certain individuals) will not \qu{fit} the model. Thus, should we throw out the whole enterprise of modeling?
+
+
+%http://colinchamp.com/diet-studies-and-cancer/
 \end{frame}
 
-\begin{frame}\frametitle{}
+\begin{frame}\frametitle{Statistical Models}
 
-	
-\end{frame}
+Mathematical models such as
 
-\begin{frame}\frametitle{}
+\beqn
+y = f(x_1, x_2, \ldots)
+\eeqn
+
 
 	
 \end{frame}
