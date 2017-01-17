@@ -1,5 +1,5 @@
-\documentclass[slides]{beamer} %switch "slides" to "handout" for printing out
-%\documentclass[handout]{beamer}
+%\documentclass[slides]{beamer} %switch "slides" to "handout" for printing out
+\documentclass[handout]{beamer}
 
 \include{preamble}
 
@@ -644,7 +644,7 @@ We likely don't know which piece of the distribution will be helpful, so let's j
 \includegraphics[width=4.5in]{two_hists}
 \end{figure}
 
-All bin values can be used as inputs. So in this model, $p > 2$. It could be almost 100.
+All bin values can be used as inputs. So in this model, $p > 2$. It could be almost 100. This is called featurization --- designing features and we will talk more about it later.
 
 \end{frame}
 
@@ -667,7 +667,7 @@ Each predictor and the response have a certain data type. If the data type of th
 	
 \end{frame}
 
-\section{Model Fitting \& Data Representation}
+\section{Data Representation \& Parametric Models}
 
 \begin{frame}\frametitle{The Aphorism Revisited}
 
@@ -706,7 +706,12 @@ We, as a people, built this model and it's been validated over centuries. How di
 
 \begin{frame}\frametitle{Humans as Model Builders}
 
+\begin{enumerate}
+\item We made it up. Don't laugh... you will see on the homework why this may be subtle.
+\item We used a \qu{data-driven approach}. \\
+
 Likely, many individuals independently \textit{observed} people (the unit of observation), assessed both $y$, their healthiness level over their lives and \emph{assessed / measured all features and noted that} their $x_1, x_2$ bedtime and waketime habits were related via a simple pattern relating these inputs to the response.
+\end{enumerate}
 
 \begin{figure}
 \centering
@@ -756,7 +761,7 @@ Response? Cat or not. Predictors in the model? Entire image... raw natural data 
 
 \begin{figure}
 \centering
-\includegraphics[width=4.5in]{human_learning_weakness}
+\includegraphics[width=4.3in]{human_learning_weakness}
 \end{figure}
 
 \end{frame}
@@ -776,7 +781,11 @@ Response? Cat or not. Predictors in the model? Entire image... raw natural data 
 	
 \end{frame}
 
-\begin{frame}\frametitle{Do we Create Simple Models?}
+\begin{frame}\frametitle{But we Create Simple Models. How?}
+
+\begin{quotation}
+Early to bed and early to rise makes a man healthy.
+\end{quotation}
 
 \begin{figure}
 \centering
@@ -795,11 +804,11 @@ This is the process by which we put forth the model \qu{early to bed and early t
 We are ...
 
 \begin{block}{Good at Building Statistical Models when...}
-the number of variables that truly matter is small and there's low noise. For example: recognizing the face of your friend, understanding speech, etc.
+the number of variables that truly matter is small and there's low noise. %For example: recognizing the face of your friend, understanding speech, etc.
 \end{block}
 	
 \begin{block}{Bad at Building Statistical Models when...}
-inputs are already derivative features of the raw data representation, are numeric and there a lot of them ($p$ large), and noise is large ($\var{\errorrv} >> 0$). For example, everything we will likely do for the rest of the semester.
+inputs are already derivative features of the raw data representation, are numeric and there a lot of them ($p$ large), and noise is large ($\var{\errorrv} >> 0$). %For example, everything we will likely do for the rest of the semester.
 \end{block}
 
 
@@ -845,7 +854,7 @@ Luckily, yes. And this is a main advantage of artificial intelligence.
 
 \begin{frame}\frametitle{What Does Input to AI Look Like?}
 
-Let's return to our model:\\
+Let's return to our model:\\~\\
 
 \begin{quotation}
 Early to bed and early to rise makes a man healthy.
@@ -858,32 +867,271 @@ Can we enter all this into a computer? No, not now, possibly not ever. Also, wil
 	
 \end{frame}
 
-\begin{frame}\frametitle{What is Featurization / Data Collection?}
+\begin{frame}\frametitle{What is Featurization \& Data Collection?}
 
 \begin{figure}
 \centering
 \includegraphics[width=4.5in]{featurization}
 \end{figure}
 
-What is featurization? Deciding predictors. What is data collection? Sampling Collecting the values of the predictors.
+What is featurization? Deciding predictors. What is data collection? (a) sampling units then (b) measuring the numeric values of the predictors (note: some measurements may be missing).
 
 \end{frame}
 
-\begin{frame}\frametitle{Good Machine Learning}
-
+\begin{frame}\frametitle{What is Good Machine Learning?}
+\begin{figure}
+\centering
+\includegraphics[width=4.5in]{good_machine_learning}
+\end{figure}
 
 	
 \end{frame}
 
-\section{Correlation  $\not \Rightarrow$  Causation}
+\begin{frame}\frametitle{What is Day-Day Machine Learning?}
+\begin{figure}
+\centering
+\includegraphics[width=4.5in]{bad_machine_learning}
+\end{figure}
 
-\begin{frame}\frametitle{A \qu{Causal} Model}
+This is \emph{bad}... but it's what we generally do all day...
+	
+\end{frame}
 
-\begin{quotation}
-The earlier to bed and the earlier to rise \emph{makes} a man healthier on average.
-\end{quotation}
+\begin{frame}\frametitle{Baseball Data Questions}
 
-What does the language suggest by using the verb \qu{to make}? It suggests that the \qu{earlier to bed and the earlier to rise} \textit{causes} \qu{a man [to be] healthier on average}.
+\begin{itemize}
+\item Response?
+\item Predictors?
+\item $n = $? $p = $?
+\item How was this data frame likely collected?
+\item Do you think by studying this dataset you can predict salaries?
+\end{itemize}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{Aside: what is Deep Learning?}
+\begin{figure}
+\centering
+\includegraphics[width=2.9in]{deep_learning}
+\end{figure}
+
+Learning complex features automatically (the cutting edge). Software running self-driving cars use this.
+%%http://selfdrivingcars.mit.edu/
+\end{frame}
+
+
+\begin{frame}\frametitle{What are we really bad at?}
+
+\begin{figure}
+\centering
+\includegraphics[width=4in]{human_simple_model_learning}
+\end{figure}
+
+Figuring out those functional forms... and the computer excels at it.
+
+\end{frame}
+
+
+
+\begin{frame}\frametitle{The Fundamental Statistical Problem}
+
+
+\small
+We know our response variable, we've picked features, made measurements and now have an $n \times (p + 1)$ data frame. We know the response looks like 
+
+\beqn
+Y = f(x_1, x_2, \ldots, x_p) + \errorrv
+\eeqn
+
+where $f$ represents the conditional mean $\cexpe{Y}{x_1, x_2, \ldots, x_p}$ and the $\errorrv$ r.v. is random noise added atop the conditional mean but we don't know $f$! \\~\\
+
+So we have to learn / infer $f$ the best we could from the historical dataset. We denote this fit $\fhat$. 
+
+What does this mean in the baseball data?
+\end{frame}
+
+\begin{frame}\frametitle{Two Worldviews: (I) Parametric}
+\beqn
+Y = f(x_1, x_2, \ldots, x_p) + \errorrv
+\eeqn
+
+\small
+\begin{block}{Philosophy of creating the fit, $\fhat$}
+\begin{itemize}
+\item We believe that $f$ has a very \qu{nice} form. 
+\item We value \qu{simplicity} because we wholeheartedly believe in Occam's Razor (simplest theory is the one that should be retained).
+\item We love the simple mathematical models such as $V=IR$ and $F = G\frac{m_1 m_2}{d^2}$ and always try to live up to their elegance.
+\item We care very much about knowing how $f$ works inside i.e. how each of the $x_j$ predictors are affect the conditional mean. Knowing how this system works is our top priority.
+\item Absolute prediction accuracy is not our \#1 focus. $f \not \approx \fhat$
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\begin{frame}\frametitle{Two Worldviews: (II) Non-Parametric}
+\beqn
+Y = f(x_1, x_2, \ldots, x_p) + \errorrv
+\eeqn
+	
+\small
+\begin{block}{Philosophy of creating the fit, $\fhat$}
+\begin{itemize}
+\item We do not make any assumptions about the form of $f$ \qu{nice} or not. 
+\item We have no value for simplicity. We are okay with a world being messy and complex.
+\item We believe simple mathematical models such as $V=IR$ and $F = G\frac{m_1 m_2}{d^2}$ work for idealized situations, but never real-life situations with aribitrarily selected predictors measured in arbitrary ways.
+\item We would like to know how $f$ works, but it's likely very complex, so it's not our top priority.
+\item Absolute prediction accuracy is indeed our \#1 focus. It's the bottom line. We want $f \approx \fhat$ as close as possible.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}\frametitle{Two Worldviews}
+
+
+The process to find $\fhat$ is known by many names:
+
+\begin{minipage}{0.5\textwidth}
+\begin{itemize}
+\item parametric modeling
+\item model fitting
+\item statistical modeling
+\item white box modeling
+\begin{figure}
+\hspace{-1cm}\includegraphics[width=2.0in]{whitebox}
+\end{figure}
+\end{itemize}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\begin{itemize}
+\item non-parametric modeling
+\item function fitting
+\item function approximation
+\item response surface methodology
+\item machine learning
+\item black box modeling
+\begin{figure}
+\centering
+\hspace{-0.5cm}\includegraphics[width=1.8in]{blackbox}
+\end{figure}
+\end{itemize}
+\end{minipage}
+
+\end{frame}
+
+\begin{frame}\frametitle{What is a Parametric Model?}
+
+If we see $f$ is a parametric model, we mean that
+
+\beqn
+f(x_1, x_2, \ldots, x_p) \approx s(x_1, x_2, \ldots, x_p; \theta_1, \theta_2, \ldots, \theta_\ell)
+\eeqn
+
+i.e. $f$ has a assjumed simple form $s$ that has various knobs that can be adjusted based on the data. These knobs are called the \emph{unknown parameters}. Here there are $\ell$ of them $\theta_1, \theta_2, \ldots, \theta_\ell$. It is said the model has $\ell$ \qu{degrees of freedom}. An example of this is the linear model,
+
+\beqn
+s(x_1, x_2, \ldots, x_p) = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p
+\eeqn
+
+with $p$ predictors, there are $p+1$ degrees of freedom (the intercept is also a knob that can be twisted). It is traditional to call the $\theta$'s in the linear model $\beta$'s due to historical reasons.
+	
+\end{frame}
+
+%\begin{frame}\frametitle{The Linear Model}
+%
+%Since the conditional mean was linear, the statistical model for regression would be
+%
+%\beqn
+%Y = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p + \errorrv 
+%\eeqn
+%
+%Is this the form you're all familiar with? 
+%
+%\end{frame}
+
+
+\section{Fitting the Linear Model}
+
+\begin{frame}\frametitle{What is $\fhat$ in a linear model?}
+
+%Because we believe in simple models and we believe in linearity, we assume that
+%
+%\beqn
+%f(x_1, x_2, \ldots, x_p) = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p
+%\eeqn
+
+Then we need to create a fit $\fhat$ that means we need estimates of all the parameters:
+
+\beqn
+\fhat(x_1, x_2, \ldots, x_p) = \betahat_0 + \betahat_1 x_1 + \ldots + \betahat_p x_p
+\eeqn
+
+then we can use $\fhat$ on new data (where the response is not observed), say $x^*_1, x^*_2, \ldots, x^*_p$ to get a prediction:
+
+\beqn
+\yhat = \fhat(x^*_1, x^*_2, \ldots, x^*_p)
+\eeqn
+
+
+Where do we get $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$ from?
+	
+\end{frame}
+
+\begin{frame}\frametitle{What defines a good fit?}
+
+\small
+
+Consider the simple linear regression (one predictor) i.e. $s(x) = \beta_0 + \beta_1 x$ thus we need to figure out $\betahat_0$ and  $\betahat_1$, constituting the model fitting. Let's say given data, we guess that $\betahat_0 = 7.2$ and $\betahat_1 = -2.8$. Would this be a good fit?
+
+\vspace{-0.5cm}
+\begin{figure}
+\centering\includegraphics[width=4.0in]{residuals}
+\end{figure}
+
+The line is our $\yhat(x)$ i.e. all possible predictions. Seems sometimes we undershot the response (the red) i.e. $y - \yhat > 0$ and sometimes overshot the response (the blue) i.e. $y - \yhat < 0$
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{The Role of the Residuals}
+
+We call $e_i := y_i - \yhat_i$ the $i$th residual. Since we fit all of our historical data there are $n$ residuals $e_1, \ldots, e_n$. Wouldn't it be nice to keep these small?
+
+\begin{block}{How to create $\fhat$}
+\begin{itemize}
+\item Minimize $e_1, \ldots, e_n$ while
+\item staying true to our assumption $s(x_1, x_2, \ldots, x_p) = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p$
+\end{itemize}
+\end{block}
+
+What does \qu{minimize $e_1, \ldots, e_n$} mean? We need to define an overall error metric. This is called the \emph{loss function}.
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{Loss Functions}
+
+\small
+Let $L = L(e_1, \ldots, e_n)$ be a loss function. What's the best we can do? If we have $e_1 = 0, \ldots, e_n = 0$, then we have no error whatsover. Thus $L \geq 0$. It is common to sum up the individual losses for each residual. Here are some loss functions below:
+
+\begin{itemize}
+\item $L = \abss{e_1} + \abss{e_2} + \ldots + \abss{e_n} = \sum_{i=1}^n \abss{e_i}$ \\
+This is known as L1 error or absolute error or sum of absolute error
+\item $L = e_1^2 + e_2^2 + \ldots + e_n^2$  \\
+This is known as L2 error or sum of squared error (SSE)
+\end{itemize}
+
+Linear model fitting and machine learning algorithms mostly use SSE.
+
+\begin{block}{How to create $\fhat$}
+\begin{itemize}
+\item Minimize SSE via a 
+\item search over all possible values of $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$
+\end{itemize}
+\end{block}
+
+Luckily the computer does all of this for you and it just pops out  $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$.
 	
 \end{frame}
 
@@ -902,6 +1150,21 @@ What does the language suggest by using the verb \qu{to make}? It suggests that 
 	
 \end{frame}
 
+
+%\section{Correlation  $\not \Rightarrow$  Causation}
+%
+%\begin{frame}\frametitle{A \qu{Causal} Model}
+%
+%\begin{quotation}
+%The earlier to bed and the earlier to rise \emph{makes} a man healthier on average.
+%\end{quotation}
+%
+%What does the language suggest by using the verb \qu{to make}? It suggests that the \qu{earlier to bed and the earlier to rise} \textit{causes} \qu{a man [to be] healthier on average}.
+%	
+%\end{frame}
+
+
+
 \begin{frame}\frametitle{}
 
 	
@@ -911,6 +1174,128 @@ What does the language suggest by using the verb \qu{to make}? It suggests that 
 
 	
 \end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
 
 \begin{frame}\frametitle{}
 
