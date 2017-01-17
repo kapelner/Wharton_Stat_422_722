@@ -1,5 +1,5 @@
-%\documentclass[slides]{beamer} %switch "slides" to "handout" for printing out
-\documentclass[handout]{beamer}
+\documentclass[slides]{beamer} %switch "slides" to "handout" for printing out
+%\documentclass[handout]{beamer}
 
 \include{preamble}
 
@@ -10,7 +10,7 @@
 \useoutertheme{progressbar}
 \useinnertheme{progressbar}
 
-\title[Missing Data in BART]{Predictive Analytics Lecture 1}
+\title[Lec 1]{Predictive Analytics Lecture 1}
 \institute[Wharton, Statistics]{Stat 422/722\\ at The Wharton School of the University of Pennsylvania}
 \date{January 17 \& 18, 2017}
 
@@ -26,12 +26,12 @@
 
 \begin{frame}\frametitle{Define: Prediction and Forecast}
 
-\qu{statement about an uncertain event}, \pause
+\qu{statement about an uncertain event}, \pause 
 \qu{informed guess or opinion} \\~\\
 
-\textbf{predict (v.)} 1620s (implied in predicted), "\textit{foretell, prophesy}," a back formation from prediction or else from Latin praedicatus, past participle of praedicere "foretell, advise, give notice,"\\~\\
+\textbf{predict (v.)} 1620s (implied in predicted), "\textit{foretell, prophesy}," a back formation from prediction or else from Latin praedicatus, past participle of praedicere "foretell, advise, give notice,"\\~\\  \pause 
 
-\textbf{forecast (n.)} early 15c., "\textit{forethought, prudence}," probably from forecast (v.). Meaning "conjectured estimate of a future course" is from 1670s. \\~\\
+\textbf{forecast (n.)} early 15c., "\textit{forethought, prudence}," probably from forecast (v.). Meaning "conjectured estimate of a future course" is from 1670s. \\~\\  \pause 
 
 I will be using predict and forecast interchangeably.
 
@@ -43,14 +43,14 @@ I will be using predict and forecast interchangeably.
 We make predictions all the time, saying things like: \\~\\
 
 \begin{itemize}
-\item \qu{Apple stock will go up tomorrow},
-\item \qu{This condo will sell for \$500K}
+\item \qu{Apple stock will go up tomorrow}, \pause 
+\item \qu{This condo will sell for \$500K} \pause 
 \end{itemize}
 
 and sometimes unknowingly
 
 \begin{itemize}
-\item \qu{Going skiing this weekend will make me happy}, \\~\\
+\item \qu{Going skiing this weekend will make me happy}, \\~\\ \pause 
 \end{itemize}
 
 How do we make predictions? \pause We use a \textit{model}.
@@ -62,10 +62,10 @@ How do we make predictions? \pause We use a \textit{model}.
 Model: a functional decription of a system  \pause \\~\\ An example model is:
 
 \begin{quotation}
-Early to bed and early to rise makes a man healthy, wealthy and wise.
+Early to bed and early to rise makes a man healthy, wealthy and wise. \pause 
 \end{quotation}
 
-\ingrey{aphorism: (2) a concise statement of a scientific principle (and scientific principles are \textit{models} of the observable universe)} \\~\\
+\ingrey{aphorism: (2) a concise statement of a scientific principle (and scientific principles are \textit{models} of the observable universe)} \\~\\  \pause 
 
 All models have \textbf{input(s)} and \textbf{output(s)}. In the model above, what are the... \\~\\
 
@@ -87,26 +87,28 @@ Here, the inputs and outputs are
 \item \textit{variables} / \textit{variates}
 \end{itemize}
 
-of a person. A person features health, a person has the characteristic of going to bed early. \\~\\
+of a person.  \pause A person features health, a person has the characteristic of going to bed early. 
 
 
 \end{frame}
 
 \begin{frame}\frametitle{What are \qu{observations}?}
 
-Here, we have features of a person. Generally, inputs and outputs are features of the 
+Generally, inputs and outputs are features of the 
 
 \begin{itemize}
 \item \textit{observation} or 
 \item \textit{unit} or 
 \item \textit{record} or 
 \item \textit{object} or 
-\item \textit{subject}.
+\item \textit{subject}
 \end{itemize} 
+
+i.e. the \qu{person} here.
 
 %\ingray{Note: I will be using \qu{observation} or the name of the unit itself: \qu{person}, \qu{car}, etc.} Here, the observation is a person.
 
-Thus the model relates some \textit{feature(s) of the observation} to other \textit{feature(s) of the observation}. Here, we are relating specific people's bedtime schedule and waking schedule to their health, wealth and wisdom.
+Thus the model relates some \textit{feature(s) of the observation}  \pause to other \textit{feature(s) of the observation}.  \pause Here, we are relating specific people's bedtime schedule and waking schedule to their health, wealth and wisdom.
 \end{frame}
 
 
@@ -130,13 +132,13 @@ are usually ambiguous, imprecise, vague and ill-defined. Why? \pause
 \item What does \qu{early to rise} mean? 
 \item What does \qu{healthy} mean? 
 \item What does \qu{wealthy} mean? 
-\item What does \qu{wise} mean?
+\item What does \qu{wise} mean? \pause 
 \end{itemize}
 
-Without resolving these ambiguities, \pause the model is unusable and of course, untestable. \\~\\ \pause
-\vspace{-0.3cm}
+Without resolving these ambiguities, the model is unusable and of course, untestable. \\~\\ \pause
 
-In order to make this precise and defined, there is a necessity to use numbers. \pause Thus, features of the observation must be \textit{measured} (to be defined later). \pause 
+
+In order to make this precise and defined, there is a necessity to use numbers. \pause Thus, features must be \textit{measured} or \textit{assessed}. 
 	
 \end{frame}
 
@@ -144,13 +146,13 @@ In order to make this precise and defined, there is a necessity to use numbers. 
 
 \small
 
-Thus the model relates some \textit{measured feature(s) of the observation} to other \textit{measured feature(s) of the observation}. The relationship is a function taking in inputs (within the parentheses) and \qu{returning} the outputs (the equal sign). For any observation,
+Thus the model relates some \textit{measured feature(s) of the observation} to other \textit{measured feature(s) of the observation}. \pause  The relationship is a function taking in inputs (within the parentheses) and \qu{returning} the outputs (the equal sign). For any observation,
 
 \beqn
 \substack{\text{the measured} \\ \text{outputs of an} \\ \text{observation}} = \text{model}\parens{\substack{\text{the measured} \\ \text{inputs of an} \\ \text{observation}}}
 \eeqn
 
-\ingrey{It is traditional to put the outputs on the left hand side.} This is assumed that the outputs were measured. This type of observation is called 
+\ingrey{It is traditional to put the outputs on the left hand side.}  \pause This is assumed that the outputs were measured. This type of observation is called 
 
 \begin{itemize}
 \item old or
@@ -181,13 +183,15 @@ Now we can hone our definition of prediction. For a
 \item future
 \end{itemize}
 
-observation, where the inputs have been measured / assessed but the output has not been measured / assessed,
+observation, where the inputs have been measured / assessed but the output has not been measured / assessed, \pause 
 
 \beqn
 \underbrace{\substack{\text{the \emph{guessed}} \\ \text{output} \\ \text{measurements}}}_{\text{prediction}} = \text{model}\parens{\substack{\text{the measured} \\ \text{inputs of an} \\ \text{observation}}}
 \eeqn
-
-\tiny 
+ \pause 
+ 
+As an example new person Bob,
+\tiny
 \beqn
 \threevec{\text{a guessed quantity of Bob's health}}{\text{a guessed quantity of Bob's wealth}}{\text{a guessed quantity Bob's wisdom}} = \text{model}\parens{\threevec{\text{a measured quantity of Bob's bedtime}}{\text{a measured quantity of Bob's waketime}}{\vdots}}
 \eeqn
@@ -200,21 +204,21 @@ observation, where the inputs have been measured / assessed but the output has n
 
 \begin{frame}\frametitle{Measurements as Variables}
 
-Instead of \qu{a measured quantity ...} we can use algebraic \textit{variables} to denote the numerical quantities. It is traditional to use $x$'s to represent inputs and $y$'s to represent outputs. Here would be the relationship for Joe:
+Instead of \qu{a measured quantity ...} we can use algebraic \textit{variables} to denote the numerical quantities.  \pause It is traditional to use $x$'s to represent inputs and $y$'s to represent outputs.  \pause Here would be the relationship for Joe:
 
 
 \beqn
 \threevec{y_1}{y_2}{y_3} = \text{model}\parens{\threevec{x_1}{x_2}{\vdots}}
 \eeqn
 
-and for Bob:
+and for Bob: \pause 
 
 
 \beqn
 \threevec{\yhat_1}{\yhat_2}{\yhat_3} = \text{model}\parens{\threevec{x_1}{x_2}{\vdots}}
 \eeqn
 
-We will use the \qu{hat} symbol ($\hat{~}$) to indicate a prediction of the output $\yhat$ to distinguish it from a known value of the output $y$.
+We will use the \qu{hat} symbol ($\hat{~}$) to indicate a prediction of the output $\yhat$ to distinguish it from the true value of the output $y$.
 
 \end{frame}
 
@@ -231,7 +235,7 @@ Each output $y$ is called a
 \item \sout{\textit{endpoint}} (only used in clinical trial context)
 \end{itemize}
 
-and they are the target of prediction --- what we want to ultimately predict. \\~\\
+and they are the \emph{target} of prediction --- what we want to ultimately predict. \\~\\ \pause 
 
 Inputs $x$'s then can go by the following terms of art:
 
@@ -240,55 +244,60 @@ Inputs $x$'s then can go by the following terms of art:
 \item \textit{predictors} (since they will be the inputs used to make predictions)
 \end{itemize}
 
-and they are what we make use of to predict. I will try to use \qu{response} and \qu{predictors} in this course.
+and they are what we \emph{make use of} to predict. I will try to use \qu{response} and \qu{predictors} in this course.
 
 \end{frame}
 
 
 \begin{frame}\frametitle{Mathematical Model}
 
-Now that we have predictors and responses measured an numeric and an equal sign relating them. We have officially created a \textit{mathematical model}. The word \qu{model} now will be represented as a function, $f$. So for an old observation,
+Now that we have predictors and responses measured an numeric and an equal sign relating them. We have officially created a \textit{mathematical model}. The word \qu{model} now will be represented as a function, $f$.  \pause So for an old observation,
 
 \beqn
 \threevec{y_1}{y_2}{y_3} = f\parens{x_1, x_2, \ldots} 
 \eeqn
 
-and for a new observation,
+and for a new observation, \pause 
 
 \beqn
 \threevec{\yhat_1}{\yhat_2}{\yhat_3} = f\parens{x_1, x_2, \ldots} 
 \eeqn
 
-It is said that the \qu{model explains the response}. What does this mean?
+It is said that the \qu{model \emph{explains} the response}. What does this mean?
 	
 \end{frame}
 
 \begin{frame}\frametitle{Science is based on Mathematical Models}
 
-We have become quite successful at shrink-wrapping interesting variables in the world around us
+We have become quite successful at shrink-wrapping interesting variables in the world around us into simple models with few inputs:
 
 \beqn
-F
+F &=& G\frac{m_1 m_2}{d^2} \\
+V &=& IR \\
+K &=& \half m v^2 \\
+PV &=& nRT
 \eeqn
+
+It took us thousands of years to figure this out.
 	
 \end{frame}
 
 
 \begin{frame}\frametitle{Focus: models with univariate responses.}
 
-Although general models have any number of outputs, this semester we will only consider models with one output. Thus, we will be looking at models such as
+Although general models have any number of outputs, this semester we will only consider models with one output.  \pause Thus, we will be looking at models such as
 
 \begin{quotation}
 Early to bed and early to rise makes a man healthy.
 \end{quotation}
 
-We picked the most interesting output. So, for an old observation,
+(I just took the first one arbitrarily).  \pause So, for an old observation,
 
 \beqn
 y = f\parens{x_1, x_2, \ldots} 
 \eeqn
 
-and a new observation,
+and a new observation, \pause 
 
 \beqn
 \yhat = f\parens{x_1, x_2, \ldots} 
@@ -299,7 +308,7 @@ and a new observation,
 
 
 
-\begin{frame}\frametitle{Many possible models}
+\begin{frame}\frametitle{Idea $\rightarrow$ English $\rightarrow$ Math}
 
 \small
 \begin{quotation}
@@ -309,13 +318,13 @@ Early to bed and early to rise makes a man healthy.
 What is the response metric? \pause What does \qu{healthy} mean?\\
 
 \begin{itemize}
-\item Healthy for his whole life? Unlikely the model means this...
-\item Healthy for ages 25-65? Since we can expect health in infanthood and adolescence but not in elderly years
+\item Healthy for his whole life? \pause Unlikely the model means this... \pause 
+\item Healthy for ages 25-65 (since we can expect health in infanthood and adolescence but not in elderly years)?
 \end{itemize}
 
-One also gets a feeling from the wording, there is either \qu{healthy} or \qu{not healthy}. Thus the response metric will be the \textit{categorical} data type and the model would be called a \textit{classification} model. \\\vspace{0.2cm}
+ALSO: one also gets a feeling from the wording, there is either \qu{healthy} or \qu{not healthy}. \pause  Thus the response metric will be the \textit{categorical} data type and the model would be called a \textit{classification} model. \\\vspace{0.2cm} \pause 
 
-Categorical measurements consist of discrete, mutually exclusive \textit{levels}. Here, \{healthy, not healthy\}. Generally, \{a, b, c, $\ldots$\}. Metrics with a large number of levels are difficult to model --- keep it low.\\\vspace{0.2cm}
+Categorical measurements consist of discrete, mutually exclusive \textit{levels}. Here, \{healthy, not healthy\}.  \pause Generally, \{a, b, c, $\ldots$\}. Metrics with a large number of levels are difficult to model --- keep it low.\\\vspace{0.2cm} \pause 
 
 I there are two levels, it is called \textit{binary} or \textit{dichotomous} and the model would be called a \textit{binary response model} (or a classification) with elements 0 and 1.
 	
@@ -323,9 +332,9 @@ I there are two levels, it is called \textit{binary} or \textit{dichotomous} and
 
 \begin{frame}\frametitle{Define the response clearly}
 
-Response: Healthy for ages 25--65 \\~\\
+Response: Healthy for ages 25--65 \\~\\ \pause 
 
-We still need a clear definition. Ideas? How about: healthy means no incidence of a \qu{major} disease between the ages of 25--65? This can be assessed with medical records. 
+We still need a clear definition. Ideas?  \pause How about: healthy means no incidence of a \qu{major} disease between the ages of 25--65? This can be assessed with medical records. 
 	
 \end{frame}
 
@@ -349,7 +358,7 @@ Thus, $x_1$ and $x_2$ are a variant of a \textit{timestamp} data type.
 \begin{frame}\frametitle{Dataframes}
 
 \small
-The historical \textit{data frame} or \textit{dataset} or even more colloquially, the \qu{data} looks like:
+The historical \textit{data frame} or \textit{dataset} (or even more colloquially, the \qu{data}) can look like:
 
 \begin{table}
 \centering
@@ -358,14 +367,13 @@ The historical \textit{data frame} or \textit{dataset} or even more colloquially
 Healthy? 1 = yes ($y$) & Average Bedtime ($x_1$) & Average Waketime ($x_2$) \\ \hline
 1 & 9:32PM & 6:42AM \\
 0 & 11:55PM & 7:53AM \\
-0 & 10:33PM & 7:02AM \\
-\vdots
+0 & 10:33PM & 7:02AM
 \end{tabular}
-\end{table}
+\end{table} \pause 
 
-Dataframes have $n$ observations and $p$ predictors. Here $n = \pause 3$ (only those viewable above) and $p = 2$. Thus, it is a matrix with $n$ rows and $p + 1$ columns. The \qu{+1} is for the response which is not a predictor. \\
+Dataframes have $n$ observations and $p$ predictors. Here $n = \pause 3$ (only those viewable above) and $p = 2$. Thus, it is a matrix with $n$ rows and $p + 1$ columns. The \qu{+1} is for the response which is not considered a predictor. \\ \pause 
 
-What would a new observation look like? Tony went to bed on average 9:53PM and awoke on average at 6:13AM. Did he have a healthy life or not?
+What would a new observation look like? Tony went to bed on average 9:53PM and awoke on average at 6:13AM. Did he have a healthy life or not? \pause 
 
 We don't know the model yet...
 	
@@ -378,11 +386,11 @@ We don't know the model yet...
 Early to bed and early to rise makes a man healthy.
 \end{quotation}
 
-which, after measuring inputs and outputs and mathematizing, becomes $y = f(x_1, x_2)$.\\
+Mathematizing, this becomes $y = f(x_1, x_2)$.\\
 
 \begin{minipage}{0.4\textwidth}
 \footnotesize
-From the wording, it seems the model is unequivocal and deterministic. This means \pause that for any input values (the measured values of $x_1$ and $x_2$), the output (the response) will have only one unique value.\\
+From the wording, it seems the model is unequivocal and deterministic. This meansthat for any input values (the measured values of $x_1$ and $x_2$), the output (the response) will have only one unique value.\\  \pause 
 \vspace{0.2cm}
 Thus the functional form likely looks like a \textit{decision tree model}.
 \end{minipage}%
@@ -395,11 +403,11 @@ Thus the functional form likely looks like a \textit{decision tree model}.
 	
 \end{frame}
 
-\begin{frame}\frametitle{Is the Model \textit{Really} Deterministic?}
+\begin{frame}\frametitle{Are Models \textit{Really} Deterministic?}
 
-This is an ancient question... it touches on the free will vs. determinism debate. We will punt on the philosophy and ask: is this model deterministic? \pause NO. \\~\\
+This is an ancient question... it touches on the free will vs. determinism debate.  \pause We will punt on the philosophy and ask: is our model deterministic? \pause NO. \\~\\
 
-Thus, this model is wrong. Why? We can find at least one person who does not have a matching response when inputs are evaluated in $f$. Seems obvious but...
+Thus, this model is \emph{wrong}. Why?  \pause We can find at least one person who does not have a matching response when inputs are evaluated in $f$. Seems obvious but...
 
 \end{frame}
 
@@ -411,7 +419,7 @@ Consider the model with the binary input
 \begin{itemize}
 \item[$y$:] contract lung cancer at some point (1) or not (0)
 \item[$x_1$:] smoke 10 pack years or more at some point in a lifetime (1) or not (0) and the response 
-\end{itemize}
+\end{itemize} \pause 
 
 Do you think the model should look like the below?\vspace{-0.2cm}
 
@@ -419,6 +427,9 @@ Do you think the model should look like the below?\vspace{-0.2cm}
 \centering
 \includegraphics[width=1.4in]{smoking}
 \end{figure}
+ \pause 
+
+
 \vspace{-0.2cm}
 No... in fact \qu{only} 16\% of smokers get lung cancer compared to about 0.4\% of non-smokers. Thus, the simpel model above is wrong because some responses (that is features of certain individuals) will not \qu{fit} the model. Thus, should we throw out the whole enterprise of modeling?
 
@@ -434,7 +445,7 @@ Mathematical models such as
 y = f(x_1, x_2, \ldots)
 \eeqn
 
-can become more forgiving to errors in $f$ by allowing for $Y$ to be modeled non-deterministically as a random variable (r.v.), uppercase $Y$. For our case of binary classification, this r.v. is the Bernoulli:
+can become forgiving to \emph{errors} in $f$ by allowing for $y$ to be modeled non-deterministically as a random variable (r.v.), uppercase $Y$. For our case of binary classification, this r.v. is the Bernoulli:
 
 \beqn
 Y \sim \bernoulli{f(x_1, x_2, \ldots)} := \begin{cases} 
@@ -454,7 +465,7 @@ A more conceivable model $f$ is:
 \begin{figure}
 \centering
 \includegraphics[width=3.2in]{stat_class_model_health}
-\end{figure}
+\end{figure} \pause 
 
 Are there still reasons for $x_1$ and $x_2$ to be rigid binary values e.g. 1 if $x_2 <$ 6:30AM? No... but we haven't spoke about model fits nor parameters.... wait...
 
@@ -466,22 +477,22 @@ Are there still reasons for $x_1$ and $x_2$ to be rigid binary values e.g. 1 if 
 So, we should really update the text of the aphorism to reflect the introduction of the random variable response. It should read:
 
 \begin{quotation}
-Early to bed and early to rise makes a man \emph{more likely to be} healthy.
+Early to bed and early to rise makes a man \pause  \emph{more likely to be} healthy.
 \end{quotation}
 
 However this seems to still suggest someone is either healthy or not healthy. Didn't the author of the aphorism, to be more accurate, say... 
 
 \begin{quotation}
-Early to bed and early to rise makes a man \emph{healthier}.
+Early to bed and early to rise makes a man \pause  \emph{healthier}.
 \end{quotation}
 
-which is deterministic:
+which is deterministic (and we will fix it soon):
 
 \beqn
 y = f(x_1, x_2)
 \eeqn 
 
-we need some way to measure a quantity of healthiness on a continuous scale. Open problem. How can you shrink-wrap health into a single number? Diversion...
+we need some way to measure a quantity of healthiness on a continuous scale.  \pause Open problem. How can you shrink-wrap health into a single number?
 
 \end{frame}
 
@@ -503,13 +514,13 @@ One such scale is found in \href{http://europepmc.org/abstract/med/6460487}{Flan
 Yes, metrics are essentially \qu{made up}. Good ones are engineered to carefully capture the information sought. Examples:
 
 \begin{itemize}
-\item \href{https://www.cato.org/human-freedom-index}{The Human Freedom Index}
-\item \href{https://en.wikipedia.org/wiki/Democracy-Dictatorship_Index}{Democracy-Dictatorship Index}
-\item S\&P 500
-\item Visual Acuity 20/20, 20/40, etc
+\item \href{https://www.cato.org/human-freedom-index}{The Human Freedom Index} \pause 
+\item \href{https://en.wikipedia.org/wiki/Democracy-Dictatorship_Index}{Democracy-Dictatorship Index} \pause 
+\item S\&P 500 \pause 
+\item Visual Acuity 20/20, 20/40, etc \pause 
 \end{itemize}
 
-It is most important for these metrics to be monotonic (i.e. higher always means better or worse). 
+It is most important for these metrics to be monotonic (i.e. higher always means better or worse).  \pause 
 
 We also would appreciate these metrics being approximately linear. So an increase of 1 \qu{point} on the scale means the same increase/decrease in quality. But that is usually too much to ask.
 
@@ -522,7 +533,7 @@ We also would appreciate these metrics being approximately linear. So an increas
 We now are considering health as a continuous number (the data type is called \qu{continuous}) but the model is still deterministic. How to we reengineer the aphorism to allow for stochasticity (randomness)?
 
 \begin{quotation}
-Early to bed and early to rise makes a man \emph{healthier on average}.
+Early to bed and early to rise makes a man  \pause \emph{healthier on average}.
 \end{quotation}
 	
 We can then build a statistical model:
@@ -531,20 +542,20 @@ We can then build a statistical model:
 Y \sim g\parens{f(x_1, x_2), \sigsq, \ldots}
 \eeqn
 
-where $f(x_1, x_2)$ now represents the mean health for these inputs, $\sigsq$ is now variance around that mean, and the ellipses is a technicality dealing with higher moments such as skew, etc that we will ignore for the purposes of this class. Thus, health scores are realized randomly but the mean health scores do not.
+where $f(x_1, x_2)$ now represents the mean health for these inputs, $\sigsq$ is now variance around that mean,  \pause and the ellipses is a technicality dealing with higher moments such as skew, etc that we will ignore for the purposes of this class. Thus, health scores are realized randomly but the mean health scores are deterministic.
 
 \end{frame}
 
 \begin{frame}\frametitle{Regression Models}
 
 \small
-When the response is continuous, the statistical model is called a \textit{regression model}. What does regression mean? Loosely, when you hear regression, you know you're modeling some continuous response (e.g. price, blood pressure, lens power). The typical way these models are written are:
+When the response is continuous, the statistical model is called a \textit{regression model}. What does regression mean?  \pause Loosely, when you hear regression, you know you're modeling some continuous response (e.g. price, blood pressure, lens power). The typical way these models are written are:
 
 \beqn
 Y = f(x_1, x_2) + \errorrv
 \eeqn
 
-The equals sign makes us feel like we're back in a deterministic model. But we're not; the $\errorrv$ is a r.v. known as the \qu{noise}. (The British call it the \qu{errors} but that is confusing!) This r.v. necessarily must have no mean, $\expe{\errorrv} = 0$. Can you explain why? \\~\\
+The equals sign makes us feel like we're back in a deterministic model. But we're not; the $\errorrv$ is a r.v. known as the \qu{noise}. (The British call it the \qu{errors} --- why?)  \pause This r.v. necessarily must have no mean, $\expe{\errorrv} = 0$. Can you explain why? \\~\\ \pause 
 
 Where does $\errorrv$ come from?? Philosophical question... one we will return to soon.
 
@@ -564,7 +575,9 @@ where $\cexpe{Y}{x_1, x_2}$ is called the \qu{conditional expectation function} 
 \cexpe{Y}{x_1, x_2} = f(x_1, x_2)
 \eeqn
 
-What does this look like?
+Specifying the model for $f$ is sometimes called \qu{conditional mean modeling}.
+
+How does one think of $\cexpe{Y}{x_1, x_2}$?
 	
 \end{frame}
 
@@ -583,9 +596,9 @@ What does this look like?
 Early to bed and early to rise makes a man healthier on average.
 \end{quotation}
 
-The wording \qu{early to bed} and \qu{early to rise} seem to smack of binary inputs. Either it's early or it's late... no in-between values. Again, it's probably not what the original author had in mind.\\~\\ %%%move this above
+The wording \qu{early to bed} and \qu{early to rise} seem to smack of  \pause binary inputs. Either it's early or it's late... no in-between values.  \pause Again, it's probably not what the original author had in mind.\\~\\ %%%move this above
 
-Let's reengineer the aphorism again to allow for grey area:
+Let's reengineer the aphorism again to allow for grey area: \pause 
 
 \begin{quotation}
 \emph{The earlier} to bed and the \emph{earlier to} rise makes a man healthier on average.
@@ -595,11 +608,11 @@ Let's reengineer the aphorism again to allow for grey area:
 
 \begin{frame}\frametitle{Bedtime and Waketime Again}
 
-We began with the average bedtime and waketime and recorded it as a datetime.
+We began with the average bedtime and waketime and recorded it as a datetime.\\~\\ \pause 
 
-We now need to use continuous measures for $x_1$ and $x_2$. How can we do this? Should we use 9:42PM, 10:14PM, etc. as before? What is later 11:55PM or 1:02AM?
+We now need to use continuous measures for $x_1$ and $x_2$. How can we do this? Should we use 9:42PM, 10:14PM, etc. as before? What is later 11:55PM or 1:02AM?\\~\\ \pause 
 
-We should not use timestamps as they fail the monotonicity property that we desire to capture \qu{lateness}.
+We should not use timestamps as they fail the monotonicity property that we desire to capture \qu{lateness}.\\~\\ \pause 
 
 What should we do? Maybe just one number defined as the number of hours after an absurd average bedtime like 5PM? Thus, 9PM $\rightarrow x_1 = 4$ and 2AM $\rightarrow x_1 = 9$, etc. Ditto for waketime to avoid the problem of people on average waking up after 12:59PM.
 	
@@ -621,13 +634,13 @@ We are using average bedtime and waketime. What's wrong with an average?
 %plot(5 + xs, dnorm(xs, 5, 0.25), type = 'l', xlab = '', ylab = '')
 %
 	
-These are two bedtime distributions over many, many years. They both have the same average: 10PM. Who do you think is healthier on average? The person on the right. Why?
+These are two bedtime distributions over many, many years. They both have the same average: 10PM. Who do you think is healthier on average?  \pause The person on the right. Why?
 \end{frame}
 
 \begin{frame}\frametitle{Designing Better Inputs}
 
 \small
-How can we get more \qu{information} out of a person's bedtime and waketime that is relevant to predicting health outcomes?
+How can we get more \qu{information} out of a person's bedtime and waketime that is relevant to predicting health outcomes? \pause 
 
 We likely don't know which piece of the distribution will be helpful, so let's just add all the information. Let's bin by maybe 20min and record the probabilities over many years of being in that bin. For instance, 5 year bins for these two people may look like:
 
@@ -638,20 +651,20 @@ We likely don't know which piece of the distribution will be helpful, so let's j
 %hist(x1, prob = TRUE, xlim = c(1,9), xlab = 'bedtimes', ylab = 'probability density estimate', main = '')
 %hist(x2, prob = TRUE, xlim = c(1,9), xlab = 'bedtimes', ylab = 'probability density estimate', main = '')
 %	
-
+\vspace{-0.2cm}
 \begin{figure}
 \centering
 \includegraphics[width=4.5in]{two_hists}
 \end{figure}
 
-All bin values can be used as inputs. So in this model, $p > 2$. It could be almost 100. This is called featurization --- designing features and we will talk more about it later.
+All bin values can be used as inputs. So in this model, $p > 2$. It could be almost 100. This is called \emph{featurization} --- designing features and we will talk more about it later.
 
 \end{frame}
 
 \begin{frame}\frametitle{Flexible Inputs $p=2 \rightarrow p \approx 100$}
 
 \begin{itemize}
-\item Advantage: We can fit more exact rules like if the proportion of times went to bed past 1AM is 10\% ... then health drops considerably and then more so for 2AM
+\item Advantage: We can fit more exact rules like if the proportion of times went to bed past 1AM is 10\% ... then health drops considerably and then more so for 2AM \pause 
 \item Disadvantage: It makes the model hard to fit and interpret. There are a lot of \qu{degrees of freedom} now (a term you've heard before). A lot more in this later as this is the most important topic in this course.
 \end{itemize}
 
@@ -659,11 +672,11 @@ All bin values can be used as inputs. So in this model, $p > 2$. It could be alm
 
 \begin{frame}\frametitle{Summary}
 
-Models relate inputs to outputs. Inputs and outputs are measurements or assessments on objects / observations.  Here, we consider only one output and name it the response. All the inputs we then consider to be predictors that explain the response via the model $f$. 
+Models relate inputs to outputs. Inputs and outputs are measurements or assessments on objects / observations.  Here, we consider only one output and name it the response.  \pause All the inputs we then consider to be predictors that explain the response via the model $f$.  \pause 
 
-Data frames have rows that are observations and columns that are predictors (with one column that is a response). 
+Data frames have rows that are observations and columns that are predictors (with one column that is a response).  \pause 
 
-Each predictor and the response have a certain data type. If the data type of the response is categorical (or binary as in two categories), we have a classification model. If the data type of the response is a continuous metric, we have a regression model.
+Each predictor and the response have a certain data type.  \pause If the data type of the response is categorical (or binary as in two categories), we have a classification model. If the data type of the response is a continuous metric, we have a regression model.
 	
 \end{frame}
 
@@ -707,10 +720,10 @@ We, as a people, built this model and it's been validated over centuries. How di
 \begin{frame}\frametitle{Humans as Model Builders}
 
 \begin{enumerate}
-\item We made it up. Don't laugh... you will see on the homework why this may be subtle.
-\item We used a \qu{data-driven approach}. \\
+\item We made it up. Don't laugh... you will see on the homework why this may be subtle. \pause 
+\item We used a \qu{data-driven approach}. \\ \pause 
 
-Likely, many individuals independently \textit{observed} people (the unit of observation), assessed both $y$, their healthiness level over their lives and \emph{assessed / measured all features and noted that} their $x_1, x_2$ bedtime and waketime habits were related via a simple pattern relating these inputs to the response.
+Likely, many individuals independently \textit{observed} people (the unit of observation), assessed both $y$, their healthiness level over their lives and \emph{assessed / measured all features and noted that} their $x_1, x_2$ bedtime and waketime habits were related via a simple pattern relating these inputs to the response. \pause 
 \end{enumerate}
 
 \begin{figure}
@@ -722,19 +735,19 @@ Likely, many individuals independently \textit{observed} people (the unit of obs
 
 
 \begin{frame}\frametitle{How does this work?}
-
+\small
 We notice phenomena around ourselves we wish to explain. For example, a person...
 
 \begin{itemize}
-\item ... gets a job at Citadel Capital or not
-\item ... gets a mortgage approved or not
-\item ... runs a mile in $t$ minutes
+\item ... gets a job at Citadel Capital or not \pause 
+\item ... gets a mortgage approved or not \pause 
+\item ... runs a mile in $t$ minutes \pause 
 \item ... has a degree of healthiness (in our aphorism example)
 \end{itemize}
 
-We then pore through the \textit{raw, naturally represented data}. What kind of information is this??\\~\\
+We then pore through the \textit{raw, naturally represented data}. What kind of information is this??\pause 
 
-Everything we notice about the people we observe! Imagine every encounter with the person for years and years (10 minutes here, 5 minutes there), full video clips, audio recordings, smells, touches, tastes, everything.\\~\\
+Everything we notice about the people we observe! Imagine every encounter with the person for years and years (10 minutes here, 5 minutes there), full video clips, audio recordings, smells, touches, tastes, everything. \pause 
 
 How many measurements is that? (What's the dimensionality of the input space?) Immeasurable and cannot be defined. But we know it's HUGE! Note: this is technically called \emph{deep learning}.
 
@@ -751,7 +764,7 @@ Is this a cat?
 \end{figure}
 
 
-Response? Cat or not. Predictors in the model? Entire image... raw natural data representation. The brain shrinks the space down to a small number of predictors. You've already built this model. 
+Response?  \pause Cat or not (0 or 1 numerically). Predictors in the model?  \pause Entire image... raw natural data representation.  \pause The brain shrinks the space down to a small number of predictors. You've already built this model (but only in your head... and you don't even know how it works). 
 
 	
 \end{frame}
@@ -770,9 +783,9 @@ Response? Cat or not. Predictors in the model? Entire image... raw natural data 
 
 \begin{block}{Weaknesses}
 \begin{itemize}
-\item The model cannot be communicated precisely.
-\item The inputs are too complicated.
-\item The functional form cannot be shared.
+\item The model cannot be communicated precisely. \pause 
+\item The inputs are too complicated. \pause 
+\item The functional form cannot be shared. \pause 
 \item And thus no prediction can be made with it (unless it is the same brain that makes the prediction that built the model).
 \end{itemize}
 \end{block}
@@ -791,7 +804,7 @@ Early to bed and early to rise makes a man healthy.
 \centering
 \includegraphics[width=4in]{human_simple_model_learning}
 \end{figure}
-
+ \pause 
 This is the process by which we put forth the model \qu{early to bed and early to rise makes a man healthy}.
 
 \end{frame}
@@ -803,11 +816,11 @@ This is the process by which we put forth the model \qu{early to bed and early t
 
 We are ...
 
-\begin{block}{Good at Building Statistical Models when...}
+\begin{block}{Good at Building Statistical Models when...} \pause 
 the number of variables that truly matter is small and there's low noise. %For example: recognizing the face of your friend, understanding speech, etc.
 \end{block}
 	
-\begin{block}{Bad at Building Statistical Models when...}
+\begin{block}{Bad at Building Statistical Models when...} \pause 
 inputs are already derivative features of the raw data representation, are numeric and there a lot of them ($p$ large), and noise is large ($\var{\errorrv} >> 0$). %For example, everything we will likely do for the rest of the semester.
 \end{block}
 
@@ -816,12 +829,12 @@ inputs are already derivative features of the raw data representation, are numer
 
 \begin{frame}\frametitle{We are Frequently Bad...}
 
-Famous finding: Paul Meehl in 1954 found when comparing predictions from a panel of clinicians with PhD's and predictions with a linear model (a simple statistical model), he found the linear model beat the PhD's.
+Famous finding: Paul Meehl in 1954 found when comparing predictions from a panel of clinicians with PhD's and predictions with a linear model (a simple statistical model),  \pause he found the linear model beat the PhD's.
 
 
 \begin{quotation}\footnotesize
 When one is dealing with human lives and life opportunities, it is immoral to adopt a mode of decision-making which has been demonstrated repeatedly to be either inferior in success rate...
-\end{quotation}
+\end{quotation} \pause 
 
 The clinicians make a diagnosis on the basis of a quick meeting and a whole bunch of numeric variables: age, serum glucose, blood pressure, symptom measurements... difficult models for us to build.
 
@@ -830,7 +843,7 @@ The clinicians make a diagnosis on the basis of a quick meeting and a whole bunc
 
 \begin{frame}\frametitle{Can we Use Artificial Intelligence (AI)?}
 
-Can we use computers to build models, especially the models we're bad at? 
+Can we use computers to build models, especially the models we're bad at?  \pause 
 
 \begin{figure}
 \centering
@@ -860,7 +873,7 @@ Let's return to our model:\\~\\
 Early to bed and early to rise makes a man healthy.
 \end{quotation}
 
-We observe every encounter with the person for years and years (10 minutes here, 5 minutes there), full video clips, audio recordings, smells, touches, tastes, everything.\\~\\
+We observe every encounter with the person for years and years (10 minutes here, 5 minutes there), full video clips, audio recordings, smells, touches, tastes, everything.\\~\\ \pause 
 
 Can we enter all this into a computer? No, not now, possibly not ever. Also, willl be using statistical modeling so it needs well-defined measurements. So we need to \qu{featurize} and then \qu{collect data}.
 
@@ -874,7 +887,7 @@ Can we enter all this into a computer? No, not now, possibly not ever. Also, wil
 \includegraphics[width=4.5in]{featurization}
 \end{figure}
 
-What is featurization? Deciding predictors. What is data collection? (a) sampling units then (b) measuring the numeric values of the predictors (note: some measurements may be missing).
+What is featurization?  \pause Deciding predictors. What is data collection?  \pause (a) sampling units then  \pause (b) measuring the numeric values of the predictors  \pause (note: some measurements may be missing).
 
 \end{frame}
 
@@ -945,11 +958,9 @@ We know our response variable, we've picked features, made measurements and now 
 Y = f(x_1, x_2, \ldots, x_p) + \errorrv
 \eeqn
 
-where $f$ represents the conditional mean $\cexpe{Y}{x_1, x_2, \ldots, x_p}$ and the $\errorrv$ r.v. is random noise added atop the conditional mean but we don't know $f$! \\~\\
+where $f$ represents the conditional mean $\cexpe{Y}{x_1, x_2, \ldots, x_p}$ and the $\errorrv$ r.v. is random noise added atop the conditional mean but we don't know $f$! \\~\\ \pause 
 
-So we have to learn / infer $f$ the best we could from the historical dataset. We denote this fit $\fhat$. 
-
-What does this mean in the baseball data?
+So we have to learn / infer $f$ the best we could from the historical dataset. We denote this fit $\fhat$.  \pause What does this mean in the baseball data?
 \end{frame}
 
 \begin{frame}\frametitle{Two Worldviews: (I) Parametric}
@@ -958,12 +969,12 @@ Y = f(x_1, x_2, \ldots, x_p) + \errorrv
 \eeqn
 
 \small
-\begin{block}{Philosophy of creating the fit, $\fhat$}
+\begin{block}{Philosophy of creating the fit, $\fhat$} \pause 
 \begin{itemize}
-\item We believe that $f$ has a very \qu{nice} form. 
-\item We value \qu{simplicity} because we wholeheartedly believe in Occam's Razor (simplest theory is the one that should be retained).
-\item We love the simple mathematical models such as $V=IR$ and $F = G\frac{m_1 m_2}{d^2}$ and always try to live up to their elegance.
-\item We care very much about knowing how $f$ works inside i.e. how each of the $x_j$ predictors are affect the conditional mean. Knowing how this system works is our top priority.
+\item We believe that $f$ has a very \qu{nice} form.  \pause 
+\item We value \qu{simplicity} because we wholeheartedly believe in Occam's Razor (simplest theory is the one that should be retained). \pause 
+\item We love the simple mathematical models such as $V=IR$ and $F = G\frac{m_1 m_2}{d^2}$ and always try to live up to their elegance. \pause 
+\item We care very much about knowing how $f$ works inside i.e. how each of the $x_j$ predictors are affect the conditional mean. Knowing how this system works is our top priority. \pause 
 \item Absolute prediction accuracy is not our \#1 focus. $f \not \approx \fhat$
 \end{itemize}
 \end{block}
@@ -976,12 +987,12 @@ Y = f(x_1, x_2, \ldots, x_p) + \errorrv
 \eeqn
 	
 \small
-\begin{block}{Philosophy of creating the fit, $\fhat$}
+\begin{block}{Philosophy of creating the fit, $\fhat$} \pause 
 \begin{itemize}
-\item We do not make any assumptions about the form of $f$ \qu{nice} or not. 
-\item We have no value for simplicity. We are okay with a world being messy and complex.
-\item We believe simple mathematical models such as $V=IR$ and $F = G\frac{m_1 m_2}{d^2}$ work for idealized situations, but never real-life situations with aribitrarily selected predictors measured in arbitrary ways.
-\item We would like to know how $f$ works, but it's likely very complex, so it's not our top priority.
+\item We do not make any assumptions about the form of $f$ \qu{nice} or not.  \pause 
+\item We have no value for simplicity. We are okay with a world being messy and complex. \pause 
+\item We believe simple mathematical models such as $V=IR$ and $F = G\frac{m_1 m_2}{d^2}$ work for idealized situations, but never real-life situations with aribitrarily selected predictors measured in arbitrary ways. \pause 
+\item We would like to know how $f$ works, but it's likely very complex, so it's not our top priority. \pause 
 \item Absolute prediction accuracy is indeed our \#1 focus. It's the bottom line. We want $f \approx \fhat$ as close as possible.
 \end{itemize}
 \end{block}
@@ -1028,7 +1039,7 @@ If we see $f$ is a parametric model, we mean that
 f(x_1, x_2, \ldots, x_p) \approx s(x_1, x_2, \ldots, x_p; \theta_1, \theta_2, \ldots, \theta_\ell)
 \eeqn
 
-i.e. $f$ has a assjumed simple form $s$ that has various knobs that can be adjusted based on the data. These knobs are called the \emph{unknown parameters}. Here there are $\ell$ of them $\theta_1, \theta_2, \ldots, \theta_\ell$. It is said the model has $\ell$ \qu{degrees of freedom}. An example of this is the linear model,
+i.e. $f$ has a assjumed simple form $s$ that has various knobs that can be adjusted based on the data.  \pause These knobs are called the \emph{unknown parameters}. Here there are $\ell$ of them $\theta_1, \theta_2, \ldots, \theta_\ell$. It is said the model has $\ell$ \qu{degrees of freedom}.  \pause An example of this is the linear model,
 
 \beqn
 s(x_1, x_2, \ldots, x_p) = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p
@@ -1086,17 +1097,17 @@ Consider the simple linear regression (one predictor) i.e. $s(x) = \beta_0 + \be
 
 \vspace{-0.5cm}
 \begin{figure}
-\centering\includegraphics[width=4.0in]{residuals}
+\centering\includegraphics[width=3.0in]{residuals}
 \end{figure}
 
-The line is our $\yhat(x)$ i.e. all possible predictions. Seems sometimes we undershot the response (the red) i.e. $y - \yhat > 0$ and sometimes overshot the response (the blue) i.e. $y - \yhat < 0$
+The line is our $\yhat(x)$ i.e. all possible predictions. Seems sometimes we undershot the response (the red) i.e. $y - \yhat > 0$ and sometimes overshot the response (the blue) i.e. $y - \yhat < 0$.
 
 	
 \end{frame}
 
 \begin{frame}\frametitle{The Role of the Residuals}
 
-We call $e_i := y_i - \yhat_i$ the $i$th residual. Since we fit all of our historical data there are $n$ residuals $e_1, \ldots, e_n$. Wouldn't it be nice to keep these small?
+We call $e_i := y_i - \yhat_i$ the $i$th residual. Since we fit all of our historical data there are $n$ residuals $e_1, \ldots, e_n$. Wouldn't it be nice to keep these small? \pause 
 
 \begin{block}{How to create $\fhat$}
 \begin{itemize}
@@ -1105,7 +1116,7 @@ We call $e_i := y_i - \yhat_i$ the $i$th residual. Since we fit all of our histo
 \end{itemize}
 \end{block}
 
-What does \qu{minimize $e_1, \ldots, e_n$} mean? We need to define an overall error metric. This is called the \emph{loss function}.
+What does \qu{minimize $e_1, \ldots, e_n$} mean? \pause  We need to define an overall error metric. This is called the \emph{loss function}.
 	
 \end{frame}
 
@@ -1113,43 +1124,179 @@ What does \qu{minimize $e_1, \ldots, e_n$} mean? We need to define an overall er
 \begin{frame}\frametitle{Loss Functions}
 
 \small
-Let $L = L(e_1, \ldots, e_n)$ be a loss function. What's the best we can do? If we have $e_1 = 0, \ldots, e_n = 0$, then we have no error whatsover. Thus $L \geq 0$. It is common to sum up the individual losses for each residual. Here are some loss functions below:
+Let $L = L(e_1, \ldots, e_n)$ be a loss function. What's the best we can do?  \pause If we have $e_1 = 0, \ldots, e_n = 0$, then we have no error whatsover. Thus $L \geq 0$. \pause  It is common to sum up the individual losses for each residual. Here are some loss functions below:
 
 \begin{itemize}
-\item $L = \abss{e_1} + \abss{e_2} + \ldots + \abss{e_n} = \sum_{i=1}^n \abss{e_i}$ \\
-This is known as L1 error or absolute error or sum of absolute error
-\item $L = e_1^2 + e_2^2 + \ldots + e_n^2$  \\
-This is known as L2 error or sum of squared error (SSE)
+\item $L = \abss{e_1} + \abss{e_2} + \ldots + \abss{e_n} = \sum_{i=1}^n \abss{e_i}$ \\ \pause 
+This is known as L1 error or absolute error or sum of absolute error \pause 
+\item $L = e_1^2 + e_2^2 + \ldots + e_n^2$  \\ \pause 
+This is known as L2 error or sum of squared error (SSE) \pause 
 \end{itemize}
 
 Linear model fitting and machine learning algorithms mostly use SSE.
 
-\begin{block}{How to create $\fhat$}
+\begin{block}{How to create $\fhat$} \pause 
 \begin{itemize}
-\item Minimize SSE via a 
+\item Minimize SSE via a  \pause 
 \item search over all possible values of $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$
 \end{itemize}
 \end{block}
-
-Luckily the computer does all of this for you and it just pops out  $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$.
+ \pause 
+Luckily the computer does all of this for you and it just pops out its answer $\betahat_0, \betahat_1,  \ldots, \betahat_p$.
 	
 \end{frame}
 
-\begin{frame}\frametitle{}
+\begin{frame}\frametitle{Is Minimal SSE what you ACTUALLY want?}
 
+Imagine your response is how much IBM stock moves on a percentage basis for one trading day. Consider two scenarios:\\~\\ \pause 
+
+\begin{itemize}
+\item If $y = -0.25\%$ and $\yhat = 0.5\%$ then $e = -0.25\% - 0.5\% = -0.75\%$ and the squared loss for your prediction would be 0.00005625.  \pause 
+\item If $y = 1.25\%$ and $\yhat = 0.5\%$ then $e = 1.25\% - 0.5\% = 0.75\%$ and the squared loss for your prediction would be 0.00005625. 
+\end{itemize}
 	
+The loss that the \qu{computer sees} for both scenarios is the same. But isn't the first prediction \qu{worse for you} than the second prediction? \\~\\ \pause 
+
+We won't have time to get into custom and asymmetric cost functions. But you need to keep this in mind when you consider the predictions you make with all of the $\fhat$'s we discuss in this class.
 \end{frame}
 
-\begin{frame}\frametitle{}
+\begin{frame}\frametitle{An Interpretable Measure of Fit}
 
+\small
+Let $L = L(e_1, \ldots, e_n) = SSE$ be our loss function. Okay, SSE = 654.4567. Did the model fit well?   \pause What are the units of SSE?  \pause The response units squared.  \pause It also grows linearly with $n$. We cannot compare models using SSE.\\~\\
+
+Consider a dataset for income among HS grads that didn't go to college. You have $n=1,000$ historical responses (the incomes). Here they are:
+
+\vspace{-0.25cm}
+\begin{figure}
+\centering\includegraphics[width=2.7in]{incomes}
+\end{figure}
+ \pause 
 	
+\vspace{-0.25cm}
+Imagine there was no predictors but you still would like to produce predictions. What would you do?
 \end{frame}
 
-\begin{frame}\frametitle{}
+\begin{frame}\frametitle{Shoot Blind}
 
+The best guess (i.e. the one with minimal SSE) is the average $\yhat = \ybar$ for any new observation. Using this prediction model, albeit very basic, the SSE is 115512239042. \pause 
+
+Now imagine you had a predictor... let's say some measure of work ethic or intelligence, call it $x$. Here's a plot:
+
+\vspace{-0.25cm}
+\begin{figure}
+\centering\includegraphics[width=2.7in]{income_by_x}
+\end{figure}
 	
+(see in R)
+
+
 \end{frame}
 
+\begin{frame}\frametitle{Shoot Less Blind}
+
+\small
+Now, the \qu{new} SSE is 34198974577. \pause  This is a reduction in SSE by 81313264465 or as a percentage basis 81313264465 / 115512239042 = 70.39\%. Seen this before? \pause 
+
+\beqn
+R^2 := \frac{SSE_0 - SSE}{SSE_0}
+\eeqn
+
+Why is this called \qu{percentage of variance explained}? \pause 
+
+\beqn
+R^2 &:=& \frac{SSE_0 - SSE}{SSE_0} \times \frac{n-1}{n-1} = \frac{\oneover{n-1}SSE_0 - \oneover{n-1}SSE}{\oneover{n-1}SSE_0} \\
+&=& \frac{\oneover{n-1}\sumionen{\squared{y_i - \ybar}} - \oneover{n-1}\sumionen{\squared{y_i - \yhat_i}}}{\oneover{n-1}\sumionen{\squared{y_i - \ybar}}} \\
+&=& \frac{s^2_y - s^2_e}{s^2_y} \approx \frac{\var{Y} - \var{E}}{\var{Y}} 
+\eeqn
+
+where $\var{Y}$ is what was inexplicable before and $\var{E}$ is what is inexplicable after. $R^2$ is really an \textit{estimate} of the pctg var. explained.
+\end{frame}
+
+\begin{frame}\frametitle{Limitations of $R^2$}
+
+$R^2$ is the great equalizer among all models and all responses. They are immediately comparable. But $R^2$ doesn't mean much for my specific problem. \pause  I'm now predicting income, $\yhat = \$70,000$ and $R^2 = 70\%$. How does knowing $R^2 = 70\%$ (i.e. the model fit is pretty good) tell me how good my $\yhat$ is?  \pause How big is $e$ in $y = \yhat + e$ where $y$ is the true response for this prediciton. It doesn't...\\~\\
+
+How about the following metric? \pause 
+
+\beqn
+s_e = \sqrt{s^2_e} = \sqrt{\oneover{n-1} SSE}= \sqrt{\oneover{n-1}\sumionen{\squared{y_i - \yhat_i}}}
+\eeqn
+
+This is our best guess of the standard error of our estimate $e$, our residual (AKA \qu{RMSE}). What is a standard error?
+
+\end{frame}
+
+\begin{frame}\frametitle{Recall the Empirical Rule}
+
+If $X \sim \normnot{\mu}{\sigsq}$, then 
+
+\begin{itemize}
+\item $\mu \pm 1 \sigma$ contains 68\% of the realization values
+\item $\mu \pm 2 \sigma$ contains 95\% of the realization values
+\item $\mu \pm 3 \sigma$ contains 99.7\% of the realization values
+\end{itemize} \pause 
+
+Thus for a realization $x$,
+
+\begin{itemize}
+\item $x \pm 1 \sigma$ contains $\mu$ 68\% of the time
+\item $x \pm 2 \sigma$ contains $\mu$ 95\% of the time
+\item $x \pm 3 \sigma$ contains $\mu$ 99.7\% of the time
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}\frametitle{Stretch the Empirical Rule}
+
+If $\sigma$ is unknown then,
+
+\begin{itemize}
+\item $x \pm 1 s$ contains $\mu$ about 68\% of the time
+\item $x \pm 2 s$ contains $\mu$ about 95\% of the time
+\item $x \pm 3 s$ contains $\mu$ about 99.7\% of the time
+\end{itemize} \pause 
+
+and if the distribution of $X$ is non-normal but not too funky,
+
+\begin{itemize}
+\item $x \pm 1 s$ contains $\mu$ about about 68\% of the time
+\item $x \pm 2 s$ contains $\mu$ about about 95\% of the time
+\item $x \pm 3 s$ contains $\mu$ about about 99.7\% of the time
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}\frametitle{Why is RMSE useful?}
+
+\small
+In our case, the r.v. is $Y~|~X_1, \ldots, X_p$ which is centered at $\mu = \cexpe{Y}{x_1, \ldots, x_p}$ and generally speaking, non-normal. $\yhat \approx \mu$ and $s_e \approx \se{Y~|~X}$. Thus, \pause 
+
+\begin{itemize}
+\item $\yhat \pm 1 s_e$ contains 68\% of the response values for a specific $x_1, \ldots, x_p$
+\item $\yhat \pm 2 s_e$ contains 95\% of the response values for a specific $x_1, \ldots, x_p$
+\item $\yhat \pm 3 s_e$ contains 99.7\% of the response values for a specific $x_1, \ldots, x_p$
+\end{itemize}
+
+Thus RMSE gives you an approximate means of assessing how variable the real response $y$ could be give your predicted response $\yhat$ .
+
+
+\end{frame}
+
+
+\begin{frame}\frametitle{All Three are Equivalent}
+
+Minimizing SSE, maximizing $R^2$ and minimizing $s_e$ all give equivalent fits.
+\beqn
+SSE && \\
+R^2 &:=& \frac{SSE_0 - SSE}{SSE_0} \\
+s_e &=& \sqrt{s^2_e} = \sqrt{\oneover{n-1} SSE}= \sqrt{\oneover{n-1}\sumionen{\squared{y_i - \yhat_i}}}
+\eeqn
+
+
+\end{frame}
+
+\end{document}
 
 %\section{Correlation  $\not \Rightarrow$  Causation}
 %

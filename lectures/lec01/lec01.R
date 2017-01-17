@@ -4,11 +4,6 @@ library(data.table)
 X = fread("baseball.csv")
 X
 
-# mod = lm(salary_thou ~ ., X)
-# summary(mod)
-# 
-# mod = lm(log(salary_thou) ~ ., X)
-# summary(mod)
 
 n = 100
 sigma = 2
@@ -44,11 +39,50 @@ x = seq(0, 1, length.out = 10)
 y = 5 + 2 * x + rnorm(n, 0, sigma)
 plot(x, y, ylim = c(0, 12))
 mod = lm(y ~ x)
+mod
 yhats = predict(mod, data.frame(x = x))
 abline(mod)
-for (i in 1 : 10){
+for (i in 1 : n){
  segments(x[i], y[i], x[i], yhats[i], 
           lwd = 3,
           col = ifelse(y[i] - yhats[i] < 0, "blue", "red")) 
 }
 
+
+#variance before and after
+set.seed(422)
+n = 300
+x = runif(n, 0, 3)
+y = pmax(20000 + 20000 * x + rnorm(n, 0, 10000), 0)
+hist(y, br = 50, xlab = "income", main = "")
+abline(v = mean(y), col = "green", lwd = 5)
+mean(y)
+es = y - mean(y)
+SSE_0 = sum(es^2)
+SSE_0
+
+plot(x, y, ylab = "income")
+#now fit the linear model
+mod = lm(y ~ x)
+abline(mod)
+
+##now find yhats
+yhats = predict(mod, data.frame(x = x))
+#and the es
+for (i in 1 : n){
+  segments(x[i], y[i], x[i], yhats[i], 
+           lwd = 3,
+           col = ifelse(y[i] - yhats[i] < 0, "blue", "red")) 
+}
+es = y - yhats
+#now get SSE now
+SSE_f = sum(es^2)
+SSE_f
+
+SSE_delta = SSE_0 - SSE_f
+SSE_delta
+
+#as a proportion of the original, null model
+SSE_delta / SSE_0
+
+summary(mod)$r.squared
