@@ -22,7 +22,7 @@
 %immediately create a title page
 \frame{\titlepage}
 
-\section{Models, Response and Predictors}
+\section{Models, Response \& Predictors}
 
 \begin{frame}\frametitle{Define: Prediction and Forecast}
 
@@ -583,7 +583,7 @@ What does this look like?
 Early to bed and early to rise makes a man healthier on average.
 \end{quotation}
 
-\qu{early to bed} and \qu{early to rise} seem to smack of binary inputs. Either it's early or it's late... no in-between values. Again, it's probably not what the original author had in mind.\\~\\ %%%move this above
+The wording \qu{early to bed} and \qu{early to rise} seem to smack of binary inputs. Either it's early or it's late... no in-between values. Again, it's probably not what the original author had in mind.\\~\\ %%%move this above
 
 Let's reengineer the aphorism again to allow for grey area:
 
@@ -667,7 +667,7 @@ Each predictor and the response have a certain data type. If the data type of th
 	
 \end{frame}
 
-\section{Model Fitting}
+\section{Model Fitting \& Data Representation}
 
 \begin{frame}\frametitle{The Aphorism Revisited}
 
@@ -697,45 +697,180 @@ As the olde englysshe prouerbe sayth in this wyse. Who soo woll ryse erly shall 
 \begin{quotation}
 Earely to bed and earely to rise, makes a man healthy, wealthy, and wise. \\
 ~~- John Clarke's Paroemiologia Anglo-Latina, 1639 (collection of proverbs) \\
-~~ -Benjamin Franklin, 1735 (popularized it in America)
+~~ -Benjamin Franklin, 1735 (popularized it in American English)
 \end{quotation}
 
-Over 500 years English speakers have been using this. A better question: how did this model evolve?
+We, as a people, built this model and it's been validated over centuries. How did we build it?
 
 \end{frame}
 
-\begin{frame}\frametitle{Supervised Machine Learning}
+\begin{frame}\frametitle{Humans as Model Builders}
 
-Likely, many individuals independently \textit{observed} people (the unit of observation), assessed their healthiness level over their lives and assessed their bedtime and waketime habits and found a simple pattern relating these inputs to the response.
+Likely, many individuals independently \textit{observed} people (the unit of observation), assessed both $y$, their healthiness level over their lives and \emph{assessed / measured all features and noted that} their $x_1, x_2$ bedtime and waketime habits were related via a simple pattern relating these inputs to the response.
+
+\begin{figure}
+\centering
+\includegraphics[width=4in]{human_learning}
+\end{figure}
 	
 \end{frame}
 
-\begin{frame}\frametitle{}
+
+\begin{frame}\frametitle{How does this work?}
+
+We notice phenomena around ourselves we wish to explain. For example, a person...
+
+\begin{itemize}
+\item ... gets a job at Citadel Capital or not
+\item ... gets a mortgage approved or not
+\item ... runs a mile in $t$ minutes
+\item ... has a degree of healthiness (in our aphorism example)
+\end{itemize}
+
+We then pore through the \textit{raw, naturally represented data}. What kind of information is this??\\~\\
+
+Everything we notice about the people we observe! Imagine every encounter with the person for years and years (10 minutes here, 5 minutes there), full video clips, audio recordings, smells, touches, tastes, everything.\\~\\
+
+How many measurements is that? (What's the dimensionality of the input space?) Immeasurable and cannot be defined. But we know it's HUGE! Note: this is technically called \emph{deep learning}.
+
+\end{frame}
+
+
+\begin{frame}\frametitle{A Deep Learning Model You've Built}
+
+Is this a cat?
+
+\begin{figure}
+\centering
+\includegraphics[width=2in]{cat.jpg}
+\end{figure}
+
+
+Response? Cat or not. Predictors in the model? Entire image... raw natural data representation. The brain shrinks the space down to a small number of predictors. You've already built this model. 
 
 	
 \end{frame}
 
-\begin{frame}\frametitle{}
+\begin{frame}\frametitle{Prediction in a Deep-Learned Human Model}
+
+
+\begin{figure}
+\centering
+\includegraphics[width=4.5in]{human_learning_weakness}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}\frametitle{Weakness in a Deep-Learned Human Model}
+
+\begin{block}{Weaknesses}
+\begin{itemize}
+\item The model cannot be communicated precisely.
+\item The inputs are too complicated.
+\item The functional form cannot be shared.
+\item And thus no prediction can be made with it (unless it is the same brain that makes the prediction that built the model).
+\end{itemize}
+\end{block}
+
 
 	
 \end{frame}
 
-\begin{frame}\frametitle{}
+\begin{frame}\frametitle{Do we Create Simple Models?}
+
+\begin{figure}
+\centering
+\includegraphics[width=4in]{human_simple_model_learning}
+\end{figure}
+
+This is the process by which we put forth the model \qu{early to bed and early to rise makes a man healthy}.
+
+\end{frame}
+
+%The sciences … make models. By a model is meant a … construct which, with the addition of certain verbal interpretations, describes observed phenomena. The justification of such a construct is solely and precisely that it is expected to work. – John von Neumann (1903–1957), 
+
+\begin{frame}\frametitle{Models we are Good and Bad At}
+\small
+
+We are ...
+
+\begin{block}{Good at Building Statistical Models when...}
+the number of variables that truly matter is small and there's low noise. For example: recognizing the face of your friend, understanding speech, etc.
+\end{block}
+	
+\begin{block}{Bad at Building Statistical Models when...}
+inputs are already derivative features of the raw data representation, are numeric and there a lot of them ($p$ large), and noise is large ($\var{\errorrv} >> 0$). For example, everything we will likely do for the rest of the semester.
+\end{block}
+
+
+\end{frame}
+
+\begin{frame}\frametitle{We are Frequently Bad...}
+
+Famous finding: Paul Meehl in 1954 found when comparing predictions from a panel of clinicians with PhD's and predictions with a linear model (a simple statistical model), he found the linear model beat the PhD's.
+
+
+\begin{quotation}\footnotesize
+When one is dealing with human lives and life opportunities, it is immoral to adopt a mode of decision-making which has been demonstrated repeatedly to be either inferior in success rate...
+\end{quotation}
+
+The clinicians make a diagnosis on the basis of a quick meeting and a whole bunch of numeric variables: age, serum glucose, blood pressure, symptom measurements... difficult models for us to build.
+
+\end{frame}
+
+
+\begin{frame}\frametitle{Can we Use Artificial Intelligence (AI)?}
+
+Can we use computers to build models, especially the models we're bad at? 
+
+\begin{figure}
+\centering
+\includegraphics[width=4in]{machine_learning}
+\end{figure}
+	
+Luckily, yes. And this is a main advantage of artificial intelligence.
+
+\end{frame}
+
+\begin{frame}\frametitle{Types of AI?}
+
+\begin{figure}
+\centering
+\includegraphics[width=2.5in]{fig14.jpg}
+\end{figure}
+
+(Fig 1.4 in Goodfellow et al., 2017)
+
+\end{frame}
+
+\begin{frame}\frametitle{What Does Input to AI Look Like?}
+
+Let's return to our model:\\
+
+\begin{quotation}
+Early to bed and early to rise makes a man healthy.
+\end{quotation}
+
+We observe every encounter with the person for years and years (10 minutes here, 5 minutes there), full video clips, audio recordings, smells, touches, tastes, everything.\\~\\
+
+Can we enter all this into a computer? No, not now, possibly not ever. Also, willl be using statistical modeling so it needs well-defined measurements. So we need to \qu{featurize} and then \qu{collect data}.
 
 	
 \end{frame}
 
-\begin{frame}\frametitle{}
+\begin{frame}\frametitle{What is Featurization / Data Collection?}
 
-	
+\begin{figure}
+\centering
+\includegraphics[width=4.5in]{featurization}
+\end{figure}
+
+What is featurization? Deciding predictors. What is data collection? Sampling Collecting the values of the predictors.
+
 \end{frame}
 
-\begin{frame}\frametitle{}
+\begin{frame}\frametitle{Good Machine Learning}
 
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
 
 	
 \end{frame}
