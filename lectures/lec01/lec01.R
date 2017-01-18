@@ -86,3 +86,15 @@ SSE_delta
 SSE_delta / SSE_0
 
 summary(mod)$r.squared
+
+
+
+#####
+n = 100
+sigma = 18
+x = seq(0, 10, length.out = n)
+y = x + rnorm(n, 0, sigma)
+plot(x, y)
+mod = lm(y ~ x)
+abline(mod)
+summary(mod)
