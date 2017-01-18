@@ -1270,8 +1270,8 @@ Thus RMSE gives you an approximate means of assessing how variable the real resp
 
 Minimizing SSE, maximizing $R^2$ and minimizing $s_e$ all give equivalent fits.
 \beqn
-SSE && \\
-R^2 &:=& \frac{SSE_0 - SSE}{SSE_0} \\
+SSE, && \\
+R^2 &:=& \frac{SSE_0 - SSE}{SSE_0} ~~\text{and} \\
 s_e &=& \sqrt{s^2_e} = \sqrt{\oneover{n-1} SSE}= \sqrt{\oneover{n-1}\sumionen{\squared{y_i - \yhat_i}}}
 \eeqn
 
@@ -1279,11 +1279,10 @@ s_e &=& \sqrt{s^2_e} = \sqrt{\oneover{n-1} SSE}= \sqrt{\oneover{n-1}\sumionen{\s
 \end{frame}
 
 
-\end{document}
 
-\begin{frame}\frametitle{$R^2$ vs. $F$ test}
+\begin{frame}\frametitle{Inference}
 
-We haven't spoken about $t$ tests or $F$ tests. Why is that? \\~\\ \pause 
+We haven't spoken about $t$ tests. Why is that? \\~\\ \pause 
 
 In order to have inference, we need to make explicit random variable model assumptions
 
@@ -1299,19 +1298,38 @@ Y \sim \normnot{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}{\sigsq}
 	
 (we will explore next time) \\~\\
 
-In this case $R^2$ will be related to $F$, the omnibus test statistic for whether the model has any signal whatsoever.
-
-\beqn
-F = \frac{\frac{SSE_0 - SSE}{p - 1}}{\frac{SSE}{n-p}} = \frac{SSE_0 - SSE}{SSE} \frac{n-p}{p-1}
-\eeqn
-
-\beqn
-R^2 = \frac{SSE_0 - SSE}{SSE_0} = \ldots = 1 - \inverse{1 + F \frac{p-1}{n-p}}
-\eeqn
 	
 \end{frame}
 
 
+\begin{frame}\frametitle{$R^2$ vs. $F$ test}
+
+In this case $R^2$ will be related to $F$, the omnibus test statistic for whether the model has any signal whatsoever.
+
+\beqn
+R^2 = \frac{SSE_0 - SSE}{SSE_0} = \ldots = 1 - \inverse{1 + F \frac{p-1}{n-p}}
+\eeqn
+
+\beqn
+F &=& \frac{\frac{SSE_0 - SSE}{p - 1}}{\frac{SSE}{n-p}} = \frac{SSE_0 - SSE}{SSE} \frac{n-p}{p-1} = \ldots \\
+&=& \underbrace{\frac{R^2}{1-R^2}}_{
+%
+\substack{
+\text{ratio of variance} \\ 
+\text{explained to} \\ 
+\text{unexplained}
+}} 
+%
+\underbrace{\frac{n-p}{p-1}}_{\substack{
+\text{penalty for} \\ 
+\text{too many features}
+}}
+\eeqn
+
+
+\end{frame}
+
+\end{document}
 %\section{Correlation  $\not \Rightarrow$  Causation}
 %
 %\begin{frame}\frametitle{A \qu{Causal} Model}
