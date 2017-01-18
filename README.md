@@ -11,7 +11,7 @@ My lectures can be listened to as clyp.it tracks [(all lectures)](https://clyp.i
 
 ## Assignments
 
-* Homework 1 [(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw01/hw01.pdf?raw=true) [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw01/hw01.pdf) (due 2/25/16)
+* Homework 1  (due 1/27/16) <!--[(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw01/hw01.pdf?raw=true) [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw01/hw01.pdf)-->
 * Project [(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/project/project.pdf?raw=true) [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/project/project.pdf) (due 2/23/17 and 2/24/17)
 
 ## Exams
@@ -19,6 +19,9 @@ My lectures can be listened to as clyp.it tracks [(all lectures)](https://clyp.i
 * Final 2/28/17 and 3/1/17 in class (last 90-120 minutes).
 
 ## Office Hours
+
+* Wed 3-4:30PM SHDH 109 Gemma Moran
+* Thu 4:30-6PM SHDH 109 Gemma Moran
 
 
 ## Grades and Class Standing

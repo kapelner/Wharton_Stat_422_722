@@ -90,11 +90,23 @@ summary(mod)$r.squared
 
 
 #####
+set.seed(422)
 n = 100
-sigma = 18
-x = seq(0, 10, length.out = n)
-y = x + rnorm(n, 0, sigma)
-plot(x, y)
-mod = lm(y ~ x)
+
+sigma = 5
+x1 = seq(0, 10, length.out = n)
+y = x1 + rnorm(n, 0, sigma)
+plot(x1, y)
+mod = lm(y ~ x1)
 abline(mod)
 summary(mod)
+
+set.seed(421)
+p = 100
+Xjunk = matrix(rnorm(n*p), nrow = n)
+X = cbind(x1, Xjunk)
+
+mod = lm(y ~ X[, 1:80])
+abline(mod)
+summary(mod)
+plot(X[,3], y)

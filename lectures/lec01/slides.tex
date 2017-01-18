@@ -1049,28 +1049,10 @@ with $p$ predictors, there are $p+1$ degrees of freedom (the intercept is also a
 	
 \end{frame}
 
-%\begin{frame}\frametitle{The Linear Model}
-%
-%Since the conditional mean was linear, the statistical model for regression would be
-%
-%\beqn
-%Y = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p + \errorrv 
-%\eeqn
-%
-%Is this the form you're all familiar with? 
-%
-%\end{frame}
-
 
 \section{Fitting the Linear Model}
 
 \begin{frame}\frametitle{What is $\fhat$ in a linear model?}
-
-%Because we believe in simple models and we believe in linearity, we assume that
-%
-%\beqn
-%f(x_1, x_2, \ldots, x_p) = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p
-%\eeqn
 
 Then we need to create a fit $\fhat$ that means we need estimates of all the parameters:
 
@@ -1179,7 +1161,7 @@ Imagine there was no predictors but you still would like to produce predictions.
 
 \begin{frame}\frametitle{Shoot Blind}
 
-The best guess (i.e. the one with minimal SSE) is the average $\yhat = \ybar$ for any new observation. Using this prediction model, albeit very basic, the SSE is 115512239042. \pause 
+The best guess (i.e. the one with minimal SSE) is the average $\yhat = \ybar$ for any new observation. Using this prediction model, albeit very basic, the SSE is 115512239042 (usually called SST). \pause 
 
 Now imagine you had a predictor... let's say some measure of work ethic or intelligence, call it $x$. Here's a plot:
 
@@ -1296,7 +1278,39 @@ s_e &=& \sqrt{s^2_e} = \sqrt{\oneover{n-1} SSE}= \sqrt{\oneover{n-1}\sumionen{\s
 
 \end{frame}
 
+
 \end{document}
+
+\begin{frame}\frametitle{$R^2$ vs. $F$ test}
+
+We haven't spoken about $t$ tests or $F$ tests. Why is that? \\~\\ \pause 
+
+In order to have inference, we need to make explicit random variable model assumptions
+
+\beqn
+Y \sim g( \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p, \sigsq, \ldots)
+\eeqn
+
+must be assumed to be something like
+
+\beqn
+Y \sim \normnot{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}{\sigsq}
+\eeqn
+	
+(we will explore next time) \\~\\
+
+In this case $R^2$ will be related to $F$, the omnibus test statistic for whether the model has any signal whatsoever.
+
+\beqn
+F = \frac{\frac{SSE_0 - SSE}{p - 1}}{\frac{SSE}{n-p}} = \frac{SSE_0 - SSE}{SSE} \frac{n-p}{p-1}
+\eeqn
+
+\beqn
+R^2 = \frac{SSE_0 - SSE}{SSE_0} = \ldots = 1 - \inverse{1 + F \frac{p-1}{n-p}}
+\eeqn
+	
+\end{frame}
+
 
 %\section{Correlation  $\not \Rightarrow$  Causation}
 %
