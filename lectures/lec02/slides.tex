@@ -22,7 +22,7 @@
 %immediately create a title page
 \frame{\titlepage}
 
-\section{LM Inference via MLE and Correlation $\not \Rightarrow$ Causation}
+\section{LM Inference, Corr. $\not \Rightarrow$ Causation \& Mult. Testing}
 
 
 
@@ -141,7 +141,7 @@ In the situation where the true model is
 y = g(x) + h_1(u_1) + h_2(u_2) + \ldots + h_m(u_m)
 \eeqn
 
-and $x$ is observed but $u_1, \ldots, u_m$ are unseen.
+and $x$ is observed but $u_1, \ldots, u_m$ are the \qu{unknowns}.
 
 \beqn
 h_1(u_1) + h_2(u_2) + \ldots + h_m(u_m) \convd \normnot{\sum_{k=1}^m \mu_k}{\sum_{k=1}^m \sigsq_k}
@@ -544,7 +544,7 @@ When can the interpretation be as follows? \sout{Another object naturally observ
 
 (for all $p$ features ... how can the illustration be updated for one variable?) 
 
-\item \pause If we've run a randomized experiment manipulating $x_j$ among the objects AND assuming an additive effect of $x_j$ on $y$.
+\item \pause If we've run a randomized experiment manipulating $x_j$ among the objects AND assuming an linear additive effect of $x_j$ on $y$.
 \end{enumerate}
 
 \end{frame}
@@ -563,9 +563,10 @@ When can the interpretation be as follows? \sout{Another object naturally observ
 
 \begin{figure}
 \centering
-\includegraphics[width=4.5in]{realistic_predictors}
+\includegraphics[width=4.1in]{realistic_predictors}
 \end{figure}
 
+Grey variables and known to be dependent but the values are unknown and the $u_k$'s are the \qu{unknown unknowns}.
 
 \end{frame}
 
@@ -580,6 +581,25 @@ Observations from the previous illustration
 \item A linear model for $y$ on $x_1, \ldots, x_p$ is likely far from the truth (not related to our discussion on causality).
 \end{itemize}
 
+\end{frame}
+
+\begin{frame}\frametitle{Inference and Causality}
+
+\begin{figure}
+\centering
+\includegraphics[width=4.5in]{inference_possible}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}\frametitle{Sidebar: Theories are Hard...}
+\begin{figure}
+\centering
+\includegraphics[width=4.0in]{theories_are_impossible}
+\end{figure}
+
+\small
+Maybe we know the predictors and the dependence, but don't know the causal dependencies. How many theories are possible? 23 variables + the response ... And that's not even counting the unknown unknowns... many have said \qu{science is impossible}.
 
 \end{frame}
 
@@ -599,7 +619,7 @@ What do we mean by naturally observed? \pause This other object is realized from
 
 \begin{frame}\frametitle{The Hidden \qu{Fifth} OLS Assumption}
 
-So this language \qu{... exactly the same features except that $x_j$ is increased by ...} is kind of absurd in the context of a strong covariance structure as ... \pause it will be very rare to observe an observation with $x_j$ different without any other predictor values different. \pause Example from baseball dataset? \\~\\
+So this language \qu{... exactly the same features except that $x_j$ is increased by ...} is \pause kind of absurd in the context of a strong covariance structure as ... \pause i.e. it will be very rare to observe an observation with $x_j$ different without any other predictor values different. Example from baseball dataset? \\~\\ \pause 
 
 There is room to argue that to have these interpretations be at all realistic, we must assume there is not a strong multicollinearity structure between $x_j$ and the other predictors.
 	
@@ -615,10 +635,88 @@ We've been beating up on correlations and their interpretations e.g. the followi
 \end{figure}
 \pause
 
-But even though higher umbrella sales do not \qu{cause} accidents, can they still predict them? \pause Yes, $R^2$ is totally agnostic to (a) if your model is true and \pause (b) if your variables are causal or not. Predictors \textit{truly} correlated to the response contain information about the value of the response and it doesn't matter through what channel it provides that information. \pause
+But even though higher umbrella sales do not \qu{cause} accidents, can they still predict them? \pause Yes, $R^2$ is totally agnostic to (a) if your model is true and \pause (b) if your variables are causal or not. Predictors \textit{truly} correlated (a causal link exists) to the response contain information about the value of the response and it doesn't matter through what channel it provides that information. \pause
 	
 \end{frame}
 
+\begin{frame}\frametitle{Fake / Spurious Correlations}
+%%from http://io9.gizmodo.com/our-new-favorite-website-spurious-correlations-1574464459
+
+\small
+$x$ is margarine consumption per capita in America measured yearly for 10 years from 2000-2009, $y$ is the divorce rate in Maine per 1000 people measured yearly for 10 years from 2000-2009
+
+\vspace{-0.2cm}
+\begin{figure}
+\centering
+\includegraphics[width=2.2in]{margarine_divorce_time.png}
+\end{figure}
+
+\vspace{-0.3cm}
+Are they linearly predictive of one another? \pause
+
+\vspace{-0.2cm}
+\begin{figure}
+\centering
+\includegraphics[width=2.2in]{margarine_divorce.png}
+\end{figure}
+\pause
+
+\footnotesize
+\vspace{-0.3cm}
+$R^2 \approx 99\%$ and $F$ test has a $\pval \approx 1 \times 10^{-8}$. [R demo] \pause Be careful about featurization... try to at least have some inkling of an idea for a causal dependency for the response on the predictors...
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{Testing Multiple Predictors at Once}
+
+[JMP Baseball data]
+
+
+	
+\end{frame}
+
+\section{Extrapolation \& Design}
+
+\begin{frame}\frametitle{Dataframe Design}
+
+We spoke a lot about featurization i.e. selecting the columns in the dataframe (these are the predictors to measure). Once we did this, we can then go out and sample observations and then measure each for their predictor values. \\
+
+But we didn't speak at all about selecting the observations themselves!
+
+
+	
+\end{frame}
+
+
+
+\section{Logistic Regression \& Binary Prediction}
+
+
+\begin{frame}\frametitle{Modeling Categorical Responses}
+
+Previously the response $y$ was continuous and via the OLS assumptions we obtained the statistical model,
+
+\beqn
+Y \inddist \normnot{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}{\sigsq}
+\eeqn
+
+If the response $y$ is categorical, can we still use this? No... the only elements in the support of the r.v. $Y$ are the levels only. \\~\\
+
+First, assume $Y$ is binary i.e. zero or one. We spoke about this statistical model before,
+
+\beqn
+Y \sim \bernoulli{f(x_1, \ldots, x_p)}
+\eeqn
+
+since $\cexpe{Y}{x_1, \ldots, x_p} = f(x_1, \ldots, x_p)$, then $f$ is still the conditional expectation function like before except now it varies only within \pause $\zeroonecl$ and it is the same as $\cprob{Y = 1}{x_1, \ldots, x_p}$.
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
 
 \begin{frame}\frametitle{}
 
