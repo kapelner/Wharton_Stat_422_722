@@ -1,5 +1,5 @@
-\documentclass[slides]{beamer} %switch "slides" to "handout" for printing out
-%\documentclass[handout]{beamer}
+%\documentclass[slides]{beamer} %switch "slides" to "handout" for printing out
+\documentclass[handout]{beamer}
 
 \include{preamble}
 
@@ -22,14 +22,14 @@
 %immediately create a title page
 \frame{\titlepage}
 
-\section{LM Inference via MLE}
+\section{LM Inference via MLE and Correlation $\not \Rightarrow$ Causation}
 
 
 
 
-\begin{frame}\frametitle{Inference}
+\begin{frame}\frametitle{No Inference Possible as of Now}
 
-We haven't spoken about $t$ tests. Why is that? \\~\\ \pause 
+We haven't spoken about $t$ or $F$ tests. Why is that? \\~\\ \pause 
 
 In order to have inference, we need to make explicit random variable model assumptions
 
@@ -42,195 +42,713 @@ must be assumed to be something like
 \beqn
 Y \sim \normnot{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}{\sigsq}
 \eeqn
+
+Is this a reasonable thing to do?
 	
-(we will explore next time) \\~\\
+\end{frame}
+
+\begin{frame}\frametitle{Back to Modeling}
+
+We said before that our model for $Y$ was
+
+\beqn
+Y = f(x_1, \ldots, x_p) + \errorrv
+\eeqn
+
+assuming we can know the model, there still is $\errorrv$. Where does it come from? According to determinism a la Laplace, if one knew all the causal information, there would be no error
+
+\beqn
+y = t(z_1, z_2, \ldots)
+\eeqn
+
+i.e $t$ is the deterministic true mathematical model. %Consider the cigarette example .%where the response is completely explained by the \emph{causal} variables $c_1, c_2, \ldots$. Causal is usually defined as a variable that affects the response variable that one can \qu{manipulate}. 
 
 	
 \end{frame}
 
+\begin{frame}\frametitle{}
 
-\begin{frame}\frametitle{$R^2$ vs. $F$ test}
+\begin{figure}
+\centering
+\includegraphics[width=3.5in]{laplace.png}
+\end{figure}
 
-In this case $R^2$ will be related to $F$, the omnibus test statistic for whether the model has any signal whatsoever.
+\end{frame}
+
+\begin{frame}\frametitle{Example Lung Cancer Causal Model}
+
+\begin{figure}
+\centering
+\includegraphics[width=3.8in]{cigarettes}
+\end{figure}
+
+\small
+Arrows represent causal directions and diamond boxes represent \qu{manipulable} variables (more on this soon). \pause  What functions for the response would be deterministic?
 
 \beqn
-R^2 = \frac{SSE_0 - SSE}{SSE_0} = \ldots = 1 - \inverse{1 + F \frac{p-1}{n-p}}
+y = t(\pause d_1, d_2, s_1), y = t(d_1, d_2, s_2, \pause c_1, c_2, c_3, c_4), y = t(d_1, d_2, c_1, c_2, c_3, c_4, \pause c_5) \\
 \eeqn
+%%http://www.webmd.com/lung-cancer/guide/lung-cancer-causes#3
+\end{frame}
+
+\begin{frame}\frametitle{The Root Cause of Randomness}
+
+\small
+But let's say we only have information about $c_1$ (a contributory cause, one among many co-occurrent causes). Since we don't have all the inputs (nor the information of the states of the co-occurent causes), we cannot be sure of $y$. Hence we'll employ a statistical model,
 
 \beqn
-F &=& \frac{\frac{SSE_0 - SSE}{p - 1}}{\frac{SSE}{n-p}} = \frac{SSE_0 - SSE}{SSE} \frac{n-p}{p-1} = \ldots \\
-&=& \underbrace{\frac{R^2}{1-R^2}}_{
+Y \sim \pause \bernoulli{f(c_1)}
+\eeqn
+
+where we saw before that $f(c_1 = 1) = 16\%$ and $f(c_1 = 0) = 0.4\%$ (probabilistic causation). Thus, the response is stochastic only because we lack information. For regression,\\~\\
+
+\beqn
+Y = f(x_1, \ldots, x_p) + \underbrace{t(z_1, z_2, \ldots) - f(x_1, \ldots, x_p)}_{\substack{\pause \errorrv \\ \pause \text{(i.e. the \qu{noise} is due to ignorance)}}}
+\eeqn
+
+\footnotesize
+Note... some believe that there is still intrinsic randomness in the universe even with all relevant information known. But we are punting on the actual philosophy...
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{$t$ is Difficult to Model}
+
+In order to get $t$, you'll need to know all these functions explicitly:
+
+\beqn
+y &=& t_y(\pause d_1, d_2, s_1) \\
+s_1 &=& t_{s_1}(c_1, c_2, c_3,c_4,s_2) \\
+s_2 &=& f_{s_2}(c_5, s_1)
+\eeqn
+
+which means that even if you know all the values of variables, you may not be able to properly model the response since you do not know the functional forms $t_y$, $t_{s_1}$ and $t_{s_2}$.
+
+\end{frame}
+
+
+\begin{frame}\frametitle{A \qu{Nice} Type of Ignorance}
+
+\begin{figure}
+\centering
+\includegraphics[width=2.5in]{nice_ignorance}
+\end{figure}
+
+\small
+In the situation where the true model is 
+
+\beqn
+y = g(x) + h_1(u_1) + h_2(u_2) + \ldots + h_m(u_m)
+\eeqn
+
+and $x$ is observed but $u_1, \ldots, u_m$ are unseen.
+
+\beqn
+h_1(u_1) + h_2(u_2) + \ldots + h_m(u_m) \convd \normnot{\sum_{k=1}^m \mu_k}{\sum_{k=1}^m \sigsq_k}
+\eeqn
+
+as the number of unseen variables increase (central limit theorem).
+
+\end{frame}
+
+\begin{frame}\frametitle{The Normal Homoskedastic Error Model}
+
+Let $c = \sum_{k=1}^m \mu_k$ and $\sigsq = \sum_{k=1}^m \sigsq_k$, then
+
+\beqn
+y = \underbrace{g(x) + c}_{f(x)} + \errorrv, \quad \text{s.t.} \quad \errorrv =  \sum_{k=1}^m h_k(u_k) - c \sim \normnot{0}{\sigsq}
+\eeqn
+
+\begin{figure}
+\centering
+\includegraphics[width=1.5in]{nice_ignorance}
+\end{figure}
+
+Also, since $x$ does not affect the other variables in any way, it cannot have an influence on their spread, hence $\sigsq$ is not a function of $x$. Thus the error spread is the same everywhere across the range of $x$ (homoskedasticity).
+
+\end{frame}
+
+\begin{frame}\frametitle{Parametric Worldview}
+
+We are back to the fundamental statistical problem, $Y = f(x) + \errorrv$ where now we are more \qu{okay} with the noise being normal and homoskedastic for all $x$.\\~\\
+
+We now invoke the parametric worldview. Within that parametric worldview, we will buy into the linear model. Thus,
+
+\beqn
+Y \sim \normnot{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}{\sigsq}
+\eeqn
+
+But there is one more assumption...
+	
+\end{frame}
+
+\begin{frame}\frametitle{Independence}
+
+We now assume that each response is independent of every other response. \footnotesize Second person:
+
+\begin{minipage}{0.55\textwidth}
+
+\begin{figure}
+\centering
+\includegraphics[width=2.1in]{cigarettes}
+\end{figure}
+First person:
+\begin{figure}
+\centering
+\includegraphics[width=2.1in]{cigarettes}
+\end{figure}
+\end{minipage}
+\begin{minipage}{0.35\textwidth}
+\normalsize
+No effect of first person's $y_1$ (nor any of the unobserved variables which generate the $\errorrv_1$) on the second person's $y$ (or $\errorrv_2$). \\~\\ \pause
+
+If there are, we need to observe them and rotate them into our estimate of $f(x)$. Examples for this cigarette case?
+\end{minipage}
+
+\end{frame}
+
+
+\begin{frame}\frametitle{The Classic OLS Assumptions}
+
+Preassuming
+
+\begin{itemize}
+\item linearity (the parametric assumption)
+\end{itemize}
+
+we then	further assume
+
+\begin{itemize}
+\item independence (most important)
+\item homoskedasticity (less important)
+\item normality of $\errorrv$ (least important if $n$ is large)
+\end{itemize}
+
+in order to get inference.
+
+\end{frame}
+
+\begin{frame}\frametitle{A Different Means of Estimation}
+
+\small
+Last time, we were working on creating a fit $\fhat$ that means we need estimates of all the parameters:
+
+\beqn
+\fhat(x_1, x_2, \ldots, x_p) = \betahat_0 + \betahat_1 x_1 + \ldots + \betahat_p x_p
+\eeqn
+
+where the unknown parameters were $\beta_0, \beta_1, \ldots, \beta_p$. Our strategy last time was to minimize SSE via a calculus to obtain $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$. \pause Why was this arbitrary? \\~\\
+
+Given the three new assumptions (that it's not too much of a stretch to buy into usually), we now have a completely specified joint probability distribution for our observed data,
+
+\beqn
+\cprob{Y_1 = y_1, Y_2 = y_2, \ldots, Y_n = y_n}{\X_1 = \x_1, \X_2 = \x_2, \ldots, \X_n = \x_n}
+\eeqn
+	
+where $\x_i := \bracks{x_{i1}, x_{i2}, \ldots, x_{ip}}$ i.e. the vector of all known measurements / covariates.
+
+\end{frame}
+
+
+\begin{frame}\frametitle{What's a probability? What's a likelihood? }
+
+\small
+In general, a parametric density function / mass function of a r.v. looks like the following:
+
+\beqn
+\prob{x; \theta} = \ldots
+\eeqn
+
+where $\theta$ are the tuning knobs on the model. We ask the question \qu{what's the probability of this realization $x$ (the data) assuming the density was parameterized at $\theta$}? Now we ask the inverse question:
+
+\beqn
+\lik{\theta; x}= \ldots
+\eeqn
+
+that is \qu{what's the likelihood of these parameters assuming we saw $x$ (the data) come out the way it did}? The $\lik{}$ denotes the \emph{likelihood function}. Of course, probability and likelihood are exactly the same numerically, 
+
+\beqn
+\prob{x; \theta} = \lik{\theta; x}= \ldots
+\eeqn
+
+but conceptually they couldn't be further apart!
+	
+\end{frame}
+
+\begin{frame}\frametitle{Maximum Likelihood Estimation (MLE)}
+
+\small
+Why not just ask the very common-sense question, what $\theta$ maximizes the probability of seeing what we observe? That would be a good guess as to what $\theta$ is.\pause 
+
+\beqn
+\thetahat := \argmax_{\theta \in \Theta} \braces{\lik{\theta; x}}
+\eeqn
+
+where $\Theta$ represents the space the parameter lives in. In our situation, $\Theta$ represents \pause all real numbers in $p$ dimensions. Let's do this in our example. The first step:
+
+
+\beqn
+&&\cprob{Y_1 = y_1, Y_2 = y_2, \ldots, Y_n = y_n}{\X_1 = \x_1, \X_2 = \x_2, \ldots, \X_n = \x_n} \\
+&=& \prod_{i=1}^n \cprob{Y_i = y_i}{\X_1 = \x_i}
+\eeqn
+
+How so? \pause Each observation is independent of every other. Recall $\prob{ABC} = \prob{A}\prob{B}\prob{C}$ if $A$, $B$ and $C$ are independent.
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{MLE of the Linear Model Parameters}
+
+\small
+We can continue,
+
+\beqn
+&=& \prod_{i=1}^n \cprob{Y_i = y_i}{\X_1 = \x_i} \\ 
+&=& \prod_{i=1}^n \oneoversqrt{2\pi \sigsq} \exp{-\oneover{2\sigsq} \squared{y - \cexpe{Y_i}{\X_i}}}
+\eeqn
+
+How? \pause Normality and homoskedasticity of $\errorrv$.
+
+\beqn
+&=& \prod_{i=1}^n \oneoversqrt{2\pi \sigsq} \exp{-\oneover{2\sigsq} \squared{y - (\beta_0 + \beta_1 x_{i1}+ \ldots + \beta_p x_{ip})}} \\ \pause
+\eeqn
+
+How? \pause Linearity of $\cexpe{Y_i}{\X_i}$. Now we wish to maximize the above over all possible $\beta_0, \beta_1, \ldots, \beta_p$.
+
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{MLE of the Linear Model Parameters}
+
+\small
+Then, by some precalc tricks,
+
+\beqn
+&=& \prod_{i=1}^n \oneoversqrt{2\pi \sigsq} \exp{-\oneover{2\sigsq} \errorrv_i^2} \\ \pause
+&=& \tothepow{\oneoversqrt{2\pi \sigsq}}{n} \exp{\sum_{i=1}^n -\oneover{2\sigsq} \errorrv_i^2} \\ \pause
+&=& \tothepow{\oneoversqrt{2\pi \sigsq}}{n} \exp{-\oneover{2\sigsq} \sum_{i=1}^n \errorrv_i^2} 
+\eeqn
+
+Pick $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p, \sigsqhat}$ such that the above is minimized. The solutions are called the \qu{maximum likelihood estimates (MLE's)}.
+	
+\end{frame}
+
+\begin{frame}\frametitle{Amazing coincidence}
+
+Using calculus, the solution to $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$ is equivalent to minimizing SSE... What a coincidence!! \\~\\
+
+\small
+Note: $\sigsqhat = \oneover{n} SSE$
+
+\end{frame}
+
+
+\begin{frame}\frametitle{The Likelihood Ratio (LR)}
+
+%\small
+Imagine two models: (a) the \qu{full} model where $\theta \in \Theta$ and (b) a reduced model where $\theta \in \Theta_R \subset \Theta$. The reduced space has $q$ less degrees of freedom for $\theta$ to operate. Consider the ratio of the likelihoods
+
+\beqn
+LR :=
 %
-\substack{
-\text{ratio of variance} \\ 
-\text{explained to} \\ 
-\text{unexplained}
-}} 
+\displaystyle \max_{\theta \in \Theta} \lik{\theta; x}
 %
-\underbrace{\frac{n-p}{p-1}}_{\substack{
-\text{penalty for} \\ 
-\text{too many features}
-}}
+/
+%
+\displaystyle \max_{\theta \in \Theta_R}  \lik{\theta; x}
+%
+\eeqn
+
+representing how much more probable the full model is over the restricted model. But is this is this increase in probability \emph{statistically significant}? It turns out as $n$ gets large and under pretty forgiving conditions,
+
+\beqn
+Q := 2 \natlog{LR} \convd \chisq{q}
 \eeqn
 
 
+\end{frame}
+
+\begin{frame}\frametitle{Testing the Simple Reduced Model}
+
+Let's test our \qu{naive model} from Lecture 1 (always predicting $\yhat = \ybar$) versus having a model having many predictors in a linear model.
+
+\beqn
+LR &=& \frac{
+\displaystyle \max_{\beta_0, \beta_1, \ldots, \beta_p, \sigsq} 
+\lik{\beta_0, \beta_1, \ldots, \beta_p; y_1, \ldots, y_n, \x_1, \ldots, \x_n}
+}{
+\displaystyle \max_{\beta_0, \sigsq} 
+\lik{\beta_0, \beta_1 = 0, \ldots, \beta_p = 0; y_1, \ldots, y_n, \x_1, \ldots, \x_n}
+} \\
+&=& \frac{
+\tothepow{\oneoversqrt{2\pi \sigsqhat}}{n} \exp{-\oneover{2\sigsqhat} SSE}
+}{
+\tothepow{\oneoversqrt{2\pi \sigsqhat_0}}{n} \exp{-\oneover{2\sigsqhat_0} SSE_0}
+} \\
+&=& \tothepow{\frac{SSE_0}{SSE}}{n/2} 
+\frac{
+\exp{-\frac{n}{2 SSE} SSE}
+}{
+\exp{-\frac{n}{2 SSE_0} SSE_0}
+} \\
+\eeqn
+
+\end{frame}
+
+
+\begin{frame}\frametitle{Testing the Simple Reduced Model}
+
+Now we build the Q statistic:
+
+\beqn
+Q = 2\natlog{\tothepow{\frac{SSE_0}{SSE}}{n/2}} = n\natlog{\frac{SSE_0}{SSE}} \convd \chisq{p}
+\eeqn
+	
+This can be used to test
+
+\beqn
+&& H_0: \beta_1 = 0, \beta_2 = 0, \ldots, \beta_p = 0 \\
+&& H_a: \text{at least one is non-zero}
+\eeqn
+
+There is another test for this you've learned about?
+\end{frame}
+
+\begin{frame}\frametitle{Omnibus F-test}
+
+\beqn
+F = \frac{\frac{SSE_0 - SSE}{p}}{\frac{SSE}{n-p}} = \frac{SSE_0 - SSE}{SSE} \frac{n-p}{p} = \parens{\frac{SSE_0}{SSE} - 1} \frac{n-p}{p} \sim F_{p, n-p}
+\eeqn
+
+Both tests use the same test statistic, namely $SSE_0 / SSE$ (up to constants and a monotonic transformation). It is a harder proof to demonstrate they have the same power for the same $n$ and $\alpha$ (but they do). \\~\\
+
+Some points
+
+\begin{itemize}
+\item The likelihood ratio test / F test can also test any subset of the predictors (even one). 
+\item Thus, we now have inference for every predictor or subset of predictors i.e.
+\begin{itemize}
+\item Hypothesis testing
+\item Confidence intervals
+\end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}\frametitle{What does inference buy you?}
+
+Previously,
+
+\beqn
+Y \sim g(\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p, \sigsq, \ldots)
+\eeqn
+
+Do not assume OLS assumptions. We picked L2 loss and minimized to get $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$. What do these numbers means? \pause
+
+\beqn
+Y \inddist \normnot{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}{\sigsq}
+\eeqn
+
+Assume OLS assumptions. Using MLE, we wind up minimizing L2 loss and get the same $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$. What do these numbers means? \pause Same thing, except now ... \pause we can \qu{test} each value and provide confidence intervals for each value. You know their stability.
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{What you want to say about $\betahat_j$}
+
+[Interpret stolen bases in baseball dataset in JMP].\\~\\
+
+A change in $x_j$ of $+1$ causes / induces a $\beta_j$ difference in its mean response $y$.\\~\\
+
+\end{frame}
+
+
+\begin{frame}\frametitle{Umbrella Sales and Car Accidents}
+
+Consider a simple example. $x:$ umbrella sales and $y:$ car accidents. What would the relationship look like? \pause
+
+\begin{figure}
+\centering
+\includegraphics[width=2.5in]{umbrellas_car_accidents.png}
+\end{figure}
+
+Does 100 more umbrellas sold \textit{cause} $15.3$ more car accidents (on average)? \pause No... only an association (assessed by a linear correlation).
+
+\end{frame}
+
+\begin{frame}\frametitle{Correlation Does Not Imply Causation}
+
+What can correlation mean?
+
+\begin{itemize}
+\item It is a coincidence. How can this be?
+\item They are consequence from of a common cause (the \emph{lurking} or \emph{counfounding} variable). How can this be?
+\item There is causation \pause
+\begin{itemize}
+\item x causes y (possibly with intermediates)
+\item y causes x (possibly with intermediates)
+\item x and y cause each other (cyclic)
+\end{itemize}
+(recall time-boundedness property)
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}\frametitle{Controlling for the Confounder}
+
+The confounding variable is likely $z = $ rainfall.
+
+\begin{figure}
+\centering
+\includegraphics[width=1.5in]{confounder}
+\end{figure}
+
+The illustration shows that if you change $x$ obviously $y$ doesn't change whatsoever (causes always precede their dependent effects an assumption known as temporal boundedness) \\~\\
+
+[Show regression in R]
+
+\end{frame}
+
+\begin{frame}\frametitle{A Proper Interpretation of $\betahat_j$}
+
+$\betahat_j$ estimates $\beta_j$. Imagine $n$ is large and the confidence interval is really small. So basically, $\betahat_j = \beta_j \neq 0$. Interpretation? \\~\\ \pause
+
+Another object naturally observed with exactly the same features except that $x_j$ is increased by $1$ unit will have a $\beta_j$ difference in its mean response $y$.\\~\\ \pause
+
+Another one: $\betahat_j$ estimates $\beta_j$. Imagine $n$ is not so large and the confidence interval is not small but we are still convinced $\beta_j \neq 0$.  Interpretation? \\~\\
+
+Another object naturally observed with exactly the same features except that $x_j$ is increased by $1$ unit will have a $\betahat_j \pm \se{\betahat_j}$ difference in its mean response $y$. (Not much difference except accounting for parameter estimation error).\\~\\
+
+\end{frame}
+
+
+\begin{frame}\frametitle{When can you say \qu{causes}?}
+
+\small
+
+When can the interpretation be as follows? \sout{Another object naturally observed with exactly the same features except for a change} \emph{If this object in front of us has its} \pause $x_j$ changed by $+1$, it will \sout{have} \emph{cause} a $\betahat_j \pm \se{\betahat_j}$ difference in its mean response $y$.
+
+\begin{enumerate}
+\item If we can just assume the model looks as follows:
+
+\vspace{-0.3cm}
+
+\begin{figure}
+\centering
+\includegraphics[width=3.5in]{get_causality}
+\end{figure}
+
+(for all $p$ features ... how can the illustration be updated for one variable?) 
+
+\item \pause If we've run a randomized experiment manipulating $x_j$ among the objects AND assuming an additive effect of $x_j$ on $y$.
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}\frametitle{Consider a Realistic Model}
+
+\begin{figure}
+\centering
+\includegraphics[width=4.5in]{realistic_model}
+\end{figure}
+
+
+\end{frame}
+
+\begin{frame}\frametitle{Consider Realistic Predictors}
+
+\begin{figure}
+\centering
+\includegraphics[width=4.5in]{realistic_predictors}
+\end{figure}
+
+
+\end{frame}
+
+\begin{frame}\frametitle{Consider Realistic Predictors}
+
+Observations from the previous illustration
+
+\begin{itemize}
+\item Maybe some of the predictors $x_1, \ldots, x_p$ are causal, but most are likely not.
+\item Of the ones that are not causal due to a confounder, you may have an idea of the lurking variables but it is unlikely you can measure them. Think college GPA vs SAT with confounder true IQ / ability.
+\item If some variables are causal, it is unlikely they have an additive causal effect; their effect is likely moderated by many other interacting variables possibly in non-linear ways.
+\item A linear model for $y$ on $x_1, \ldots, x_p$ is likely far from the truth (not related to our discussion on causality).
+\end{itemize}
+
+
+\end{frame}
+
+\begin{frame}\frametitle{More on OLS Coefficient Interpretation}
+
+\small
+The linear regression coefficient interpretation again: another object \emph{naturally observed} with exactly the same features except that $x_j$ is increased by $1$ unit will have a $\betahat_j \pm \se{\betahat_j}$ difference in its mean response $y$.\\~\\
+
+What do we mean by naturally observed? \pause This other object is realized from the same joint distribution as all other observations. This means that whatever \textit{multicollinearity} / \textit{covariance structure} exists between the predictors, $\braces{\cov{X_j}{X_k}}$, will give rise to the predictor values in the other object.
+	
+\begin{figure}
+\centering
+\includegraphics[width=2.8in]{predictor_covariance_structure}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}\frametitle{The Hidden \qu{Fifth} OLS Assumption}
+
+So this language \qu{... exactly the same features except that $x_j$ is increased by ...} is kind of absurd in the context of a strong covariance structure as ... \pause it will be very rare to observe an observation with $x_j$ different without any other predictor values different. \pause Example from baseball dataset? \\~\\
+
+There is room to argue that to have these interpretations be at all realistic, we must assume there is not a strong multicollinearity structure between $x_j$ and the other predictors.
+	
+\end{frame}
+
+\begin{frame}\frametitle{But Real Correlations Still Rock}
+
+We've been beating up on correlations and their interpretations e.g. the following:
+
+\begin{figure}
+\centering
+\includegraphics[width=2.5in]{umbrellas_car_accidents.png}
+\end{figure}
+\pause
+
+But even though higher umbrella sales do not \qu{cause} accidents, can they still predict them? \pause Yes, $R^2$ is totally agnostic to (a) if your model is true and \pause (b) if your variables are causal or not. Predictors \textit{truly} correlated to the response contain information about the value of the response and it doesn't matter through what channel it provides that information. \pause
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
 \end{frame}
 
 \end{document}
-%\section{Correlation  $\not \Rightarrow$  Causation}
+
+
+
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+%\begin{frame}\frametitle{$R^2$ vs. $F$ test}
 %
-%\begin{frame}\frametitle{A \qu{Causal} Model}
+%In this case $R^2$ will be related to $F$, the omnibus test statistic for whether the model has any signal whatsoever.
 %
-%\begin{quotation}
-%The earlier to bed and the earlier to rise \emph{makes} a man healthier on average.
-%\end{quotation}
+%\beqn
+%R^2 = \frac{SSE_0 - SSE}{SSE_0} = \ldots = 1 - \inverse{1 + F \frac{p-1}{n-p}}
+%\eeqn
 %
-%What does the language suggest by using the verb \qu{to make}? It suggests that the \qu{earlier to bed and the earlier to rise} \textit{causes} \qu{a man [to be] healthier on average}.
-%	
-%\end{frame}
-
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\end{document}
+%\beqn
+%F &=& \frac{\frac{SSE_0 - SSE}{p - 1}}{\frac{SSE}{n-p}} = \frac{SSE_0 - SSE}{SSE} \frac{n-p}{p-1} = \ldots \\
+%&=& \underbrace{\frac{R^2}{1-R^2}}_{
+%%
+%\substack{
+%\text{ratio of variance} \\ 
+%\text{explained to} \\ 
+%\text{unexplained}
+%}} 
+%%
+%\underbrace{\frac{n-p}{p-1}}_{\substack{
+%\text{penalty for} \\ 
+%\text{too many features}
+%}}
+%\eeqn

@@ -1,9 +1,7 @@
-setwd("C:/Users/Adam/workspace/Wharton_Stat_422_722/lectures/lec01")
 library(data.table)
 #http://www4.stat.ncsu.edu/~boos/var.select/baseball.html
 X = fread("baseball.csv")
 X
-
 
 n = 100
 sigma = 2
@@ -105,8 +103,8 @@ set.seed(421)
 p = 100
 Xjunk = matrix(rnorm(n*p), nrow = n)
 X = cbind(x1, Xjunk)
+colnames(X) = c("real", rep("fake", p))
 
 mod = lm(y ~ X[, 1:80])
 abline(mod)
 summary(mod)
-plot(X[,3], y)

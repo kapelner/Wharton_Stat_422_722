@@ -11,7 +11,7 @@ My lectures can be listened to as clyp.it tracks [(all lectures)](https://clyp.i
 
 ## Assignments
 
-* Homework 1  (due 1/27/16) <!--[(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw01/hw01.pdf?raw=true) [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw01/hw01.pdf)-->
+* Homework 1 unreleased as of now but will be due 1/31/16 <!--[(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw01/hw01.pdf?raw=true) [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw01/hw01.pdf)-->
 * Project [(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/project/project.pdf?raw=true) [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/project/project.pdf) (due 2/23/17 and 2/24/17)
 
 ## Exams
