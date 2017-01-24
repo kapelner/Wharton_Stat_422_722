@@ -595,11 +595,11 @@ Observations from the previous illustration
 \begin{frame}\frametitle{Sidebar: Theories are Hard...}
 \begin{figure}
 \centering
-\includegraphics[width=4.0in]{theories_are_impossible}
+\includegraphics[width=3.5in]{theories_are_impossible}
 \end{figure}
 
-\small
-Maybe we know the predictors and the dependence, but don't know the causal dependencies. How many theories are possible? 23 variables + the response ... And that's not even counting the unknown unknowns... many have said \qu{science is impossible}.
+\footnotesize
+Maybe we know the predictors, but don't know the causal dependencies. How many theories are possible? \pause 23 variables, 4 configurations between each pair, 23 possible dependences to the the response ... $4^{\binom{23}{2}} \times 2^{23} = 1.757 \times 10^{159}$. And that's not even counting the unknown unknowns... many have said \qu{science is impossible}.
 
 \end{frame}
 
@@ -642,7 +642,7 @@ But even though higher umbrella sales do not \qu{cause} accidents, can they stil
 \begin{frame}\frametitle{Fake / Spurious Correlations}
 %%from http://io9.gizmodo.com/our-new-favorite-website-spurious-correlations-1574464459
 
-\small
+\footnotesize
 $x$ is margarine consumption per capita in America measured yearly for 10 years from 2000-2009, $y$ is the divorce rate in Maine per 1000 people measured yearly for 10 years from 2000-2009
 
 \vspace{-0.2cm}
@@ -661,9 +661,9 @@ Are they linearly predictive of one another? \pause
 \end{figure}
 \pause
 
-\footnotesize
+
 \vspace{-0.3cm}
-$R^2 \approx 99\%$ and $F$ test has a $\pval \approx 1 \times 10^{-8}$. [R demo] \pause Be careful about featurization... try to at least have some inkling of an idea for a causal dependency for the response on the predictors...
+$R^2 \approx 99\%$, $F$ test $\pval \approx 1 \times 10^{-8}$. [R demo] \pause Be careful about featurization... try to at least have some inkling of an idea for a causal dependency for the response on the predictors... Data dredging / mining is dangerous.
 
 	
 \end{frame}
