@@ -7,12 +7,13 @@
 \usepackage{placeins}
 \usepackage{amssymb}
 \usepackage{wasysym}
-\usepackage{abstract}
+%\usepackage{abstract}
 \usepackage{hyperref}
 \usepackage{etoolbox}
 \usepackage{datetime}
 \usepackage{xcolor}
 \usepackage{alphalph}
+\usepackage[normalem]{ulem}
 \settimeformat{ampmtime}
 
 %\usepackage{pstricks,pst-node,pst-tree}
@@ -25,7 +26,7 @@
 %\usepackage{bbding}
 %\usepackage{listings}
 %\usepackage{appendix}
-\usepackage[margin=1in]{geometry}
+%\usepackage[margin=1in]{geometry}
 %\geometry{papersize={8.5in,11in},total={6.5in,9in}}
 %\usepackage{cancel}
 %\usepackage{algorithmic, algorithm}
@@ -92,6 +93,8 @@
 
 %define colors and color typesetting conveniences
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
+\newcommand{\ingray}[1]{\color{gray}#1 \color{black}}
+\newcommand{\ingrey}[1]{\ingray{#1}}
 \definecolor{black}{rgb}{0,0,0}
 \definecolor{white}{rgb}{1,1,1}
 \definecolor{blue}{rgb}{0.5,0.5,1}
@@ -169,6 +172,7 @@
 \newcommand{\inddist}{~{\buildrel ind \over \sim}~}
 \newcommand{\approxdist}{~{\buildrel approx \over \sim}~}
 \newcommand{\equalsindist}{~{\buildrel d \over =}~}
+\newcommand{\lik}[1]{\mathcal{L}\parens{#1}}
 \newcommand{\loglik}[1]{\ell\parens{#1}}
 \newcommand{\thetahatkminone}{\thetahat^{(k-1)}}
 \newcommand{\thetahatkplusone}{\thetahat^{(k+1)}}
@@ -237,7 +241,10 @@
 \newcommand{\yadj}{\y_{\text{(adj)}}}
 \newcommand{\xjadj}{\x_{j\text{(adj)}}}
 \newcommand{\xjadjM}{\x_{j \perp M}}
-\newcommand{\yhat}{\hat{\y}}
+\newcommand{\yhat}{\hat{y}}
+\newcommand{\Yhat}{\hat{Y}}
+\newcommand{\fhat}{\hat{f}}
+\newcommand{\betahat}{\hat{\beta}}
 \newcommand{\yhatsub}{\yhat_{\text{(sub)}}}
 \newcommand{\yhatstar}{\yhat^*}
 \newcommand{\yhatstarnew}{\yhatstar_{\text{new}}}
@@ -246,7 +253,6 @@
 \newcommand{\bb}{\bv{b}}
 \newcommand{\bbt}{\bb^T}
 \newcommand{\bbeta}{\bv{\beta}}
-\newcommand{\betahat}{\hat{\beta}}
 \newcommand{\beps}{\bv{\epsilon}}
 \newcommand{\bepst}{\beps^T}
 \newcommand{\e}{\bv{e}}
@@ -318,6 +324,7 @@
 \newcommand{\prodonen}[2]{\bracks{\prod_{#1=1}^n #2}}
 \newcommand{\mysum}[4]{\sum_{#1=#2}^{#3} #4}
 \newcommand{\sumonen}[2]{\sum_{#1=1}^n #2}
+\newcommand{\sumionen}[1]{\sumonen{i}{#1}}
 \newcommand{\infsum}[2]{\sum_{#1=1}^\infty #2}
 \newcommand{\infprod}[2]{\prod_{#1=1}^\infty #2}
 \newcommand{\infunion}[2]{\bigcup_{#1=1}^\infty #2}
@@ -349,6 +356,7 @@
 \newcommand{\dime}[1]{\text{dim}\bracks{#1}}
 \renewcommand{\det}[1]{\text{det}\bracks{#1}}
 \newcommand{\expe}[1]{\mathbb{E}\bracks{#1}}
+\newcommand{\cexpe}[2]{\expe{#1~|~#2}}
 \newcommand{\expeabs}[1]{\expe{\abss{#1}}}
 \newcommand{\expesub}[2]{\mathbb{E}_{#1}\bracks{#2}}
 \newcommand{\indic}[1]{\mathds{1}_{#1}}
@@ -474,37 +482,39 @@
 \newcommand{\ENcl}{\bar{E}_N}
 \newcommand{\diam}[1]{\text{diam}\parens{#1}}
 
+\newcommand{\pval}{p_{\text{val}}}
 \newcommand{\taua}{\tau_a}
 
 \newcommand{\myint}[4]{\int_{#2}^{#3} #4 \,\text{d}#1}
 \newcommand{\laplacet}[1]{\mathscr{L}\bracks{#1}}
 \newcommand{\laplaceinvt}[1]{\mathscr{L}^{-1}\bracks{#1}}
-\renewcommand{\min}[1]{\text{min}\braces{#1}}
-\renewcommand{\max}[1]{\text{max}\braces{#1}}
+%\renewcommand{\min}[1]{\text{min}\braces{#1}}
+%\renewcommand{\max}[1]{\text{max}\braces{#1}}
 
 \newcommand{\Vbar}[1]{\bar{V}\parens{#1}}
 \newcommand{\expnegrtau}{\exp{-r\tau}}
+\newcommand{\errorrv}{\mathcal{E}}
 
 %%% problem typesetting
 
 %%% problem typesetting
 \definecolor{darkgrey}{rgb}{0.10,0.10,0.9}
+%
+%\newcommand{\problem}[1]{\noindent \colorbox{black}{{\color{yellow} \large{\textsf{\textbf{Problem \arabic{probnum}}}}~}} \addtocounter{probnum}{1} \vspace{0.2cm} \\ \iftoggle{professormode}{}{\color{darkgrey}} #1}
+%
+%\newcommand{\easysubproblem}[1]{\ingreen{\item} \iftoggle{professormode}{}{\color{darkgrey}} [easy] #1 \color{black} }
+%\newcommand{\intermediatesubproblem}[1]{\inorange{\item} \iftoggle{professormode}{}{\color{darkgrey}} [harder] #1 \color{black} }
+%\newcommand{\hardsubproblem}[1]{\inred{\item} \iftoggle{professormode}{}{\color{darkgrey}} [difficult] #1 \color{black} }
+%\newcommand{\extracreditsubproblem}[1]{\inpurple{\item} \iftoggle{professormode}{}{\color{darkgrey}} [E.C.] #1 \color{black} }
 
-\newcommand{\problem}[1]{\noindent \colorbox{black}{{\color{yellow} \large{\textsf{\textbf{Problem \arabic{probnum}}}}~}} \addtocounter{probnum}{1} \vspace{0.2cm} \\ \iftoggle{professormode}{}{\color{darkgrey}} #1}
 
-\newcommand{\easysubproblem}[1]{\ingreen{\item} \iftoggle{professormode}{}{\color{darkgrey}} [easy] #1 \color{black} }
-\newcommand{\intermediatesubproblem}[1]{\inorange{\item} \iftoggle{professormode}{}{\color{darkgrey}} [harder] #1 \color{black} }
-\newcommand{\hardsubproblem}[1]{\inred{\item} \iftoggle{professormode}{}{\color{darkgrey}} [difficult] #1 \color{black} }
-\newcommand{\extracreditsubproblem}[1]{\inpurple{\item} \iftoggle{professormode}{}{\color{darkgrey}} [E.C.] #1 \color{black} }
+%\newcommand{\spc}[1]{\iftoggle{professormode}{\\ \vspace{#1cm}}{\\ \vspace{-0.3cm}}}
 
-
-\newcommand{\spc}[1]{\iftoggle{professormode}{\\ \vspace{#1cm}}{\\ \vspace{-0.3cm}}}
-
-\makeatletter
-\newalphalph{\alphmult}[mult]{\@alph}{26}
-\renewcommand{\labelenumi}{(\alphmult{\value{enumi}})}
+%\makeatletter
+%\newalphalph{\alphmult}[mult]{\@alph}{26}
+%\renewcommand{\labelenumi}{(\alphmult{\value{enumi}})}
 
 \newcommand{\support}[1]{\text{Supp}\bracks{#1}}
-\newcommand{\mode}[1]{\text{Mode}\bracks{#1}}
+%\newcommand{\mode}[1]{\text{Mode}\bracks{#1}}
 \newcommand{\IQR}[1]{\text{IQR}\bracks{#1}}
 \newcommand{\quantile}[2]{\text{Quantile}\bracks{#1,\,#2}}

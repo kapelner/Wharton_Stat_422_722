@@ -1,6 +1,7 @@
 \documentclass[12pt]{article}
 
 \include{preamble}
+\newcommand{\errorrv}{\mathcal{E}}
 
 \newtoggle{professormode}
 \toggletrue{professormode} %STUDENTS: DELETE or COMMENT this line
@@ -12,7 +13,7 @@
 \author{Professor Adam Kapelner} %STUDENTS: write your name and section here e.g. "\author{John Doe, Section A}"
 
 \iftoggle{professormode}{
-\date{Due \textit{in class} January 24/25 \\ \vspace{0.5cm} \footnotesize (this document last updated \today ~at \currenttime)}
+\date{Due \textit{4th floor JMHH} Thursday, February 2 5PM\\ \vspace{0.5cm} \footnotesize (this document last updated \today ~at \currenttime)}
 }
 
 \renewcommand{\abstractname}{Instructions and Philosophy}
@@ -42,12 +43,12 @@ You may collaborate, but hand in your own copy with your own wording. See the \h
 
 \thispagestyle{empty}
 \vspace{1cm}
-NAME: \line(1,0){240} ~~SECTION (A or B): \line(1,0){35}
+\noindent NAME: \line(1,0){250} ~~COURSE (422 or 722): \line(1,0){30} \\~\\ SECTION (A or B): \line(1,0){15}
 \pagebreak\newpage
 }
 
 
-\problem{These questions are about prediction and modeling.}
+\problem{These questions are about prediction and modeling theory.}
 
 \begin{enumerate}
 
@@ -56,192 +57,195 @@ NAME: \line(1,0){240} ~~SECTION (A or B): \line(1,0){35}
 
 \easysubproblem{Considering the etymological definitions, do we \qu{predict} or do we \qu{forecast}? Explain your answer.}\spc{3}
 
-\end{enumerate}
+\easysubproblem{Explain what each row in a dataframe represents. Give every synonym for the rows in a dataframe. Write a sentence as to why each of the particular vocabulary words were employed here.}\spc{10}
 
+\easysubproblem{Explain what each column in a dataframe represents. Give every synonym for the column. Write a sentence as to why each of the particular vocabulary words were employed here. In the models in this class, there will be \emph{one} special column. Explain what its called and give definitions for all its synonyms.}\spc{10}
 
-\end{document}
+\easysubproblem{Explain why theories are mathematical (generally speaking).}\spc{6}
 
-Q's
+\intermediatesubproblem{Below is an excerpt from Box and Draper (1987, page 424) and contains the famous line \qu{all models are wrong, but some are useful}. Explain what this means. 
 
-* Below is a map of Philadelphia. Is it a model of Philadelphia? Argue yes
-* Argue no
-
-
-
-\iftoggle{professormode}{
-\paragraph{The Power of the CLT} In the last homework we proved the CLT, now we examine its power. We can do statistical inference: estimation and testing.\\ \\
-} 
-
-\problem{These exercises will pick up after the proof of the CLT.}
-
-
-\begin{enumerate}
-
-
-\easysubproblem{Draw the PDF of $\Phat_n$ below. On the $\phat$ axis, mark a tick for the mean, and ticks for three standard errors above the mean and ticks for three standard errors below the mean. I'm giving almost a full page for this because other problems depend on it. Use 1/3 of the space for your drawing of the PDF.  }\spc{11}
-
-
-\hardsubproblem{If $\Xoneton \iid \bernoulli{p}$ and assuming $n$ is big enough for the CLT to \qu{kick in} as well as what you know about normal distributions shifted and scaled, provide the PDF of $\Phat_n$. This will force you to understand (1) the generalized density for $\normnot{\mu}{\sigsq}$ which is in the notes but has never been previously asked on a homework assignment, (2) substitutions for the mean and variance and (3) what the free variable is. }\spc{2}
-
-\intermediatesubproblem{Let's say $p=0.2$ and $n = 100$. What is $\prob{\Phat_n \geq 0.24}$? You will need to use shifts and scales to get it to look like $\prob{Z > z}$ where $Z$ is the standard normal and $z$ is 0.24 standardized.  }\spc{6}
-
-\hardsubproblem{Let's say $p=0.2$ and $n = 100$. What is the probability of realizing a $\phat$ above 0.3? Without a computer, you cannot answer this exactly. Just using the empirical rule, find the lower and upper bound of this probability. Do not answer exactly. I will not ask you to answer exactly on the test but I will ask you to find a lower and upper bound using the empirical rule.  }\spc{5}
-
-\end{enumerate}
-
-\iftoggle{professormode}{
-\paragraph{Basics of Statistical Inference}~\\ \\
-} 
-
-\problem{We have now used the CLT to understand the distribution of sample proportions. Here, we will assume that $p$, the true proportion of \qu{success,} is unknown and we will try to infer it. This is a problem of paramount importance. Imagine you're polling for a political candidate. You really do want to know $p$ --- the proportion of people who will vote for your candidate. Imagine you're investigating a drug with side effects. You really do want to know $p$ --- the proportion of people who suffer from that side effect.}
-
-\begin{enumerate}
-
-\easysubproblem{If you have realizations of $\Xoneton \iid \bernoulli{p}$, call them $\xoneton$, what is your best guess of $p$? This is called a \qu{point estimate.} Make sure to use the special notation for this estimate we used in class and define it mathematically.  }\spc{2}
-
-\hardsubproblem{Write \textit{in English} why $\phat \neq p$. I marked this as hard because you need to really dredge up your knowledge about random variables, realizations and parameters and get all these concepts straight.  }\spc{4}
-
-\intermediatesubproblem{Reference the picture in 1(a). Where are the \qu{middle} 95\% of $\phat$'s realized? When I say \qu{middle} I mean the 95\% that are \textit{closest} to $p$, the true expected value. Write the interval that corresponds to this set of numbers. Use the bracket set notation we learned in lecture 1.  }\spc{2}
-
-\intermediatesubproblem{The interval you created in (c) left out 5\% of the density of $\Phat_n$. Write the set that corresponds to this left out set. Use the union notation from lecture 1.  }\spc{2}
-
-\easysubproblem{What is the width of the interval you created in (c)?  }\spc{0.5}
-
-\easysubproblem{What is the half width of the interval you created in (c)?  }\spc{1}
-
-\easysubproblem{In your picture in 1(a), draw a dotted line from the center of the PDF, $p$ down the length of the page. Create a realization of $\Phat$, call it $\phat$ within the interval in (c) and mark it as a solid dot. Then carefully measure using a ruler, one half width (f) from the fot to the left and one half width from (f) to the right and draw these two lines and mark the ends with a square bracket. No need to write anything below this prompt.}
-
-\easysubproblem{Did this interval \textit{cover} $p$? That is, does it include $p$? You can see if it includes the dotted line drawn down from $p$.  }\spc{1}
-
-\easysubproblem{Would all $\phat$'s realized within the interval in (c) cover $p$?  }\spc{1}
-
-\hardsubproblem{Prove that the probability that the interval covers $p$ is 95\%. We did this in class.  }\spc{4}
-
-\easysubproblem{Illustrate an example of a $\phat$ with the same half-width to the left and right interval that does \textit{not} cover $p$ in your picture of 1(a). No need to write anything here.}
-
-\intermediatesubproblem{In what set do the $\phat$'s such as in (k) come from that fail to cover $p$?  }\spc{1}
-
-
-\end{enumerate}
-
-
-\problem{Now we'll just practice building CI's and ask some questions about the procedure.}
-
-\begin{enumerate}
-
-\intermediatesubproblem{Why is it important to have a simple random sample (a completely random sample) when sampling from a population? Write a couple sentences \textit{in English}.  }\spc{4}
-
-\easysubproblem{Write the mathematical definition of a two-sided $1-\alpha$ confidence interval below for a one-sample binomial proportion.  }\spc{1}
-
-\easysubproblem{In the notation above, the \qu{CI} has two subscripts. What do these two subscripts mean?  }\spc{2}
-
-\hardsubproblem{The above CI in (b) does not give \textit{exact} coverage, but only \textit{approximate} coverage for two separate reasons. What are the two reasons? Assume the realizations are indeed sampled from $\iid$ Bernoulli r.v.'s and it was a simple random sample.  }\spc{4}
-
-\easysubproblem{As in the example done in class, imagine we sampled 594 M\&M's and found that 116 were blue. Compute a 95\% CI for $p$, the true proportion of blue M\&M's. Assume all of the CI assumptions are correct.  }\spc{2}
-
-\easysubproblem{Compute a 99\% CI for $p$, the true proportion of blue M\&M's using the same data as in (e). Assume all of the CI assumptions are correct. I gave you this $z_{\overtwo{\alpha}}$ value in class. }\spc{4}
-
-\hardsubproblem{The 99\% CI is larger than the 95\% CI. This is because $z_{\overtwo{\alpha}}$ increased because we requested wider confidence which increases the margin of error (the margin of error is the $z_{\overtwo{\alpha}}\sqrt{\frac{\phat(1-\phat)}{n}}$ term). Let's say we wanted a 99\% CI with the same width as the 95\% CI. How much more M\&M's would we have to look at to do so?  }\spc{6}
-
-\intermediatesubproblem{Let's say we wanted to be sure we captured $p$ in the CI. What's the problem with just making our $1-\alpha$ really large like 99.99999\% (or $\alpha$ really small like 0.000001\%)? Answer \textit{in English}.  }\spc{4}
-
-\easysubproblem{For the interval you created in (e) provide three valid classical interpretations for it \textit{in English}.  }\spc{6}
-
-\easysubproblem{For the interval you created in (e) write the non-classical i.e subjective interpretation \textit{in English} --- this is the interpretation you really want to be able to say...  }\spc{3}
-
-\easysubproblem{We were interested in political orientation at Queens College. We polled 100 students and 38 of them were registered democrats. Create a 95\% confidence interval for the true proportion of registered democrats at Queens College.  }\spc{4}
-
-\easysubproblem{To get these 100 students, imagine we asked students who were waiting at the Q64 bus stop. Would there then be any problems with the CI we created in (k)? Answer \textit{in English}.  }\spc{3}
-
-\intermediatesubproblem{What would be the best way (or at least a better way) to sample 100 students in order to create the most accurate CI in (k)? Answer \textit{in English}.  }\spc{7}
-
-\end{enumerate}
-
-
-\problem{CI's are for inference but hypothesis testing is for assessing whether a certain theory is grounded. This will be the last topic covered on the Math 241 final. We will illustrate by using the human sex ratio example from class.}
-
-\begin{enumerate}
-
-\easysubproblem{We a priori assume an equal sex ratio. We'll define $p$ as the probability of being male arbitrarily. What is the null hypothesis expressed using the mathematical notation we used in class? }\spc{1}
-
-\easysubproblem{What would be the alternative hypothesis expressed using the mathematical notation we used in class? }\spc{1}
-
-\intermediatesubproblem{If $n=200$, what is the null distribution? No symbols are acceptable as an answer, you must calculate exactly what the distribution is. Draw this null distribution how we did in class. }\spc{6}
-
-\intermediatesubproblem{Let's say failing to find a deviation from the hypothesized equal sex ratio meant you get fired from your boss (who believes in the unequal sex ratio theory). What kind of $\alpha$ would you pick for this test? Justify using a sentence \textit{in English}. }\spc{3}
-
-\easysubproblem{Regardless of the $\alpha$ chosen, choose $\alpha = 1\%$. What is the retainment region under $\alpha = 1\%$? Denote it on the drawing in (c). }\spc{2}
-
-\easysubproblem{What is the rejection region under $\alpha = 1\%$? Use the $\cup$ symbol to join the two sets. Denote it on the drawing in (c). }\spc{2}
-
-\easysubproblem{What is a Type I error in general? Answer \textit{in English}. }\spc{3}
-
-\easysubproblem{What does a Type I error mean in this human sex ratio experiment? Answer \textit{in English}. }\spc{3}
-
-\easysubproblem{What is the probability of the Type I error in this example? }\spc{1} 
-
-\easysubproblem{What is a Type II error in general? Answer \textit{in English}. }\spc{3}
-
-\easysubproblem{What does a Type II error mean in this human sex ratio experiment? Answer \textit{in English}. }\spc{3}
-
-\easysubproblem{You count there are 113 males. Calculate $\phat$ and denote it on the drawing in (c).  }\spc{3}
-
-\easysubproblem{What is the result of the hypothesis test? Do you retain $H_0$ or reject $H_0$? Write a sentence in English interpreting what this means.  }\spc{4}
-
-\hardsubproblem{Now let $n=4,247,000$ (the number of American newborns in the year 2008) and use the same $\alpha =1\%$. You get 2,173,000 males. Write the hypotheses, find the retainment region and find the result and interpret it. }\spc{9}
-
-\extracreditsubproblem{Why is the human sex ratio not even? Write your thoughts below with sources. }\spc{5}
-
-\end{enumerate}
-
-\problem{This last example involved two-sided hypothesis tests of one proportion. Here, we will examine the case of firing the Uber driver where we only care about only testing one side.
-
-The Uber driver takes 1,000 rides and then the company makes a decision about whether or not he's a good driver based on an arbitrary rule of having more than $p=$ 5\% true proportion / propensity of bad rides.}
-
-\begin{enumerate}
-
-\easysubproblem{Detecting him being a bad driver is sounding the alarm. Thus the status quo is that he's a good driver. Thus, $H_0: p \leq 0.05$. What is $H_a$ here?  }\spc{1}
-
-\intermediatesubproblem{At $\alpha$ = 2.5\%, what is the retainment region? }\spc{3}
-
-\easysubproblem{At $\alpha$ = 2.5\%, what is the rejection region? }\spc{1}
-
-\easysubproblem{The driver under investigation had 62 badly reviewed rides out of 1,000 rides. Calculate $\phat$ and say if it's above the $p$ cutoff Uber is using. }\spc{1}
-
-\intermediatesubproblem{If the driver under investigation had 62 badly reviewed rides out of 1,000 rides, would Uber fire him? Run the hypothesis test now and see. Hint: the answer to the (d) will mislead you. }\spc{8}
-
-\hardsubproblem{You may be wondering why on Earth we defined $H_a$ the way we did in (a). Wouldn't it seem more natural to switch the null and alternative hypothesis? Switch them here and run the test again. }\spc{6}
-
-\hardsubproblem{Your answer changed! Why is it a bad idea to run the test like in (f) / why is it a better idea to run the test like in (e)? }\spc{4.5}
-
-
-\extracreditsubproblem{Find the $p$-val for the test in (e). }\spc{0}
-
-\extracreditsubproblem{If the driver's true proportion / propensity of bad rides is $6\%$, what is the probability of a type II error when running the test in (e)? Then calculate power (1 - the probability of a type II error).}\spc{0}
-
-\end{enumerate}
-
-\problem{This will teach you about $H_0$ and $H_a$ using a silly example. This problem is optional and will not be graded.}
-
-\iftoggle{professormode}{
 \begin{figure}[htp]
 \centering
-\includegraphics[width=2in]{ufo.jpg}
-\end{figure}  
-} 
+\includegraphics[width=6in]{box_draper_p424.jpg}
+\end{figure}}~\spc{6}
+
+
+\intermediatesubproblem{What did we call $\delta(\xi)$ in class (ibid, Equation 13.1.7)?}\spc{1}
+
+\extracreditsubproblem{If the true model were to be found and estimated from the a finite sample dataframe, would it be better for inference than a simple model? Yes / no explain. Would it be better for prediction? Yes / no explain. }\spc{7}
+
+\intermediatesubproblem{In many sciences there is a belief in the so-called \qu{tapering effect} which means that there are large effects, then small effects, then really small effects. How can this be used to explain the success of linear regression in predicting responses with likely myriad inputs (a la slide 32, Lecture 2)?}\spc{5}
+
+
+\extracreditsubproblem{Why will \qu{full reality always remain elusive in the biological sciences}? (Burnham and Anderson, 1998) What does that say about the softer sciences such as economics, psychology, sociology, etc?}\spc{6}
+
+\intermediatesubproblem{Explain why non-parametric models can give you lower misspecification error but possibly higher model estimation error.}\spc{6}
+
+\intermediatesubproblem{I got a phone call from a startup founder who described the idea for a company that predicts startup success. The founder told me their model was that they assign 5 points to a startup for having two or more C-level founders, 10 points for closing an angel round, 5 points for the first employee, etc. What kind of model is this? Why would you trust / not trust its predictions?}\spc{7}
+
+
+\easysubproblem{Look at slide 32 in lecture 2 but not slide 33. Write down all observations you have about this picture.}\spc{6}
+
+
+\extracreditsubproblem{If you find a confounding / lurking variable $Z$, does that mean $Z$ is causal? If yes, explain; if not, provide a counterexample.}\spc{3}
+
+\intermediatesubproblem{Given a model with one response and 10 variables where the 10 variables are realized simultaneously but the response is realized afterwards, how many models can be posited? Ignore the fact that each functional relationship can be different. See slide 35 lecture 2.}\spc{3}
+
+\easysubproblem{Why advantage does a \qu{real} correlation have over a \emph{spurious} correlation?}\spc{3}
+
+\intermediatesubproblem{My friend has six children, all born on Wednesday. Is this \qu{significant}? Discuss.}\spc{5}
+
+\end{enumerate}
+
+\problem{THIS PROBLEM IS OPTIONAL. Here we will be analyzing the theory that \qu{skiing is dangerous}. }
+
 
 \begin{enumerate}
 
-\easysubproblem{Consider $H_0$: Aliens do not exist vs $H_a$: Aliens do exist. Why is this a \qu{standard} hypothesis test? [optional] }\spc{1}
 
-\easysubproblem{Describe a person using English who has a high $\alpha$ for $H_0$: Aliens do not exist vs $H_a$: Aliens do exist. [optional] }\spc{1}
+\easysubproblem{Define the response(s) and the predictors(s) in this model.}\spc{3}
 
-\easysubproblem{Describe a person using English who has a low $\alpha$ for $H_0$: Aliens do not exist vs $H_a$: Aliens do exist. [optional] }\spc{1}
+\intermediatesubproblem{Mathematize this model. Explain clearly what you are measuring and how it is measured.}\spc{3}
 
-\easysubproblem{Describe a person using English who has a high $\alpha$ for $H_0$: Aliens do exist vs $H_a$: Aliens do not exist. [optional] }\spc{1}
 
-\easysubproblem{Describe a person using English who has a low $\alpha$ for $H_0$: Aliens do exist vs $H_a$: Aliens do not exist. [optional] }\spc{2}
+\easysubproblem{If you were to use a data-driven approach, what would the dataframe look like? What are the datatypes of each variable? Will the eventual model be a regression? Classification? Something else?}\spc{3}
+
+\intermediatesubproblem{Explain why a deterministic model for your response variable is absurd.}\spc{3}
+
+\intermediatesubproblem{Create a stochastic (statistical) model for the response. Pay attention to which letters are lowercase/uppercase.}\spc{3}
+
+\intermediatesubproblem{In this model, would the error term $\errorrv$ be large or small? Explain.}\spc{3}
+
+\intermediatesubproblem{If you were given leeway to collect a multidimensional representation of \qu{skiing}  (i.e. a more natural, raw representation), what would you collect?}\spc{3}
+
+\hardsubproblem{Build a causal model (using bubbles and arrows) for the response.}\spc{9}
+
+
+\hardsubproblem{Does skiing \emph{cause} the response? If so, is it a major contributor? Explain using your diagram from (h).}\spc{7}
 
 \end{enumerate}
+
+\problem{We will discuss confounding here. The prevailing data on wage inequality says that women are paid 90 cents on the dollar that men earn for comparable work.
+
+
+\begin{figure}[htp]
+\centering
+\includegraphics[width=3in]{celebrity_heights.jpg}
+\end{figure}
+}
+
+\begin{enumerate}
+
+\easysubproblem{If you were to do a regression of $y:$ earnings on $x_1:$ employee height, what would the results look like and why? Report the p-values on each $\betahat_j$'s and the omnibus $F$ statistic.}\spc{5}
+
+\easysubproblem{Build a causal model for $y$: earnings and $x_1$: employee height and $x_2:$ employee gender. No need to include unknown variables.}\spc{8}
+
+\easysubproblem{If you were to do a regression of $y:$ earnings on $x_1:$ employee height and $x_2$ gender, what would the results look like? Report the p-values on each $\betahat_j$'s and the omnibus $F$ statistic. Also say if the $\betahat_j$ values changed and which direction vs. the regression in part (a).}\spc{8}
+
+\end{enumerate}
+
+\problem{A few questions about likelihood. Imagine a simple model where you flip the same coin three times. You are modeling the response \qu{flipping a head} with a statistical model and make a parametric assumption that the event is a Bernoulli r.v.
+
+\begin{figure}[htp]
+\centering
+\includegraphics[width=3in]{three_coins.jpg}
+\end{figure}
+}
+
+\begin{enumerate}
+
+\easysubproblem{What does $\theta$ represent in this model?}\spc{1}
+
+\intermediatesubproblem{Find the joint probability density / mass function for these three events.}\\
+
+$\prob{Y_1, Y_2, Y_3} = $\spc{2}
+
+\easysubproblem{Find the likelihood function.}\spc{1}
+
+\intermediatesubproblem{Find the maximum likelihood estimator for $\theta$.}\spc{3}
+
+\easysubproblem{If your data was heads, heads, tails (in the image above). What is the maximum likelihood estimate? This will allow you to locate the best possible model given your parametric assumptions.}\spc{1}
+
+\extracreditsubproblem{If your maximum likelihood estimate in (e) was indeed the value of $\theta$, what data would be most probable? Note: this is the inverse question of likelihood and it is meant to trick you.}\spc{12}
+
+\end{enumerate}
+
+\problem{Here we will be considering different types of AI. Imagine you have the following problem: you are tasked with finding the centers of cancer cells in microscopic images. Images are composed of pixels which encode a color. Typical coloring schemes for computer graphics are \qu{true color} and use about 16.8 milion different colors per pixel. Here's a typical image:
+
+\begin{figure}[htp]
+\centering
+\includegraphics[width=3in]{cancer.png}
+\end{figure}
+
+All cells are stained using immunohistochemistry using a compound which appears blue. But cancer cells in this type of immunohistochemical staining appear to have a red membrane due to a surface marker. (In the example above a green dot is placed in the center of every cancer cell to indicate to you what you are looking for; this dot is \emph{not part of the original image}). Assume we are using a data-driven approach to solve this problem.
+}
+
+\begin{enumerate}
+
+\easysubproblem{What type of AI would work the best here? No need to discuss.}\spc{1}
+
+\easysubproblem{What is the raw data representation?}\spc{2}
+
+\intermediatesubproblem{What is the unit of analysis?}\spc{3}
+
+\intermediatesubproblem{Why is it easy for you to find the cell centers but difficult for a computer?}\spc{3}
+
+\hardsubproblem{Consider the situation where you employ classic machine learning. What features would you collect on the units of analysis? Enumerate and describe these features.}\spc{8}
+
+\hardsubproblem{How would you sample to build a dataframe (collect historical data)? Explain the procedure and the goals of this step. This is known as \qu{supervised machine learning}.}\spc{7}
+
+\intermediatesubproblem{Once you built the dataframe, would a human be able to use that dataframe to create a predictive model? Yes / no and discuss.}\spc{3}
+
+\easysubproblem{Considering you selected features in (e) and sampled in (f), would this entire enterprise be considered \qu{good machine learning}? Explain.}\spc{3}
+
+
+\easysubproblem{Now you have the dataframe. Given the problem context, which worldview would you select --- the parametric or the nonparametric and why?}\spc{3}
+
+\hardsubproblem{Assume you went the parametric model route and you built a linear model. Explain where it would be wrong. Be explicit by referencing your predictors in (e).}\spc{10}
+
+
+\end{enumerate}
+
+\problem{These exercises will dicsuss the linear model and linear regressions.}
+
+
+\begin{enumerate}
+
+\easysubproblem{Think of three loss functions $L(e_1, \ldots, e_n)$. Do not list any that we did in class.}\spc{3}
+
+\intermediatesubproblem{You are building a data-driven model and choose to use the linear parametric assumption but not necessarily the other three OLS assumptions. Describe a situation where fitting this model using $L = SSE$ is \emph{not} a good idea because it does not accuractely reflect the loss function in your situation at hand.}\spc{3}
+
+\extracreditsubproblem{Prove that the MLE of the $\beta$'s is the same solution as minimizing SSE.}\spc{10}
+
+
+\extracreditsubproblem{Assume that you have proven the above and plugged in those estimates to the likelihood expression. Now $\sum_{i=1}^n \errorrv_i^2 = \sum_{i=1}^n e_i^2 = SSE$. Prove that $\hat{\sigsq}_{MLE} = MSE$.}\spc{8}
+
+
+
+\end{enumerate}
+
+\problem{We will now analyze the baseball data (\texttt{baseball.csv}). You can use any software package you wish to answer these questions.}
+
+\begin{enumerate}
+
+\easysubproblem{Fit a linear model with reponse variable $y:$ salary in thousands. Use all available predictors. Provide a valid interpretation on $\betahat_j$ for the feature \qu{number of RBI's}.}\spc{3}
+
+\easysubproblem{Is this interpretation reasonable given what you know about number of RBI's and how it is related to other predictors? You may need to ask someone who knows a bit about baseball.}\spc{6}
+
+\easysubproblem{What a causal additive model for number of RBI's make sense? Yes / no.}\spc{1}
+
+\easysubproblem{Would you be able to make a randomized experiment to find the additive causal effect of number of RBI's? Yes / no.}\spc{1}
+
+\easysubproblem{Some of these variables may be significant because we dredged. Why is this likely \emph{not} the case?}\spc{3}
+
+\extracreditsubproblem{Use a likelihood ratio test to test the effect of number of RBI's and Number of Walks.}\spc{10}
+
+
+
+\end{enumerate}
+
+
+
 
 \end{document}

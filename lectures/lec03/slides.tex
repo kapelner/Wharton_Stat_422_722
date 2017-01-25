@@ -1,5 +1,5 @@
-\documentclass[slides]{beamer} %switch "slides" to "handout" for printing out
-%\documentclass[handout]{beamer}
+%\documentclass[slides]{beamer} %switch "slides" to "handout" for printing out
+\documentclass[handout]{beamer}
 
 \include{preamble}
 
@@ -10,9 +10,9 @@
 \useoutertheme{progressbar}
 \useinnertheme{progressbar}
 
-\title[Lec 1]{Predictive Analytics Lecture 2}
+\title[Lec 1]{Predictive Analytics Lecture 3}
 \institute[Wharton, Statistics]{Stat 422/722\\ at The Wharton School of the University of Pennsylvania}
-\date{January 24 \& 25, 2017}
+\date{January 31 \& February 1, 2017}
 
 \author{Adam Kapelner}
 
@@ -21,6 +21,12 @@
 
 %immediately create a title page
 \frame{\titlepage}
+
+
+\end{document}
+
+
+
 
 \section{LM Inference, Corr. $\not \Rightarrow$ Causation}
 
@@ -61,7 +67,8 @@ assuming we can know the model, there still is $\errorrv$. Where does it come fr
 y = t(z_1, z_2, \ldots)
 \eeqn
 
-i.e $t$ is the deterministic true mathematical model.
+i.e $t$ is the deterministic true mathematical model. %Consider the cigarette example .%where the response is completely explained by the \emph{causal} variables $c_1, c_2, \ldots$. Causal is usually defined as a variable that affects the response variable that one can \qu{manipulate}. 
+
 	
 \end{frame}
 
@@ -82,7 +89,7 @@ i.e $t$ is the deterministic true mathematical model.
 \end{figure}
 
 \small
-Arrows represent causal directions and diamond boxes represent \qu{manipulable} variables (more on this soon).   What functions for the response would be deterministic? \pause 
+Arrows represent causal directions and diamond boxes represent \qu{manipulable} variables (more on this soon).   What functions for the response would be deterministic? \pause
 
 \beqn
 y = t(\pause d_1, d_2, s_1), y = t(d_1, d_2, s_2, \pause c_1, c_2, c_3, c_4), y = t(d_1, d_2, c_1, c_2, c_3, c_4, \pause c_5) \\
@@ -93,7 +100,7 @@ y = t(\pause d_1, d_2, s_1), y = t(d_1, d_2, s_2, \pause c_1, c_2, c_3, c_4), y 
 \begin{frame}\frametitle{The Root Cause of Randomness}
 
 \small
-But let's say we only have information about $c_1$ (a contributory cause, one among many co-occurrent causes).  \pause Since we don't have all the inputs (nor the information of the states of the co-occurent causes), we cannot be sure of $y$. Hence we'll employ a statistical model, \pause
+But let's say we only have information about $c_1$ (a contributory cause, one among many co-occurrent causes). Since we don't have all the inputs (nor the information of the states of the co-occurent causes), we cannot be sure of $y$. Hence we'll employ a statistical model, \pause
 
 \beqn
 Y \sim \pause \bernoulli{f(c_1)}
@@ -120,7 +127,7 @@ Then if we make a parametric assumption,
 
 \beqn
 y &=& s(x_1, \ldots, x_p; \theta_1, \ldots, \theta_\ell) + \\
-&& \underbrace{f(x_1, \ldots, x_p) - s(x_1, \ldots, x_p; \theta_1, \ldots, \theta_\ell)}_{ \pause \text{model misspecification}} + \\
+&& \underbrace{f(x_1, \ldots, x_p) - s(x_1, \ldots, x_p; \theta_1, \ldots, \theta_\ell)}_{\text{model misspecification}} + \\
 && \underbrace{t(z_1, z_2, \ldots) - f(x_1, \ldots, x_p)}_{\substack{\pause \errorrv \\ \pause \text{noise due to ignorance error}}}
 \eeqn
 	
@@ -131,8 +138,8 @@ Further, we then have to estimate the parameters to get a fit:
 
 \beqn
 y &=& \underbrace{\hat{s}(x_1, \ldots, x_p; \hat{\theta}_1, \ldots, \hat{\theta}_\ell)}_{\yhat} + \\
-&& \underbrace{s(x_1, \ldots, x_p; \theta_1, \ldots, \theta_\ell) - \hat{s}(x_1, \ldots, x_p; \hat{\theta}_1, \ldots, \hat{\theta}_\ell)}_{ \pause \text{model / parameter estimation error}} + \\
-&& \underbrace{f(x_1, \ldots, x_p) - s(x_1, \ldots, x_p; \theta_1, \ldots, \theta_\ell)}_{ \pause \text{model misspecification error}} + \\
+&& \underbrace{s(x_1, \ldots, x_p; \theta_1, \ldots, \theta_\ell) - \hat{s}(x_1, \ldots, x_p; \hat{\theta}_1, \ldots, \hat{\theta}_\ell)}_{\text{model / parameter estimation error}} + \\
+&& \underbrace{f(x_1, \ldots, x_p) - s(x_1, \ldots, x_p; \theta_1, \ldots, \theta_\ell)}_{\text{model misspecification error}} + \\
 && \underbrace{t(z_1, z_2, \ldots) - f(x_1, \ldots, x_p)}_{\substack{\pause \errorrv \\ \pause \text{noise due to ignorance}}}
 \eeqn
 	
@@ -200,13 +207,13 @@ y = \underbrace{g(x) + \errorrv_0}_{f(x)} + \, \errorrv \quad \text{s.t.} \quad 
 \includegraphics[width=1.5in]{nice_ignorance}
 \end{figure}
 
-Also, since $x$ does not affect the other variables in any way, it cannot have an influence on their spread,  \pause hence $\sigsq$ is not a function of \pause $x$. Thus the error spread is the same everywhere across the range of $x$ (homoskedasticity).
+Also, since $x$ does not affect the other variables in any way, it cannot have an influence on their spread, hence $\sigsq$ is not a function of \pause $x$. Thus the error spread is the same everywhere across the range of $x$ (homoskedasticity).
 
 \end{frame}
 
 \begin{frame}\frametitle{Parametric Worldview}
 
-We are back to the fundamental statistical problem, $Y = f(x) + \errorrv$ where now we are more \qu{okay} with the noise being normal and homoskedastic for all $x$.\\~\\ \pause 
+We are back to the fundamental statistical problem, $Y = f(x) + \errorrv$ where now we are more \qu{okay} with the noise being normal and homoskedastic for all $x$.\\~\\
 
 We now invoke the parametric worldview. Within that parametric worldview, we will buy into the linear model. Thus,
 
@@ -237,8 +244,7 @@ First person:
 \end{figure}
 \end{minipage}
 \begin{minipage}{0.35\textwidth}
-\normalsize 
-\pause 
+\normalsize
 No effect of first person's $y_1$ (nor any of the unobserved variables which generate the $\errorrv_1$) on the second person's $y$ (or $\errorrv_2$). \\ \pause
 
 If there are, we need to observe them and rotate them into our estimate of $f(x)$. Examples for this cigarette case?
@@ -263,7 +269,7 @@ we then	further assume
 \item normality of $\errorrv$ (least important if $n$ is large)
 \end{itemize}
 
-in order to get ... \pause inference. Changing these assumptions gives entirely new modeling techniques and inference. It is called \qu{generalized linear model} theory.
+in order to get inference. Changing these assumptions gives entirely new modeling techniques and inference. It is called \qu{generalized linear model} theory.
 
 \end{frame}
 
@@ -298,13 +304,13 @@ In general, a parametric density function / mass function of a r.v. looks like t
 \prob{x; \theta} = \ldots
 \eeqn
 
-where $\theta$ are the ... \pause tuning knobs on the model. We ask the question \qu{what's the probability of this realization $x$ (the data) assuming the density was parameterized at $\theta$}? Now we ask the inverse question:
+where $\theta$ are the tuning knobs on the model. We ask the question \qu{what's the probability of this realization $x$ (the data) assuming the density was parameterized at $\theta$}? Now we ask the inverse question:
 
 \beqn
 \lik{\theta; x}= \ldots
 \eeqn
 
-that is \qu{what's the likelihood of these parameters assuming we saw $x$ (the data) come out the way it did}? The $\lik{}$ denotes the \emph{likelihood function}. Of course, probability and likelihood are  \pause exactly the same numerically, 
+that is \qu{what's the likelihood of these parameters assuming we saw $x$ (the data) come out the way it did}? The $\lik{}$ denotes the \emph{likelihood function}. Of course, probability and likelihood are exactly the same numerically, 
 
 \beqn
 \prob{x; \theta} = \lik{\theta; x}= \ldots
@@ -317,7 +323,7 @@ but conceptually they couldn't be further apart!
 \begin{frame}\frametitle{Maximum Likelihood Estimation (MLE)}
 
 \small
-Why not just ask the very common-sense question, what $\theta$ (what model within this parametric family) maximizes the probability of seeing what we observe? That would be a good guess as to what $\theta$ is. \pause 
+Why not just ask the very common-sense question, what $\theta$ maximizes the probability of seeing what we observe? That would be a good guess as to what $\theta$ is.\pause 
 
 \beqn
 \thetahat := \argmax_{\theta \in \Theta} \braces{\lik{\theta; x}} = \argmax_{\theta \in \Theta} \braces{\underbrace{\natlog{\lik{\theta; x}}}_{\loglik{\theta; x}}} \pause
@@ -397,7 +403,7 @@ LR :=
 representing how much \pause more probable the full model is over the restricted model. But is this is this increase in probability \emph{statistically significant}? It turns out as $n$ gets large and under pretty forgiving conditions,
 
 \beqn
-Q &:=& 2 \underbrace{\natlog{LR}}_{\substack{\loglik{\thetahat; x} - \\ \loglik{\thetahat_R; x}}} \convd \chisq{q} \\
+Q &:=& 2 \natlog{LR} \convd \chisq{q} \\
 % &=& 2\parens{\loglik{\thetahat; x} - \loglik{\thetahat_R; x}}
 \eeqn
 
@@ -406,7 +412,7 @@ Q &:=& 2 \underbrace{\natlog{LR}}_{\substack{\loglik{\thetahat; x} - \\ \loglik{
 
 \begin{frame}\frametitle{Testing the Simple Reduced Model}
 
-Let's test our \qu{naive model} from Lecture 1 (always predicting $\yhat = \pause \ybar$) versus having a model having many predictors in a linear model.
+Let's test our \qu{naive model} from Lecture 1 (always predicting $\yhat = \ybar$) versus having a model having many predictors in a linear model.
 
 \beqn
 LR &=& \frac{
@@ -613,7 +619,6 @@ Some observations from the previous illustration:\pause
 \item Maybe some of the predictors $x_1, \ldots, x_p$ are causal, but most are likely not. \pause
 \item Of the ones that are not causal due to a confounder, you may have an idea of the lurking variables but it is unlikely you can measure them. Think college GPA vs SAT with confounder true IQ / ability.\pause
 \item If some variables are causal, it is unlikely they have an additive causal effect; their effect is likely moderated by many other interacting variables possibly in non-linear ways.\pause
-\item Some predictors are completed independent of the response.\pause
 \item A linear model for $y$ on $x_1, \ldots, x_p$ is likely far from the truth (not related to our discussion on causality).
 \end{itemize}
 
@@ -912,7 +917,7 @@ But we didn't speak at all about selecting the observations themselves (assuming
 
 \begin{frame}\frametitle{Optimal Design for Inferring one Slope}
 
-Question: assume OLS and that we only care about inference for $\beta_1$. We can sample any $x$ values live in their set $\mathbb{X}$ e.g. $\in \bracks{x_m, x_M}$. What should the $n$ values be? \\~\\
+Question: assume OLS and that we only care about inference for $\beta_1$. We can sample any $x$ values $\in \bracks{x_m, x_M}$. What should the $n$ values be? \\~\\
 
 Let $x_m = 0$, $x_M = 1$ and $n = 10$. The best inference for $\beta_1$ means ... \pause $\se{\betahat_1}$ is minimum. Design strategies for the $x$'s: \pause
 
