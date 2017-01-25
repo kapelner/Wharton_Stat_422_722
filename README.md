@@ -4,7 +4,7 @@ This is the course homepage for STAT 422/722 for the Spring semester 2017 at The
 
 ## Lectures
 
-My lectures can be listened to as clyp.it tracks [(all lectures)](https://clyp.it/search?type=hashtag&query=stat422). Clyp has an iphone and android app as well. I will also include my PDF notes.
+My first lecture can be listened to as a clyp.it tracks but all others should be on canvas.
 
 * Lecture 1 [(audio sec A)](https://clyp.it/ty1cebu4) [(audio sec B)](https://clyp.it/d3tmzv0b) [(slides)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec01/slides.pdf)
 * Other lectures are available on canvas.
