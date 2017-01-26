@@ -8,12 +8,12 @@
 
 
 
-\title{STAT 422/722 Spring 2016 Homework \#1}
+\title{STAT 422/722 Spring 2016 Homework \#2}
 
 \author{Professor Adam Kapelner} %STUDENTS: write your name and section here e.g. "\author{John Doe, Section A}"
 
 \iftoggle{professormode}{
-\date{Due \textit{4th floor JMHH} Thursday, February 2 5PM\\ \vspace{0.5cm} \footnotesize (this document last updated \today ~at \currenttime)}
+\date{Due \textit{4th floor JMHH} Thursday, February 9 5PM\\ \vspace{0.5cm} \footnotesize (this document last updated \today ~at \currenttime)}
 }
 
 \renewcommand{\abstractname}{Instructions and Philosophy}
@@ -47,6 +47,11 @@ You may collaborate, but hand in your own copy with your own wording. See the \h
 \pagebreak\newpage
 }
 
+\end{document}
+
+\problem{These questions are about prediction and modeling theory.}
+
+
 
 \problem{These questions are about prediction and modeling theory.}
 
@@ -59,17 +64,17 @@ You may collaborate, but hand in your own copy with your own wording. See the \h
 
 \easysubproblem{Explain what each row in a dataframe represents. Give every synonym for the rows in a dataframe. Write a sentence as to why each of the particular vocabulary words were employed here.}\spc{10}
 
-\easysubproblem{Explain what each column in a dataframe represents. Give every synonym for the column. Write a sentence as to why each of the particular vocabulary words were employed here. In the models in this class, there will be \emph{one} special column. Explain what its called and give definitions for all its synonyms.}\spc{11}
+\easysubproblem{Explain what each column in a dataframe represents. Give every synonym for the column. Write a sentence as to why each of the particular vocabulary words were employed here. In the models in this class, there will be \emph{one} special column. Explain what its called and give definitions for all its synonyms.}\spc{10}
 
 \easysubproblem{Explain why theories are mathematical (generally speaking).}\spc{6}
 
-\intermediatesubproblem{Below is an excerpt from Box and Draper (1987, page 424) and contains the famous line \qu{all models are wrong, but some are useful}. Explain what this means. }\spc{5}
+\intermediatesubproblem{Below is an excerpt from Box and Draper (1987, page 424) and contains the famous line \qu{all models are wrong, but some are useful}. Explain what this means. 
 
 \iftoggle{professormode}{
 \begin{figure}[htp]
 \centering
 \includegraphics[width=6in]{box_draper_p424.jpg}
-\end{figure}~\spc{3}}
+\end{figure}}}~\spc{6}
 
 
 \intermediatesubproblem{What did we call $\delta(\xi)$ in class (ibid, Equation 13.1.7)?}\spc{1}
@@ -139,7 +144,7 @@ You may collaborate, but hand in your own copy with your own wording. See the \h
 
 \begin{enumerate}
 
-\easysubproblem{If you were to do a regression of $y:$ earnings on $x_1:$ employee height, what would the results look like and why? Report the p-values on each $\betahat_j$'s and the omnibus $F$ statistic's $p$ value.}\spc{5}
+\easysubproblem{If you were to do a regression of $y:$ earnings on $x_1:$ employee height, what would the results look like and why? Report the p-values on each $\betahat_j$'s and the omnibus $F$ statistic.}\spc{5}
 
 \easysubproblem{Build a causal model for $y$: earnings and $x_1$: employee height and $x_2:$ employee gender. No need to include unknown variables.}\spc{8}
 
@@ -167,7 +172,7 @@ $\prob{Y_1, Y_2, Y_3} = $\spc{2}
 
 \easysubproblem{Find the likelihood function.}\spc{1}
 
-\extracreditsubproblem{Find the maximum likelihood estimator for $\theta$.}\spc{3}
+\intermediatesubproblem{Find the maximum likelihood estimator for $\theta$.}\spc{3}
 
 \easysubproblem{If your data was heads, heads, tails (in the image above). What is the maximum likelihood estimate? This will allow you to locate the best possible model given your parametric assumptions.}\spc{1}
 
@@ -206,7 +211,7 @@ All cells are stained using immunohistochemistry using a compound which appears 
 
 \easysubproblem{Now you have the dataframe. Given the problem context, which worldview would you select --- the parametric or the nonparametric and why?}\spc{3}
 
-\hardsubproblem{Assume you went the parametric model route and you built a vanilla linear model. Explain where it would be wrong. Be explicit by referencing your predictors in (e).}\spc{10}
+\hardsubproblem{Assume you went the parametric model route and you built a linear model. Explain where it would be wrong. Be explicit by referencing your predictors in (e).}\spc{10}
 
 
 \end{enumerate}
@@ -237,7 +242,7 @@ All cells are stained using immunohistochemistry using a compound which appears 
 
 \easysubproblem{Is this interpretation reasonable given what you know about number of RBI's and how it is related to other predictors? You may need to ask someone who knows a bit about baseball.}\spc{6}
 
-\easysubproblem{Does a causal additive model for number of RBI's make sense? Yes / no.}\spc{1}
+\easysubproblem{What a causal additive model for number of RBI's make sense? Yes / no.}\spc{1}
 
 \easysubproblem{Would you be able to make a randomized experiment to find the additive causal effect of number of RBI's? Yes / no.}\spc{1}
 
