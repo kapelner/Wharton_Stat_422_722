@@ -75,7 +75,30 @@ i.e. the most likely model for this data is a weighted coin with probability of 
 
 \end{frame}
 
-\section{Design}
+\section{Extrapolation / Design}
+
+
+\begin{frame}\frametitle{Extrapolation}
+\small
+Data driven approaches are all focused on accuracy during \emph{interpolation}.  
+
+\begin{figure}
+\centering
+\includegraphics[width=2.5in]{extrap1.png}
+\end{figure}
+\vspace{-0.3cm}
+Extrapolation brings trouble. It is important to ask the question for a new observation $\x^*$ if it is within the space of $\x$'s in the historical data. (Hardly anyone does this... but you should)! Be aware that extrapolation methods of different algorithms differ considerably! [R Demo]
+	
+\end{frame}
+
+\begin{frame}\frametitle{Reconciliation of those Silly Cartoons}
+
+\begin{figure}
+\centering
+\includegraphics[width=3.2in]{extrap.jpg}
+\end{figure}
+
+\end{frame}
 
 \begin{frame}\frametitle{Dataframe Design}
 
@@ -84,7 +107,7 @@ We spoke a lot about featurization i.e. selecting the columns in the dataframe (
 But we didn't speak at all about selecting the observations themselves (assuming you have some modicum of control of selecting your data). Two things to consider: \\~\\  \pause
 
 \begin{enumerate}
-\item \emph{Generalizability} refers to the ability of the model to generalize, or be \emph{externally valid} when considering new observations. This comes down to sampling observations from the same population as your new data you wish to predict (pretty obvious). Sometimes difficult in practice! \pause
+\item \emph{Generalizability} refers to the ability of the model to generalize, or be \emph{externally valid} when considering new observations. This comes down to sampling observations from the same population as your new data you wish to predict (pretty obvious). Sometimes difficult in practice! \pause Extrapolation?? \pause
 \item Optimal Design
 \end{enumerate}
 
@@ -146,30 +169,6 @@ $I$-optimality: minimize the average prediction variance over the design space.
 \end{frame}
 
 
-\section{Extrapolation}
-
-
-\begin{frame}\frametitle{Extrapolation}
-\small
-Data driven approaches are all focused on accuracy during \emph{interpolation}.  
-
-\begin{figure}
-\centering
-\includegraphics[width=2.5in]{extrap1.png}
-\end{figure}
-\vspace{-0.3cm}
-Extrapolation brings trouble. It is important to ask the question for a new observation $\x^*$ if it is within the space of $\x$'s in the historical data. (Hardly anyone does this... but you should)! Be aware that extrapolation methods of different algorithms differ considerably! [R Demo]
-	
-\end{frame}
-
-\begin{frame}\frametitle{Reconciliation of those Silly Cartoons}
-
-\begin{figure}
-\centering
-\includegraphics[width=3.2in]{extrap.jpg}
-\end{figure}
-
-\end{frame}
 
 \section{Logistic Regression}
 
@@ -184,7 +183,7 @@ Y \inddist \normnot{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}{\sigsq}
 
 If the response $y$ is categorical, can we still use this? \pause No... the only elements in the support of the r.v. $Y$ are the levels only. [JMP Churn] \\~\\
 
-First, assume $Y$ is binary i.e. zero or one. The model we use is...\pause  
+First, assume $Y$ is binary i.e. zero or one. The model (AKA \qu{classifier}) we use is...\pause  
 
 \beqn
 Y \sim \bernoulli{f(x_1, \ldots, x_p)}
@@ -210,7 +209,7 @@ And the parametric assumption would be
 \lambda(s_{\reals}(x_1, \ldots, x_p; \theta_1, \ldots, \theta_\ell)) = s(x_1, \ldots, x_p; \theta_1, \ldots, \theta_\ell)
 \eeqn
 
-And assuming a linear form:
+And assuming a linear form of $s_{\reals}$,
 
 \beqn
 \lambda(\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p) = ?
@@ -305,7 +304,7 @@ How? \pause
 &=& \prod_{i=1}^n \parens{\frac{e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}}{1 + e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}}}^{y_i} \parens{1 - \frac{e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}}{1 + e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}}}^{1-y_i}
 \eeqn
 
-How? \pause This does not have a simple, closed form solution. The computer iterates numerically usually using the log of above, since it's (1) numerically more stable and (2) the expression is easier to work with. When it \qu{converges} on the values of the parameters that maximize the above, these are shipped to you as $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$. This is called \qu{running a logistic regression}. This usually is instant on a modern computer.
+How? \pause This does not have a simple, closed form solution. The computer iterates numerically using gradient methods. It usually uses the $\natlog{\cdot}$ of above, since it's (1) numerically more stable and (2) the expression is easier to work with. When it \qu{converges} on the values of the parameters that maximize the above, these are shipped to you as $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$. This is called \qu{running a logistic regression}. This usually is instant on a modern computer.
 	
 \end{frame}
 
@@ -318,7 +317,7 @@ How? \pause
 \phat = \phat(x^*_1, \ldots, x^*_p) = \pause \frac{e^{\betahat_0 + \betahat_1 x_1 + \ldots + \betahat_p x_p}}{1 + e^{\betahat_0 + \betahat_1 x_1 + \ldots + \betahat_p x_p}}
 \eeqn
 	
-Note the predictions are for the conditional expectation function, the probability itself. However, you may actually wish to predict the response, the 1 or the 0. What to do?\\~\\ \pause
+Note the predictions are for the conditional expectation function, the probability itself, the \emph{estimated expected probability}. However, you may actually wish to predict the response, the 1 or the 0. What to do?\\~\\ \pause
 
 You can create a \emph{classification rule} which allows you to make a decision about the response based on the probability. What is the most intuitive classification rule? \pause
 
@@ -326,7 +325,7 @@ You can create a \emph{classification rule} which allows you to make a decision 
 \yhat = \indic{\phat \geq 0.5} := \pause \begin{cases} 1 ~~~\text{if}~~~ \phat \geq 0.5 \\ 0 ~~~\text{if}~~~ \phat < 0.5 \end{cases}
 \eeqn
 
-AKA the \qu{most likely criterion}. \pause We will return to prediction and evaluation of predictive performance later but first...
+AKA the \qu{most likely criterion}. \pause We will return to prediction and evaluation of predictive performance later but first... inference.
 
 \end{frame}
 
@@ -334,7 +333,7 @@ AKA the \qu{most likely criterion}. \pause We will return to prediction and eval
 \begin{frame}\frametitle{Global Test in Logistic Regression}
 
 \footnotesize
-Recall in OLS regression, probability theory directly gave us $t$-tests and $F$-tests. Under the logistic regression assumptions, \emph{we have no such analogous theory}! However, we can make use of the ... \pause likelihood ratio test. Recall:
+Recall in OLS regression, gaussian (normal) theory directly gave us $t$-tests and $F$-tests. Under the logistic regression assumptions, \emph{we have no such analogous theory}! However, we can make use of the ... \pause likelihood ratio test. Recall:
 
 \vspace{-0.2cm}
 \beqn
@@ -378,7 +377,7 @@ We then look at $Q = 2\natlog{LR}$ and compare it to the appropriate $\chi^2$ di
 Let's say we want to test something like:
 
 \beqn
-&& H_0: \beta_1 = 0, \beta_2 = 0, \quad H_a: \text{at least one is non-zero}
+&& H_0: \beta_1 = 0 ~\&~ \beta_2 = 0, \quad H_a: \text{at least one is non-zero}
 \eeqn
 
 We can again use the likelihood ratio test:
@@ -419,28 +418,401 @@ We can again use the likelihood ratio test:
 \eeqn \pause
 
 \small
-We then look at $Q = 2\natlog{LR}$ and compare it to the appropriate $\chi^2$ distribution. Here, since we've dropped $2$ parameters / degrees of freedom, we look at the critical $\chisq{1, \alpha}$ value. \\~\\ \pause
+We then look at $Q = 2\natlog{LR}$ and compare it to the appropriate $\chi^2$ distribution. Here, since we've dropped 1 parameter / degrees of freedom; thus we look at the critical $\chisq{1, \alpha}$ value. \\~\\ \pause
 
-There is something special about a $\chisq{}$ r.v. with one degree of freedom. \pause Cool fact from basic probability: $\sqrt{\chisq{1}} = Z \sim \stdnormnot$. This is how JMP produces standard errors for logistic regression coefficients.
+There is something special about a $\chisq{}$ r.v. with one degree of freedom. \pause Note this cool fact from probability theory: $\sqrt{\chisq{1}} \sim \stdnormnot$ i.e. a \qu{z-score}. This is how JMP produces standard errors for logistic regression coefficients.
 
 \end{frame}
 
 
-\begin{frame}\frametitle{Telecom Churn Example}
-
+\begin{frame}\frametitle{Telecom Company Churn Example}
+\small
 In marketing \qu{churn} refers to a customer canceling their service. Studies suggest that it costs 5-10x more to acquire a new customer than to retain an old customer. Thus, predicting churn is of major interest! \\~\\ \pause
 
-Here's a dataset from a telecom company (likely it's churn on Verizon / AT\&T / T-Mobile /Sprint's cell-phone plan). We have 7,043 customers with 20 features. This is likely a nearly-mindless dump!! Churn is defined to be a complete cancellation of services in the next month period. Since we are predicting churn, define $y=1$ to be churn, so the $\phat$'s are estimates of probability of churning (this just makes everything easier to understand).
+Here's a dataset from a telecom company (likely it's churn on Verizon / AT\&T / T-Mobile /Sprint's cell-phone plan). We have 7,043 customers with 20 features. This is likely a nearly-mindless dump!! Churn is defined to be a complete cancellation of services in the next month period. Since we are predicting churn, define $y=1$ to be churn, so the $\phat$'s are estimates of probability of churning (this just makes everything easier to understand). \\~\\ \pause
+
+We begin just trying to model $y$: churn vs. $x$: tenure (the number of months customer is currently subscribed for). What do you think the relationship will be? $\partial /\partial x [f(x)]$?
 	
 \end{frame}
 
-\begin{frame}\frametitle{}
+\begin{frame}\frametitle{Results of Simple Logistic Regression}
+
+[JMP demo] Which likelihood numbers are best? Well highest likelihoods are good which means highest log likelihoods which means \textit{smallest} negative log likelihoods.... yup it's confusing. Here's what JMP did:
+
+\beqn
+Q &=& 2\natlog{LR} = 2\parens{\loglik{\thetahat; x} - \loglik{\thetahat_R; x}} \\
+&=& 2\parens{-(3595.9341) - -(4075.0729)}\\
+&=& 2\parens{479.1389} = 958.2778  \\
+&=& 2\natlog{1.22 \times 10^{208}}
+\eeqn
+
+and $\chisq{1, 5\%}$ = \texttt{qchisq(.95, 1)} = 3.84. So this passes the test (comfortably). We reject $H_0$ and conclude that the model is linearly useful. \pause ALSO: equivalent to a test of one variable. We reject $H_0$ and conclude tenure has a linear effect on the log-odds of churn. \\~\\ \pause
 
 	
 \end{frame}
 
+\begin{frame}\frametitle{Basic Predictions I}
+
+Predict estimated expected probability of churn for someone who has 1 month of tenure
+
+\beqn
+\phat = \frac{e^{\betahat_0 + \betahat_1 x_1}}{1 + e^{\betahat_0 + \betahat_1 x_1}} = \frac{e^{0.0273 + (-0.0288) (1)}}{1 + e^{0.0273 + (-0.0288) (1)}} = \frac{0.9985}{1.9985} = 0.500
+\eeqn
+
+How about 2 months of tenure?
+
+\beqn
+\phat = \frac{e^{\betahat_0 + \betahat_1 x_1}}{1 + e^{\betahat_0 + \betahat_1 x_1}} = \frac{e^{0.0273 + (-0.0288) (2)}}{1 + e^{0.0273 + (-0.0288) (2)}} = \frac{0.9702}{1.9702} = 0.492
+\eeqn
+
+i.e. a difference in about 0.8\% as measured on a probability scale.
+
+\end{frame}
+
+\begin{frame}\frametitle{The Logistic Function}
+
+\begin{figure}
+\centering
+\includegraphics[width=3.2in]{logistic_function.png}
+\end{figure}
+
+A move of one unit in $x$ when $x \approx 0$ is a much bigger move than one unit in $x$ when $x \approx 3$
+
+\end{frame}
+
+\begin{frame}\frametitle{Parameter Standard Error}
+
+To add to the confusion... JMP prefers to calculate parameter estimates and standard error via the Wald test, which is similar to the likelihood ratio test. Thus, 761.00 $\neq$ 958.28 but, remarkably, they are about the same conceptually -- both large and significant. The standard errors,
+
+\beqn
+\underbrace{Q = z^2}_{\substack{\text{fact from} \\ \text{probability} \\ \text{theory}}} = \squared{\frac{\betahat_1}{s_{\betahat_1}}} \Rightarrow  s_{\betahat_1} = \frac{\abss{\betahat_1}}{\sqrt{Q}}
+\eeqn
+
+are expectedly about the same 
+
+\beqn
+s_{\betahat_1} &=& \frac{\abss{-0.0387682}}{\sqrt{761.00}} = 0.0014 \eqncomment{via the Wald test}\\
+s_{\betahat_1} &=& \frac{\abss{-0.0387682}}{\sqrt{958.28}} = 0.0013 \eqncomment{via the LR test}
+\eeqn
+
+	
+\end{frame}
+
+
+
+\begin{frame}\frametitle{Multivariate Logistic Regr. Interp. I}
+
+Now let's use all variables. Questions:
+
+\begin{itemize}
+\item Which variable(s) should we leave out? \pause \texttt{customerID} --- no causal mechanism.
+\item Why are we getting biased estimates and zeroes? \pause Perfect multicollinearity. \pause  Solution? \pause Kill columns until you don't get the error anymore. Turns out 6 have to be removed.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}\frametitle{Realistic Predictors Illustration (updated)}
+
+\begin{figure}
+\centering
+\hspace{-0.5cm}\includegraphics[width=4.6in]{realistic_predictors}
+\end{figure}
+	
+\end{frame}
+
+\begin{frame}\frametitle{Multivariate Logistic Regr. Interp. II}
+
+\small
+Now let's use all variables. Questions:
+
+\begin{itemize}
+\item \ingrey{Which variable(s) should we leave out? \texttt{customerID} --- no causal mechanism.}
+\item \ingrey{Why are we getting biased estimates and zeroes?  Perfect multicollinearity.}
+\item Are all these variables \qu{significant}? \pause No. After a Bonferroni correction, we \qu{lose} two. Are they for sure insignificant? \pause No, maybe we didn't have enough power to detect them...
+\item Do the coefficients sign / size make sense intuitively? \pause Yes?
+\item Which of the \qu{driving} variables are \textit{not} able to be manipulated? \pause Senior citzen, total charges (?) \pause
+\item Should you (the manager) try to incentivize electronic checks? \pause Paperless billing? \pause Dropping multiple phone lines? \pause You can try these things if you have nothing to lose, but remember, they are not guaranteed to be causal! And they may \inred{backfire!!} (Can you think of an example??)
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}\frametitle{Remember Where you At!!}
+
+\begin{figure}
+\centering
+\includegraphics[width=4.75in]{where_we_at}
+\end{figure}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{Evaluating Logistic Regression Models}
+
+Many, many measures reported by JMP that we generally don't use: \pause
+
+\begin{itemize}
+\item $R^2(U)$
+\item Generalized $R^2$
+\item Mean Negative Log probability
+\item \qu{RMSE}
+\item Mean Absolute Deviation \pause
+\end{itemize}
+
+And ones that we do use:
+
+\begin{itemize}
+\item AICc / BIC (for something a little bit different... we will come back to this in a couple of lectures) \pause
+\item Misclassification Rate \pause
+\end{itemize}
+
+We now cover evaluating classification models in general (not only in the context of logistic regression models specifically).
+
+\end{frame}
 
 \section{Evaluating Classification Models}
+
+\begin{frame}\frametitle{Probability Predictions $\Rightarrow$ Level Predictions}
+
+\small
+Recall that ... you can create a classification rule which allows you to make a decision about the response based on the probability. The most intuitive classification rule is: \pause
+
+\beqn
+\yhat = \indic{\phat \geq 0.5} := \pause \begin{cases} 1 ~~~\text{if}~~~ \phat \geq 0.5 \\ 0 ~~~\text{if}~~~ \phat < 0.5 \end{cases}
+\eeqn
+
+In regression, you examined functions of the residuals $e_i := y_i - \yhat_i$ to assess model fit. What is an analagous residual here? There are four residuals, two representing errors. The best way to see them is to create the \emph{confusion matrix}:
+
+\begin{table}
+\centering
+\begin{tabular}{cc|cc|}
+& & \multicolumn{2}{c|}{$\yhat$ (decision)} \\
+& & 1 & 0 \\ \hline
+\multirow{2}{*}{$y$ (truth)} & 1 & true positive (TP) & false negative (FN) \\ 
+& 0 & false positive (FP) & true negative (TN) \\ \hline
+\end{tabular}
+\end{table}
+
+Why do \qu{correlations rock} here?? \pause We are purely evaluating predictive performance... no inferential claims!
+
+\end{frame}
+
+
+\begin{frame}\frametitle{Confusion Matrix for Churn Model}
+
+JMP gives us the matrix [JMP], \pause but they don't annotate it well. Here are some numbers I like to see:
+
+\footnotesize
+\begin{table}
+\centering
+\begin{tabular}{cc|cc|cc}
+& & \multicolumn{2}{c|}{$\yhat$} & & Model \\
+& & 1 & 0 & Totals &  Errors\\ \hline
+\multirow{2}{*}{$y$} & 1 & $TP$ = 1012 & $FN$ = 857 & $P$ = 1869 & $FNR$ = 45.9\% \\ 
+& 0 & $FP$ = 531 & $TN$ = 4632 & $N$ = 5163 & $FPR$ = 10.2\% \\ \hline
+& Totals & $\Phat$ = 1543 & $\Nhat$ = 5489 & $n=$ 7032 \\
+& Use errors & $FDR$ = 34.3\% & $FOR$ = 15.6\% & & \fbox{$ME$ = 19.7\%}
+\end{tabular}
+\end{table}
+\normalsize
+
+There are other metrics commonly reported
+
+
+\begin{itemize}
+\item Sensitivity = $\frac{TP}{TP + FN} = \frac{TP}{P}$, the proportion of positives successfully recovered (large value = good model), 54.9\% above
+\item Specificity = $\frac{TN}{TN + FP} = \frac{TN}{N}$, the proportion of negatives successfully recovered (large value = good model), 89.8\% above
+\end{itemize}
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{Misclassification Error}
+
+Already... what is one broad, general metric to evaluate the model? Misclassification error cost function (or Accuracy):
+
+\beqn
+ME &:=& \oneover{n} \sum_{i=1}^n \indic{y_i \neq \yhat_i} \\
+ACC &:=& 1 - ME = \oneover{n} \sum_{i=1}^n \indic{y_i = \yhat_i}
+\eeqn
+
+This essentially treats both types of errors (FN and FP) equally (more on this later).
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{There's are a Ton of Metrics...}
+
+From \href{https://en.wikipedia.org/wiki/Confusion\_matrix\#Table\_of\_confusion}{wikipedia}... 
+
+\begin{figure}
+\centering
+\hspace{-0.5cm}\includegraphics[width=4.25in]{confusion_matrix.png}
+\end{figure}
+
+Others I will be talking about:
+
+
+\begin{itemize}
+\item False Discovery Rate (FDR) = $\frac{FP}{TP + FP} = \frac{FP}{\Phat}$, the proportion of positives of those predicted to be positive (small value = good model)
+\item False Omission Rate (FOR) = $\frac{FN}{TN + FN} = \frac{FN}{\Nhat}$, the proportion of negatives of those predicted to be negative (small value = good model)
+\end{itemize}
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{Generalizing the Classification Rule}
+
+Recall the classification rule $\yhat = \indic{\phat \geq 0.5}$. Using 0.5 is a principled default but we can use any rule $p_0 \in (0,1)$:
+
+\beqn
+\yhat = \indic{\phat \geq p_0} := \pause \begin{cases} 1 ~~~\text{if}~~~ \phat \geq p_0 \\ 0 ~~~\text{if}~~~ \phat < p_0 \end{cases}
+\eeqn
+
+What happens when we change the $p_0$ threshold? If $p_0 \uparrow ~~\Rightarrow~~ \Phat \pause \downarrow$ and $\Nhat \pause \uparrow$. If $p_0 \downarrow ~~\Rightarrow~~ \Phat \pause \uparrow$ and $\Nhat \pause \downarrow$. Changing $p_0$ changes the column totals and obviously creates a whole new confusion matrix.
+\\~\\
+
+So now it's simple, vary $p_0$ and pick the best model according to your cost / error / loss function (the $ME$ at the moment). Let's just do every $p_0$!
+	
+\end{frame}
+
+\begin{frame}\frametitle{Receiver-Operator Characteristic Table}
+
+\begin{figure}
+\centering
+\hspace{-0.5cm}\includegraphics[width=3.0in]{roc_table.png}
+\end{figure}
+
+\vspace{-0.3cm}
+Here, \texttt{Prob} is what we denoted $p_0$. \qu{Best model} is not defined here by highest $ACC$ (lowest $ME$), it's determined by highest \textbf{specificity + sensitivity} or equivalently, the highest \textbf{sensitivity - (1 - specificity)}.JMP indicates that row with a $\star$. This is an arbitrary metric, but is a good default.
+
+\end{frame}
+
+\begin{frame}\frametitle{Receiver-Operator Characteristic Curve}
+
+\vspace{-0.2cm}
+\begin{figure}
+\centering
+\hspace{-0.5cm}\includegraphics[width=2.5in]{roc_curve.png}
+\end{figure}
+
+\small
+\vspace{-0.3cm}
+This is graphical illustration of the table. Each dot represents the sensitivity-specificity tradeoff for each $p_0$. \pause The starred row of maximum sensitivity + specificity is indicated here by a yellow tangent line. \pause I drew the diagonal line to indicate predictive performance that is expected \qu{by chance}. Why?
+
+\end{frame}
+
+
+\begin{frame}\frametitle{Area Under the Curve (AUC) Metric}
+
+\vspace{-0.2cm}
+\begin{figure}
+\centering
+\hspace{-0.5cm}\includegraphics[width=1.3in]{roc_curve.png}
+\end{figure}
+
+\small
+\vspace{-0.3cm}
+If you built a model by chance the \qu{area under the curve} (or to the right of the curve) on the graph would be ... \pause 0.5 since the graph is a unit square. Under the ROC curve itself (or to its right) is an area ... \pause greater than 0.5. Here, it's 0.844. \pause This metric is called AUC and is widely used as a metric to assess performance of all possible classifiers in this set of models together, it is a composite metric unlike $ME$ or anything derived from an individual confusion table.\\~\\
+
+AUC is nice to evaluate overall performance of all possible models... but at the end of the day... \pause you ship \emph{ONE} model! So we still need a means of evaluating our one model from one confusion table.
+
+\end{frame}
+
+
+\begin{frame}\frametitle{Churn Example Where $p_0 = 0.10$}
+\pause
+\tiny
+\begin{table}
+\centering
+\begin{tabular}{cc|cc|cc}
+& $p_0 = 0.5$ & \multicolumn{2}{c|}{$\yhat$} & & Model \\
+& & 1 & 0 & Totals &  Errors\\ \hline
+\multirow{2}{*}{$y$} & 1 & $TP$ = 1012 & $FN$ = 857 & $P$ = 1869 & $FNR$ = 45.9\% \\ 
+& 0 & $FP$ = 531 & $TN$ = 4632 & $N$ = 5163 & $FPR$ = 10.2\% \\ \hline
+& Totals & $\Phat$ = 1543 & $\Nhat$ = 5489 & $n=$ 7032 \\
+& Use errors & $FDR$ = 34.3\% & $FOR$ = 15.6\% & & \fbox{$ME$ = 19.7\%}
+\end{tabular}
+\end{table}
+\normalsize
+\pause
+
+\footnotesize
+\begin{table}
+\centering
+\begin{tabular}{cc|cc|cc}
+& $p_0 = 0.1$ & \multicolumn{2}{c|}{$\yhat$} & & Model \\
+& & 1 & 0 & Totals &  Errors\\ \hline
+\multirow{2}{*}{$y$} & 1 & $TP$ = 1772 & $FN$ = 97 & $P$ = 1869 & $FNR$ = 5.1\% \\ 
+& 0 & FP = 2669 & $TN$ = 2494 & $N$ = 5163 & $FPR$ = 51.6\% \\ \hline
+& Totals & $\Phat$ = 4441 & $\Nhat$ = 2591 & $n=$ 7032 \\
+& Use errors & $FDR$ = 60.1\% & $FOR$ =3.7\% & & \fbox{$ME$ = 39.3\%}
+\end{tabular}
+\end{table}\pause
+\small
+
+
+Which numbers did not change? \pause $n$, $P$ and $N$. Why? \pause These are fixed according to the dataframe. All other numbers changed! What happend to our first means of evaluation, the Misclassification Error? \pause It increased from 19.7\% $\rightarrow$ 39.3\%. So isn't this a worse model?? \\~\\ \pause 
+
+Not necessarily... It depends on what your goal is!
+\end{frame}
+
+\begin{frame}\frametitle{Asymmetric Costs in a Classifier}
+
+These are always two types of errors but the costs are not always the same.
+
+\tiny
+\begin{table}
+\centering
+\begin{tabular}{cc|cc|cc}
+& $p_0 = 0.1$ & \multicolumn{2}{c|}{$\yhat$} & & Model \\
+& & 1 & 0 & Totals &  Errors\\ \hline
+\multirow{2}{*}{$y$} & 1 & $TP$ = 1772 & $FN$ = 97 & $P$ = 1869 & $FNR$ = 5.1\% \\ 
+& 0 & FP = 2669 & $TN$ = 2494 & $N$ = 5163 & $FPR$ = 51.6\% \\ \hline
+& Totals & $\Phat$ = 4441 & $\Nhat$ = 2591 & $n=$ 7032 \\
+& Use errors & $FDR$ = 60.1\% & $FOR$ = 3.7\% & & \fbox{$ME$ = 39.3\%}
+\end{tabular}
+\end{table}\pause
+\small
+
+Imagine we really are the Telecom business manager. It costs 5-10x more to acquire a new customer than to engage a customer who is likely to churn. What type of error specifically is \textit{very} costly? \pause The $FN$. Who are they? \pause These are those who you said were not going to churn \textit{and they did}! Cost? \pause You need to acquire a new customer! The other type of error is less costly, the $FP$. Who are they? \pause These are the people you thought were going to churn and did not. Cost? \pause Whatever the incentive package is.
+	
+\end{frame}
+
+\begin{frame}\frametitle{Weighted Misclassification Error}
+
+We now define two costs: (1) the cost of the $FP$ denoted $c_{FP}$ and (2) the cost of the $FN$ denoted $c_{FN}$. We then define the weighted misclassification error evaluation metric:
+
+\beqn
+ME_w := \oneover{n} \sum_{i=1}^n c_{FP} \indic{y_i = 0 \& \yhat = 1} + c_{FN} \indic{y_i = 1 \& \yhat_i = 0}
+\eeqn
+
+We now vary $p_0$ to locate the model that optimizes this error to be minimum.
+	
+\end{frame}
+
+\begin{frame}\frametitle{Minimum Weighted Misclassification Error}
+
+Let's assume that $c_{FN} = \$1000$ and $c_{FP} = \$100$ just for the example's sake. Note: this is a \emph{cost ratio} of 10:1.
+
+\vspace{-0.2cm}
+\begin{figure}
+\centering
+\hspace{-0.5cm}\includegraphics[width=3.1in]{weighted_misclassification_costs.png}
+\end{figure}
+
+We now calculate the cost and find the minimum model (i.e. the $p_0$ to ship). [JMP] \pause Or alternatively, we can select the model with the closest $FN / FP \approx 10:1$ to match the stakeholder preference of the desired cost ratio.
+
+
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{$\phat$'s as Ordinal Values}
+
+One final point... If we were on a mission to find the top $m$ churners. What would we do? \pause Sort the $\phat$'s and return the top $m$.
+	
+\end{frame}
+
 
 \end{document}
 	
