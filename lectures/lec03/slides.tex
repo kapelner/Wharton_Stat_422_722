@@ -619,7 +619,7 @@ There are other metrics commonly reported
 
 
 \begin{itemize}
-\item Sensitivity = $\frac{TP}{TP + FN} = \frac{TP}{P}$, the proportion of positives successfully recovered (large value = good model), 54.9\% above
+\item Sensitivity = Recall = $\frac{TP}{TP + FN} = \frac{TP}{P}$, the proportion of positives successfully recovered (large value = good model), 54.9\% above
 \item Specificity = $\frac{TN}{TN + FP} = \frac{TN}{N}$, the proportion of negatives successfully recovered (large value = good model), 89.8\% above
 \end{itemize}
 	
@@ -639,8 +639,15 @@ This essentially treats both types of errors (FN and FP) equally (more on this l
 	
 \end{frame}
 
+\begin{frame}\frametitle{Production Classifier Flowchart}
+\begin{figure}
+\centering
+\includegraphics[width=3.95in]{classifier_flowchart}
+\end{figure}
+\end{frame}
 
-\begin{frame}\frametitle{There's are a Ton of Metrics...}
+
+\begin{frame}\frametitle{There's a Ton of Metrics...}
 
 From \href{https://en.wikipedia.org/wiki/Confusion\_matrix\#Table\_of\_confusion}{wikipedia}... 
 
@@ -649,12 +656,13 @@ From \href{https://en.wikipedia.org/wiki/Confusion\_matrix\#Table\_of\_confusion
 \hspace{-0.5cm}\includegraphics[width=4.25in]{confusion_matrix.png}
 \end{figure}
 
-Others I will be talking about:
+\footnotesize
+Others (from above) commonly used:
 
-
-\begin{itemize}
-\item False Discovery Rate (FDR) = $\frac{FP}{TP + FP} = \frac{FP}{\Phat}$, the proportion of positives of those predicted to be positive (small value = good model)
-\item False Omission Rate (FOR) = $\frac{FN}{TN + FN} = \frac{FN}{\Nhat}$, the proportion of negatives of those predicted to be negative (small value = good model)
+\begin{itemize} \footnotesize
+\item False Discovery Rate (FDR) = $\frac{FP}{TP + FP} = \frac{FP}{\Phat}$, the proportion of negatives of those predicted to be positive (small value = good model) \pause
+\item False Omission Rate (FOR) = $\frac{FN}{TN + FN} = \frac{FN}{\Nhat}$, the proportion of postives of those predicted to be negative (small value = good model) \pause
+\item Precision = Positive Predictive Value (PPV) = 1 - FDR = $\frac{TP}{TP + FP}$, the proportion of postives of those predicted to be positive (large value = good model)
 \end{itemize}
 	
 \end{frame}
@@ -804,6 +812,46 @@ We now calculate the cost and find the minimum model (i.e. the $p_0$ to ship). [
 
 
 
+	
+\end{frame}
+
+\begin{frame}\frametitle{Expected Value Calculation}
+
+You can also imagine assignment of both costs \textit{and} benefits:
+
+\tiny
+\begin{table}
+\centering
+\begin{tabular}{cc|cc|}
+& $p_0 = 0.1$ & \multicolumn{2}{c|}{$\yhat$}   \\
+& & 1 & 0  \\ \hline
+\multirow{2}{*}{$y$} & 1 & $b_{TP}$ & $c_{FN}$  \\ 
+& 0 & $c_{FP}$ &$b_{TN}$  \\ \hline
+\end{tabular}
+\end{table}\pause
+\small
+
+and then use the confusion matrix to estimate probabilities:
+
+\begin{table} \small
+\centering
+\begin{tabular}{cc|cc|}
+& $p_0 = 0.1$ & \multicolumn{2}{c|}{$\yhat$}  \\
+& & 1 & 0 \\ \hline
+\multirow{2}{*}{$y$} & 1 & 25.1\% & 1.3\%  \\ 
+& 0 & 40.0\% & 35.5\%  \\ \hline
+\end{tabular}
+\end{table}\pause
+\small
+
+The expected value would be? 
+
+\beqn
+\expe{T} &=& p_{TP} \times b_{TP} +  p_{TN} \times b_{TN} + p_{FP} \times c_{FP} +  p_{FN} \times c_{FN} \\
+&\approx& \phat_{TP} \times b_{TP} +  \phat_{TN} \times b_{TN} + \phat_{FP} \times c_{FP} +  \phat_{FN} \times c_{FN}
+\eeqn
+
+Highest expected value model is shipped (ex. from Provost \& Fawcett, 2013).
 	
 \end{frame}
 
