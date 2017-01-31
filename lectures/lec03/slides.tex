@@ -1,5 +1,5 @@
-%\documentclass[slides]{beamer} %switch "slides" to "handout" for printing out
-\documentclass[handout]{beamer}
+\documentclass[slides]{beamer} %switch "slides" to "handout" for printing out
+%\documentclass[handout]{beamer}
 
 \include{preamble}
 
@@ -22,6 +22,7 @@
 %immediately create a title page
 \frame{\titlepage}
 
+\section{Max. Likelihood Review}
 
 \begin{frame}\frametitle{The Coin Example from Last Class I}
 \small
@@ -32,14 +33,14 @@ What is the probability of the data? We employ the mass / density function:
 
 \beqn
 && \prob{Y_1 = y_1, Y_2 = y_2, Y_3 = y_3; \theta} = \prod_{i=1}^3 \prob{Y_i = y_i; \theta} = \pause  \prod_{i=1}^3 \theta^{y_i} \tothepow{1 - \theta}{1 - y_i} \\
-&=& \pause \parens{ \theta^{(1)} \tothepow{1 - \theta}{1 - (1)}} \parens{\theta^{(1)} \tothepow{1 - \theta}{1 - (1)}} \parens{\theta^{(0)} \tothepow{1 - \theta}{1 - (0)}} \\
+&=& \pause \parens{ \theta^{(1)} \tothepow{1 - \theta}{1 - (1)}} \parens{\theta^{(1)} \tothepow{1 - \theta}{1 - (1)}} \parens{\theta^{(0)} \tothepow{1 - \theta}{1 - (0)}} \\ \pause 
 &=& \theta^2 (1 - \theta)
 \eeqn
 
 And now we can calculate the probability of seeing the data assuming $\theta$. Assume $\theta = 0.5$ then,
 
 \beqn
-\prob{Y_1 = 1, Y_2 = 1, Y_3 = 0; \theta = 0.5}  =  0.5^2 (1 - 0.5) = 0.125
+\prob{Y_1 = 1, Y_2 = 1, Y_3 = 0; \theta = 0.5}  =  0.5^2 (1 - 0.5) =  \pause 0.125
 \eeqn
 	
 \end{frame}
@@ -47,20 +48,20 @@ And now we can calculate the probability of seeing the data assuming $\theta$. A
 \begin{frame}\frametitle{The Coin Example from Last Class II}
 
 \footnotesize
-Now we ask the inverse question. If we saw this data  $y_1 = 1$, $y_2 = 1$, $y_3 = 0$, what is the most likely model, i.e. the most likely value of $\theta$. We first write down the likelihood function which it's easy because it's the same as the mass / density function
+Now we ask the inverse question. \pause  If we saw this data  $y_1 = 1$, $y_2 = 1$, $y_3 = 0$, what is the most likely model? Equivalently, what is the most likely value of $\theta$? \pause We first write down the likelihood function which it's easy because it's the same as the mass / density function
 
 
 \beqn
-\lik{\theta; Y_1 = 1, Y_2 = 1, Y_3 = 0} = \prob{Y_1 = 1, Y_2 = 1, Y_3 = 0; \theta} = \theta^2 (1 - \theta)
+\lik{\theta; Y_1 = 1, Y_2 = 1, Y_3 = 0} =  \pause \prob{Y_1 = 1, Y_2 = 1, Y_3 = 0; \theta} = \pause  \theta^2 (1 - \theta)
 \eeqn
 
-And now we pick the value of $\theta$ which maximizes the likelihood,
+And now we pick the value of $\theta$ which maximizes the likelihood, \pause 
 
 \beqn
 \thetahat := \argmax_{\theta \in \Theta} \braces{\lik{\theta; x}}
 \eeqn
 
-So we need to take the derivative 
+How? \pause Calculus 101: we take the derivative, set it equal to zero and solve for $\theta$:
 
 \beqn %\frac{d}{d\theta}\bracks{\lik{\theta; Y_1 = 1, Y_2 = 1, Y_3 = 0}} = \pause 
 && \frac{d}{d\theta}\bracks{\theta^2 (1 - \theta)} = \pause \frac{d}{d\theta}\bracks{\theta^2 - \theta^3} = \pause 2\theta - 3\theta^2
@@ -68,57 +69,67 @@ So we need to take the derivative
 
 and set it equal to zero:
 \beqn
-0 = 2\theta - 3\theta^2 = \theta(2 - 3\theta) \Rightarrow 0 = 2-3\theta \Rightarrow \thetahatmle = \frac{2}{3}
+0 = 2\theta - 3\theta^2 = \theta(2 - 3\theta) \Rightarrow 0 = 2-3\theta \Rightarrow \thetahatmle = \frac{2}{3} \pause 
 \eeqn
 
 i.e. the most likely model for this data is a weighted coin with probability of heads of 2/3.
 
 \end{frame}
 
-\section{Extrapolation / Design}
+\section{Extrapolation}
 
 
 \begin{frame}\frametitle{Extrapolation}
 \small
-Data driven approaches are all focused on accuracy during \emph{interpolation}.  
+Data driven approaches are all focused on accuracy during \emph{interpolation} (estimation within a known range). \emph{Extrapolation} (estimation outside of a known range) brings trouble.  \pause  
 
 \begin{figure}
 \centering
-\includegraphics[width=2.5in]{extrap1.png}
+\includegraphics[width=2.25in]{extrap1.png}
 \end{figure}
-\vspace{-0.3cm}
-Extrapolation brings trouble. It is important to ask the question for a new observation $\x^*$ if it is within the space of $\x$'s in the historical data. (Hardly anyone does this... but you should)! Be aware that extrapolation methods of different algorithms differ considerably! [R Demo]
+\vspace{-0.3cm} \pause 
+
+It is important to ask the question for a new observation $\x^*$ if it is within the space of $\x$'s in the historical data. (Hardly anyone does this when $p > 2$... but you should)! 
 	
 \end{frame}
 
-\begin{frame}\frametitle{Reconciliation of those Silly Cartoons}
+\begin{frame}\frametitle{Reconciliation of These Silly Cartoons}
 
+\vspace{-0.3cm} 
 \begin{figure}
 \centering
-\includegraphics[width=3.2in]{extrap.jpg}
+\includegraphics[width=3.0in]{extrap.jpg}
 \end{figure}
+ \pause 
+ \small
+\vspace{-0.1cm} 
+Be aware that extrapolation methods of different algorithms differ considerably! [R Demo]
 
 \end{frame}
 
+\section{Design}
+
 \begin{frame}\frametitle{Dataframe Design}
+
+\small
 
 We spoke a lot about featurization i.e. selecting the columns in the dataframe (these are the predictors to measure). Once we did this, we can then go out and sample observations and then measure each for their predictor values. \\~\\ \pause
 
 But we didn't speak at all about selecting the observations themselves (assuming you have some modicum of control of selecting your data). Two things to consider: \\~\\  \pause
 
 \begin{enumerate}
-\item \emph{Generalizability} refers to the ability of the model to generalize, or be \emph{externally valid} when considering new observations. This comes down to sampling observations from the same population as your new data you wish to predict (pretty obvious). Sometimes difficult in practice! \pause Extrapolation?? \pause
-\item Optimal Design
+\item \emph{Generalizability} refers to the ability of the model to generalize, or be \emph{externally valid} when considering new observations. This comes down to sampling observations from the same population as your new data you wish to predict (pretty obvious). Sometimes difficult in practice! \pause Extrapolation?? \pause 
+\item Optimal Design \pause
 \end{enumerate}
 
-	
+What to measure? \checkmark ~~\pause Who to measure it on???	
 \end{frame}
 
 \begin{frame}\frametitle{Optimal Design for Inferring one Slope}
 
-Question: assume OLS and that we only care about inference for $\beta_1$. We can sample any $x$ values live in their set $\mathbb{X}$ e.g. $\in \bracks{x_m, x_M}$. What should the $n$ values be? \\~\\
+Question: assume (a) OLS with $p=1$ and \pause (b) we only care about inference for $\beta_1$ (intercept inessential) and \pause (c) we are at liberty to sample any $x$ values live in their set $\mathbb{X}$ e.g. $\in \bracks{x_m, x_M}$. What should these $n$ values of $x$ be? \\~\\
 
-Let $x_m = 0$, $x_M = 1$ and $n = 10$. The best inference for $\beta_1$ means ... \pause $\se{\betahat_1}$ is minimum. Design strategies for the $x$'s: \pause
+Let $x_m = 0$, $x_M = 1$ and $n = 10$. The best inference for $\beta_1$ means ... \pause $\se{\betahat_1}$ is minimum (since unbiasedness is guaranteed since we are using minimum SSE estimation). Design strategies for the $x$'s: \pause
 
 \begin{enumerate}
 \item Random sampling \pause
@@ -136,20 +147,20 @@ Let $x_m = 0$, $x_M = 1$ and $n = 10$. The best inference for $\beta_1$ means ..
 Recall the formula from Stat 102 / 613:
 
 \beqn
-\se{\betahat_1} = \sqrt{\frac{MSE}{(n-1)s^2_x}}
+\se{\betahat_1} = \sqrt{\frac{MSE}{(n-1)s^2_x}} = \frac{RMSE}{\sqrt{\displaystyle \sum_{i=1}^n \squared{x_i - \xbar}}}
 \eeqn
 
-How can we make this small?
+How can we make this small? \pause 
 
 \begin{enumerate}
-\item Maximize $n$ (duh)
-\item Minimize the numerator, $MSE$ i.e. minimize the $SSE$. Can we do this? Yes by picking the closest $\betahat_1$ to $\beta_1$ (which we already do). \pause
+\item Maximize $n$ (duh) ... so we'll assume $n$ is fixed by a budget constraint so now what? \pause
+\item Minimize the numerator, $RMSE$ i.e. minimize the $MSE$ i.e. minimize $SSE$. Can we do this? \pause Yes by picking the closest $\betahat_1$ to $\beta_1$ (which we already do). \pause
 \item Maximize the denominator $(n-1) s^2_x$. Since $n$ is already maximized, we can pick $x_1, \ldots, x_n$ to maximize $s^2_x$, the sample variance of the predictor.  How? \pause Put half of the $x$'s at $x_m$ and the other half at $x_M$ thereby \pause maximizing the distance from the $x$'s to \pause $\xbar$.
 \end{enumerate}
 	
 \end{frame}
 
-\begin{frame}\frametitle{Optimal Design of Linear Models}
+\begin{frame}\frametitle{General Optimal Design of Linear Models}
 \small
 
 We seek the best linear approximation of $f(x)$ which is $\beta_0 + \beta_1 x _1+ \ldots + \beta_p x_p$. We pick the $\x$'s to give us the best linear approximation. What criteria? JMP gives two ways:
@@ -157,11 +168,11 @@ We seek the best linear approximation of $f(x)$ which is $\beta_0 + \beta_1 x _1
 \begin{enumerate}
 \item Note: $\var{\betahat_0, \betahat_1, \ldots, \betahat_p} = \sigsq \XtXinv$ \pause
 
-$D$-optimality: maximize $\abss{\XtX}$ --- this maximizes the variance-covariance among the parameter estimates. \pause
+$D$-optimality: maximize $\abss{\XtX}$ --- this minimizes the variance-covariance among the parameter estimates. \pause
 
-\item Note: $\var{\Yhat_1, \ldots, \Yhat_n} = \sigsq \XXtXinvXt$ \pause
+\item Note: $\var{\Yhat_1, \ldots, \Yhat_n} = \sigsq \XXtXinvXt$ \pause 
 
-$I$-optimality: minimize the average prediction variance over the design space.
+$I$-optimality: minimize the average prediction variance over the design space. I'm unsure how JMP defined \qu{design space}.
 \end{enumerate}
 
 [R Demo] \pause What did we learn? \pause For linear models with no polynomials or interactions, keep the observations as close to the minimimums and maximums as possible. For linear models with polynomials and interactions (more non-parametric than parametric), \pause keep most towards the minimums and maximums and some in the center of the input space.
@@ -181,7 +192,7 @@ Previously the response $y$ was continuous and via the OLS assumptions we obtain
 Y \inddist \normnot{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}{\sigsq}
 \eeqn
 
-If the response $y$ is categorical, can we still use this? \pause No... the only elements in the support of the r.v. $Y$ are the levels only. [JMP Churn] \\~\\
+If the response $y$ is categorical, can we still use this? \pause No... the only elements in the support of the r.v. $Y$ are the levels only. [JMP Churn Dataframe] \\~\\ \pause 
 
 First, assume $Y$ is binary i.e. zero or one. The model (AKA \qu{classifier}) we use is...\pause  
 
@@ -195,7 +206,7 @@ since $\cexpe{Y}{x_1, \ldots, x_p} = f(x_1, \ldots, x_p)$, then $f$ is still the
 
 \begin{frame}\frametitle{Linear $f(x)$?}
 
-We can model $f(x)$ as the simple linear function but this returns values smaller than 0 and larger than 1 and thus it cannot be the conditional expectation function! Why? \pause Lines vary between $\parens{-\infty, +\infty}$. \\~\\ \pause
+We can model $f(x)$ as the simple linear function but this returns values smaller than 0 and larger than 1 and thus it cannot be the conditional expectation function! Why? \pause Lines with nonzero slope vary between $\parens{-\infty, +\infty}$. \\~\\ \pause
 
 We need a \qu{link function} to connect the linear function to the restricted support of the response:
 
@@ -209,31 +220,31 @@ And the parametric assumption would be
 \lambda(s_{\reals}(x_1, \ldots, x_p; \theta_1, \ldots, \theta_\ell)) = s(x_1, \ldots, x_p; \theta_1, \ldots, \theta_\ell)
 \eeqn
 
-And assuming a linear form of $s_{\reals}$,
+And assuming a linear form of $s_{\reals}$, \pause
 
 \beqn
-\lambda(\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p) = ?
+\lambda(\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p) = ~?
 \eeqn
 
 \end{frame}
 
 \begin{frame}\frametitle{Choice of $\lambda$?}
 
-We just need $\lambda: \reals \rightarrow \zeroonecl$. There are infinite $\lambda$'s to choose from. I've only seen three used: \pause
+We just need $\lambda: \reals \rightarrow \zeroonecl$. There are infinite $\lambda$'s to choose from... but I've only seen three used: \pause
 
 \begin{enumerate}
 \item Logistic link: $\lambda(w) = \frac{e^w}{1 + e^w}$ (most common) \pause
 \item Inverse normal (probit) link: $\lambda(w) = \Phi^{-1}(w)$ where $\Phi$ is the normal CDF function (somewhat common) \pause
-\item Complementary Log-log (cloglog) link: $\lambda(w) = \natlog{-\natlog{w}}$ (rare!)
+\item Complementary Log-log (cloglog) link: $\lambda(w) = \natlog{-\natlog{w}}$ (rare!) \pause
 \end{enumerate}
 
-Let's investigate what the first one means. Define $p := \prob{Y=1}$. We can think about probability  in another way:
+Herein, we focus on the logistic link. First, short detour. Define $p := \prob{Y=1}$. We can think about probability  in another way:
 
 \beqn
 odds(Y = 1) := \frac{p}{1-p}
 \eeqn
 
-So if odds = 4:1, what is $p$? This means that the probability of the event happening is four times more likely than the complement happening. Or...  of 4+1 runs, 4 will be a yes. What is the range of odds? \pause $[0, \infty)$.
+So if odds of an event is 4 (\qu{4:1}), what is $p$? \pause This means that the probability of the event happening is four times more likely than the complement happening. Or...  of 4+1 trials, 4 will be a yes (on average). What is the range of the odds function? \pause $[0, \infty)$.
 	
 \end{frame}
 
@@ -249,19 +260,25 @@ What is the range of the logit function? \pause All of $\reals$. Hence, we can n
 
 \footnotesize
 \beqn
-\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p &=& logit(Y = 1) =  \natlog{\frac{p}{1-p}} \\ \pause
+s_\reals = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p &=& logit(Y = 1) =  \natlog{\frac{p}{1-p}} \\ \pause
+\eeqn
+
+\small
+Thus, a change in the linear model becomes a linear change in log-odds. 
+
+\footnotesize
+\beqn
 e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p} &=& \frac{p}{1-p} \\ \pause
 (1-p)e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p} &=& p \\ \pause
 e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}  &=& p + p e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}\\ \pause
 p &=& \frac{e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}}{1 + e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}} = \lambda(\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p) \pause
 \eeqn
 
-\small
-Thus, a change in the linear model becomes a linear change in log-odds. This is (I would say) the most interpretable link function situation we've got.
-	
+
+	This is (I would say) the most interpretable link function situation we've got.
 \end{frame}
 
-\begin{frame}\frametitle{The Logistic Function}
+\begin{frame}\frametitle{The Logistic Function (an \qu{S} Shape)}
 
 \begin{figure}
 \centering
@@ -271,56 +288,64 @@ Thus, a change in the linear model becomes a linear change in log-odds. This is 
 \end{frame}
 
 \begin{frame}\frametitle{How to Obtain a Model Fit}
-
-A model fit would mean we estimate $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$. We initially did this estimation for regression (continuous $y$) by defining a loss function, SSE, and finding the optimal solution via calculus. What do we do now?? \\~\\
+\small
+A model fit would mean we estimate $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$. \pause  We initially did this estimation for regression (continuous $y$) by ...  \pause defining a loss function, SSE, and finding the optimal solution via calculus. What do we do now?? \\~\\
 
 Likelihood to the rescue. First the \qu{logistic regression assumptions}
 
 \begin{enumerate}
-\item Linear-Logistic conditional expectation \pause
-\item Independence
-\end{enumerate}
+\item Independence among observations. Thus,\pause 
 
-\small
+\footnotesize
 \beqn
 &&\cprob{Y_1 = y_1, Y_2 = y_2, \ldots, Y_n = y_n}{\X_1 = \x_1, \X_2 = \x_2, \ldots, \X_n = \x_n} \\
 &=& \prod_{i=1}^n \cprob{Y_i = y_i}{\X_1 = \x_i}
 \eeqn
 
-How?
+\small
+\item Bernoulli Model. Thus, \pause
+\footnotesize
+\beqn
+= \prod_{i=1}^n p^{y_i} (1-p)^{1-y_i}
+\eeqn \pause
+\small
+\item Linear Logistic conditional expectation. Thus,
+\end{enumerate}
+
 	
 \end{frame}
 
 \begin{frame}\frametitle{Maximum Likelihood Estimates}
-\small
-\beqn
-= \prod_{i=1}^n p^{y_i} (1-p)^{1-y_i}
-\eeqn
-
-How? \pause
 
 \beqn
-&& \lik{\beta_0, \beta_1, \ldots, \beta_p; \x_1, \ldots, \x_n} \\
-&=& \prod_{i=1}^n \parens{\frac{e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}}{1 + e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}}}^{y_i} \parens{1 - \frac{e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}}{1 + e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}}}^{1-y_i}
+&=& \prod_{i=1}^n \parens{\frac{e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}}{1 + e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}}}^{y_i} \parens{1 - \frac{e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}}{1 + e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p}}}^{1-y_i} \\
+&=& \lik{\beta_0, \beta_1, \ldots, \beta_p; \x_1, \ldots, \x_n}
 \eeqn
 
-How? \pause This does not have a simple, closed form solution. The computer iterates numerically using gradient methods. It usually uses the $\natlog{\cdot}$ of above, since it's (1) numerically more stable and (2) the expression is easier to work with. When it \qu{converges} on the values of the parameters that maximize the above, these are shipped to you as $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$. This is called \qu{running a logistic regression}. This usually is instant on a modern computer.
+This does not have a simple, closed form solution. \pause The computer iterates numerically using gradient methods. It usually uses the $\natlog{\cdot}$ of above, since it's (1) numerically more stable and (2) the expression is easier to work with. When it \qu{converges} on the values of the parameters that maximize the above, these are shipped to you as $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$. This is called \qu{running a logistic regression}. The above looks complicated but it is instant on a modern computer for most real-world datasets.
 	
 \end{frame}
 
 \begin{frame}\frametitle{Prediction with Logistic Regression}
-\small
+\footnotesize
 
-How? \pause
+Recall that predictions in linear regression were easy:
 
 \beqn
-\phat = \phat(x^*_1, \ldots, x^*_p) = \pause \frac{e^{\betahat_0 + \betahat_1 x_1 + \ldots + \betahat_p x_p}}{1 + e^{\betahat_0 + \betahat_1 x_1 + \ldots + \betahat_p x_p}}
+\yhat = \yhat(\x^*) = \betahat_0 + \betahat_1 x^*_1 + \ldots + \betahat_p x^*_p
+\eeqn
+\pause 
+
+How do we use a logistic regression model to predict with new data $\x^*$? \pause
+
+\beqn
+\phat = \phat(\x^*) = \pause \frac{e^{\betahat_0 + \betahat_1 x_1 + \ldots + \betahat_p x_p}}{1 + e^{\betahat_0 + \betahat_1 x_1 + \ldots + \betahat_p x_p}}
 \eeqn
 	
 Note the predictions are for the conditional expectation function, the probability itself, the \emph{estimated expected probability}. However, you may actually wish to predict the response, the 1 or the 0. What to do?\\~\\ \pause
 
 You can create a \emph{classification rule} which allows you to make a decision about the response based on the probability. What is the most intuitive classification rule? \pause
-
+\vspace{-0.2cm}
 \beqn
 \yhat = \indic{\phat \geq 0.5} := \pause \begin{cases} 1 ~~~\text{if}~~~ \phat \geq 0.5 \\ 0 ~~~\text{if}~~~ \phat < 0.5 \end{cases}
 \eeqn
@@ -333,7 +358,7 @@ AKA the \qu{most likely criterion}. \pause We will return to prediction and eval
 \begin{frame}\frametitle{Global Test in Logistic Regression}
 
 \footnotesize
-Recall in OLS regression, gaussian (normal) theory directly gave us $t$-tests and $F$-tests. Under the logistic regression assumptions, \emph{we have no such analogous theory}! However, we can make use of the ... \pause likelihood ratio test. Recall:
+Recall in OLS regression, gaussian (normal) theory directly gave us $t$-tests and $F$-tests. Under the logistic regression assumptions, \emph{we have no such analogous theory}! However, we can make use of the ... \pause likelihood ratio test. \pause Recall:
 
 \vspace{-0.2cm}
 \beqn
@@ -392,7 +417,7 @@ LR = \frac{
 }
 \eeqn \pause
 
-We then look at $Q = 2\natlog{LR}$ and compare it to the appropriate $\chi^2$ distribution. Here, since we've dropped $2$ parameters / degrees of freedom, we look at the critical $\chisq{2, \alpha}$ value.\\~\\ \pause
+We then look at $Q = 2\natlog{LR}$ and compare it to the appropriate $\chi^2$ distribution. Here, since we've dropped $2$ parameters / degrees of freedom, we look at the critical $\chisq{2, \alpha}$ value.
 
 \end{frame}
 
@@ -404,7 +429,7 @@ Let's say we want to test an individual slope coefficient:
 && H_0: \beta_j = 0, \quad H_a: \beta_j \neq 0
 \eeqn
 	
-We can again use the likelihood ratio test:
+(a la the \qu{partial-F test}). We can again use the likelihood ratio test:
 
 \footnotesize
 \beqn
@@ -420,52 +445,70 @@ We can again use the likelihood ratio test:
 \small
 We then look at $Q = 2\natlog{LR}$ and compare it to the appropriate $\chi^2$ distribution. Here, since we've dropped 1 parameter / degrees of freedom; thus we look at the critical $\chisq{1, \alpha}$ value. \\~\\ \pause
 
-There is something special about a $\chisq{}$ r.v. with one degree of freedom. \pause Note this cool fact from probability theory: $\sqrt{\chisq{1}} \sim \stdnormnot$ i.e. a \qu{z-score}. This is how JMP produces standard errors for logistic regression coefficients.
+There is something special about a $\chisq{}$ r.v. with one degree of freedom. \pause Note this cool fact from probability theory: $Q \sim \chisq{1} \Rightarrow \pause \sqrt{Q} \sim \stdnormnot$ i.e. a \qu{z-score}. This is how JMP produces standard errors for logistic regression coefficients.
 
 \end{frame}
 
 
 \begin{frame}\frametitle{Telecom Company Churn Example}
 \small
-In marketing \qu{churn} refers to a customer canceling their service. Studies suggest that it costs 5-10x more to acquire a new customer than to retain an old customer. Thus, predicting churn is of major interest! \\~\\ \pause
+In marketing lingo, \qu{churn} refers to a customer canceling their service. Studies suggest that it costs 5-10x more to acquire a new customer than to retain an old customer. Thus, predicting churn is of major interest! \\~\\ \pause
 
 Here's a dataset from a telecom company (likely it's churn on Verizon / AT\&T / T-Mobile /Sprint's cell-phone plan). We have 7,043 customers with 20 features. This is likely a nearly-mindless dump!! Churn is defined to be a complete cancellation of services in the next month period. Since we are predicting churn, define $y=1$ to be churn, so the $\phat$'s are estimates of probability of churning (this just makes everything easier to understand). \\~\\ \pause
 
-We begin just trying to model $y$: churn vs. $x$: tenure (the number of months customer is currently subscribed for). What do you think the relationship will be? $\partial /\partial x [f(x)]$?
+We begin just trying to model $y$: churn vs. $x$: tenure (the number of months customer is currently subscribed for). What do you think the relationship will be i.e. what is the sign of $\partial /\partial x [f(x)]$ generally speaking?
 	
 \end{frame}
 
 \begin{frame}\frametitle{Results of Simple Logistic Regression}
-
-[JMP demo] Which likelihood numbers are best? Well highest likelihoods are good which means highest log likelihoods which means \textit{smallest} negative log likelihoods.... yup it's confusing. Here's what JMP did:
+\small 
+[JMP demo] \pause Which likelihood numbers are \qu{best}? Highest likelihoods are good which means highest log likelihoods which means \textit{smallest} negative log likelihoods.... yup it's confusing.  \pause Here's what JMP did:
 
 \beqn
 Q &=& 2\natlog{LR} = 2\parens{\loglik{\thetahat; x} - \loglik{\thetahat_R; x}} \\
 &=& 2\parens{-(3595.9341) - -(4075.0729)}\\
-&=& 2\parens{479.1389} = 958.2778  \\
-&=& 2\natlog{1.22 \times 10^{208}}
+&=& 2\parens{479.1389} = 958.2778
 \eeqn
 
 and $\chisq{1, 5\%}$ = \texttt{qchisq(.95, 1)} = 3.84. So this passes the test (comfortably). We reject $H_0$ and conclude that the model is linearly useful. \pause ALSO: equivalent to a test of one variable. We reject $H_0$ and conclude tenure has a linear effect on the log-odds of churn. \\~\\ \pause
 
+Also note that $LR = 1.22 \times 10^{208}$ but $e^{-3595.9341} = 0$ i.e. it's less than the smallest number a computer can represent (without special handling). Numbers are cool things... and logs are pretty powerful.
 	
 \end{frame}
 
 \begin{frame}\frametitle{Basic Predictions I}
 
-Predict estimated expected probability of churn for someone who has 1 month of tenure
+Predict estimated expected probability of churn for someone who has 1 month of tenure \pause
 
 \beqn
 \phat = \frac{e^{\betahat_0 + \betahat_1 x_1}}{1 + e^{\betahat_0 + \betahat_1 x_1}} = \frac{e^{0.0273 + (-0.0288) (1)}}{1 + e^{0.0273 + (-0.0288) (1)}} = \frac{0.9985}{1.9985} = 0.500
 \eeqn
 
-How about 2 months of tenure?
+How about 2 months of tenure? \pause
 
 \beqn
 \phat = \frac{e^{\betahat_0 + \betahat_1 x_1}}{1 + e^{\betahat_0 + \betahat_1 x_1}} = \frac{e^{0.0273 + (-0.0288) (2)}}{1 + e^{0.0273 + (-0.0288) (2)}} = \frac{0.9702}{1.9702} = 0.492
 \eeqn
 
 i.e. a difference in about 0.8\% as measured on a probability scale.
+
+\end{frame}
+
+\begin{frame}\frametitle{Basic Predictions II}
+
+Predict estimated expected probability of churn for someone who has 100 month of tenure \pause
+
+\beqn
+\phat = \frac{e^{\betahat_0 + \betahat_1 x_1}}{1 + e^{\betahat_0 + \betahat_1 x_1}} = \frac{e^{0.0273 + (-0.0288) (100)}}{1 + e^{0.0273 + (-0.0288) (100)}} = 0.055
+\eeqn
+
+How about 101 months of tenure? \pause
+
+\beqn
+\phat = \frac{e^{\betahat_0 + \betahat_1 x_1}}{1 + e^{\betahat_0 + \betahat_1 x_1}} = \frac{e^{0.0273 + (-0.0288) (101)}}{1 + e^{0.0273 + (-0.0288) (101)}} = 0.053
+\eeqn
+
+i.e. a difference in about 0.2\% as measured on a probability scale (i.e. a 4x difference from before). But isn't the model supposedly to be linear??
 
 \end{frame}
 
@@ -482,11 +525,11 @@ A move of one unit in $x$ when $x \approx 0$ is a much bigger move than one unit
 
 \begin{frame}\frametitle{Parameter Standard Error}
 
-To add to the confusion... JMP prefers to calculate parameter estimates and standard error via the Wald test, which is similar to the likelihood ratio test. Thus, 761.00 $\neq$ 958.28 but, remarkably, they are about the same conceptually -- both large and significant. The standard errors,
+To add to the confusion... JMP prefers to calculate parameter estimates and standard error via the Wald test, which is similar to the likelihood ratio test. Thus, 761.00 $\neq$ 958.28 but, remarkably, they are about the same conceptually -- both large and significant. \pause The standard errors,
 
 \beqn
 \underbrace{Q = z^2}_{\substack{\text{fact from} \\ \text{probability} \\ \text{theory}}} = \squared{\frac{\betahat_1}{s_{\betahat_1}}} \Rightarrow  s_{\betahat_1} = \frac{\abss{\betahat_1}}{\sqrt{Q}}
-\eeqn
+\eeqn \pause 
 
 are expectedly about the same 
 
@@ -505,7 +548,7 @@ s_{\betahat_1} &=& \frac{\abss{-0.0387682}}{\sqrt{958.28}} = 0.0013 \eqncomment{
 Now let's use all variables. Questions:
 
 \begin{itemize}
-\item Which variable(s) should we leave out? \pause \texttt{customerID} --- no causal mechanism.
+\item Which variable(s) should we leave out? \pause \texttt{customerID} --- no causal mechanism.\pause 
 \item Why are we getting biased estimates and zeroes? \pause Perfect multicollinearity. \pause  Solution? \pause Kill columns until you don't get the error anymore. Turns out 6 have to be removed.
 \end{itemize}
 
@@ -528,9 +571,9 @@ Now let's use all variables. Questions:
 \begin{itemize}
 \item \ingrey{Which variable(s) should we leave out? \texttt{customerID} --- no causal mechanism.}
 \item \ingrey{Why are we getting biased estimates and zeroes?  Perfect multicollinearity.}
-\item Are all these variables \qu{significant}? \pause No. After a Bonferroni correction, we \qu{lose} two. Are they for sure insignificant? \pause No, maybe we didn't have enough power to detect them...
+\item Are all these variables \qu{significant}? \pause No. And further, after a Bonferroni correction, we \qu{lose} two. Are they for sure insignificant? \pause No, maybe we didn't have enough \emph{power} to detect them... [review power concept]
 \item Do the coefficients sign / size make sense intuitively? \pause Yes?
-\item Which of the \qu{driving} variables are \textit{not} able to be manipulated? \pause Senior citzen, total charges (?) \pause
+\item Which of the \qu{driving} variables are \textit{not} able to be manipulated? \pause Senior citizen, total charges (?) \pause
 \item Should you (the manager) try to incentivize electronic checks? \pause Paperless billing? \pause Dropping multiple phone lines? \pause You can try these things if you have nothing to lose, but remember, they are not guaranteed to be causal! And they may \inred{backfire!!} (Can you think of an example??)
 \end{itemize}
 
@@ -569,7 +612,7 @@ We now cover evaluating classification models in general (not only in the contex
 
 \end{frame}
 
-\section{Evaluating Classification Models}
+\section{Evaluating Binary Classification Models}
 
 \begin{frame}\frametitle{Probability Predictions $\Rightarrow$ Level Predictions}
 
@@ -580,7 +623,7 @@ Recall that ... you can create a classification rule which allows you to make a 
 \yhat = \indic{\phat \geq 0.5} := \pause \begin{cases} 1 ~~~\text{if}~~~ \phat \geq 0.5 \\ 0 ~~~\text{if}~~~ \phat < 0.5 \end{cases}
 \eeqn
 
-In regression, you examined functions of the residuals $e_i := y_i - \yhat_i$ to assess model fit. What is an analagous residual here? There are four residuals, two representing errors. The best way to see them is to create the \emph{confusion matrix}:
+In regression, you examined functions of the residuals $e_i := y_i - \yhat_i$ to assess model fit. What is an analagous residual here? \pause There are four residuals, two representing errors. The best way to see them is to create the \emph{confusion matrix}:
 
 \begin{table}
 \centering
@@ -628,14 +671,14 @@ There are other metrics commonly reported
 
 \begin{frame}\frametitle{Misclassification Error}
 
-Already... what is one broad, general metric to evaluate the model? Misclassification error cost function (or Accuracy):
+Already... what is one broad, general metric to evaluate the model? \pause Misclassification error cost function (or Accuracy):
 
 \beqn
 ME &:=& \oneover{n} \sum_{i=1}^n \indic{y_i \neq \yhat_i} \\
 ACC &:=& 1 - ME = \oneover{n} \sum_{i=1}^n \indic{y_i = \yhat_i}
 \eeqn
 
-This essentially treats both types of errors (FN and FP) equally (more on this later).
+This essentially treats both types of errors (the FN's and the FP's) equally (more on this later).
 	
 \end{frame}
 
@@ -662,15 +705,9 @@ Others (from above) commonly used:
 \begin{itemize} \footnotesize
 \item False Discovery Rate (FDR) = $\frac{FP}{TP + FP} = \frac{FP}{\Phat}$, the proportion of negatives of those predicted to be positive (small value = good model) \pause
 \item False Omission Rate (FOR) = $\frac{FN}{TN + FN} = \frac{FN}{\Nhat}$, the proportion of postives of those predicted to be negative (small value = good model) \pause
-\item Precision = Positive Predictive Value (PPV) = 1 - FDR = $\frac{TP}{TP + FP}$, the proportion of postives of those predicted to be positive (large value = good model)
+\item Precision = Positive Predictive Value (PPV) = 1 - FDR = $\frac{TP}{TP + FP}$, the proportion of positives of those predicted to be positive (large value = good model)
 \end{itemize}
 	
-\end{frame}
-
-
-\begin{frame}\frametitle{One Way to Think About Classification}
-
-
 \end{frame}
 
 
@@ -712,7 +749,7 @@ Here, \texttt{Prob} is what we denoted $p_0$. \qu{Best model} is not defined her
 
 \small
 \vspace{-0.3cm}
-This is graphical illustration of the table. Each dot represents the sensitivity-specificity tradeoff for each $p_0$. \pause The starred row of maximum sensitivity + specificity is indicated here by a yellow tangent line. \pause I drew the diagonal line to indicate predictive performance that is expected \qu{by chance}. Why? \pause Also, are there other ROC variants? \pause Yes.
+This is graphical illustration of the table. Each dot represents the sensitivity-specificity tradeoff for each $p_0$. \pause The starred row of maximum sensitivity + specificity is indicated here by a yellow tangent line. \pause I drew the diagonal line to indicate predictive performance that is expected \qu{by chance}. Why? \pause Also, are there other ROC variants? \pause Yes (HW?).
 
 \end{frame}
 
@@ -727,9 +764,9 @@ This is graphical illustration of the table. Each dot represents the sensitivity
 
 \small
 \vspace{-0.3cm}
-If you built a model by chance the \qu{area under the curve} (or to the right of the curve) on the graph would be ... \pause 0.5 since the graph is a unit square. Under the ROC curve itself (or to its right) is an area ... \pause greater than 0.5. Here, it's 0.844. \pause This metric is called AUC and is widely used as a metric to assess performance of all possible classifiers in this set of models together, it is a composite metric unlike $ME$ or anything derived from an individual confusion table.\\~\\
+If you built a model by chance the \qu{area under the curve} (or to the right of the curve) on the graph would be ... \pause 0.5 since the graph is a unit square. Under the ROC curve itself (or to its right) is an area ... \pause greater than 0.5. Here, it's 0.844. \pause This metric is called AUC and is widely used as a metric to assess performance of all possible classifiers in this set of models together, it is a composite metric unlike $ME$ or anything derived from an individual confusion table.\\~\\ \pause
 
-AUC is nice to evaluate overall performance of all possible models... but at the end of the day... \pause you ship \emph{ONE} model! So we still need a means of evaluating our one model from one confusion table.
+AUC is nice to evaluate overall performance of all possible models... but at the end of the day... \pause you ship \emph{ONE} model! \pause So we still need a means of evaluating our one model from one confusion table.
 
 \end{frame}
 
@@ -786,20 +823,20 @@ These are always two types of errors but the costs are not always the same.
 & Totals & $\Phat$ = 4441 & $\Nhat$ = 2591 & $n=$ 7032 \\
 & Use errors & $FDR$ = 60.1\% & $FOR$ = 3.7\% & & \fbox{$ME$ = 39.3\%}
 \end{tabular}
-\end{table}\pause
+\end{table}
 \small
 
-Imagine we really are the Telecom business manager. It costs 5-10x more to acquire a new customer than to engage a customer who is likely to churn. What type of error specifically is \textit{very} costly? \pause The $FN$. Who are they? \pause These are those who you said were not going to churn \textit{and they did}! Cost? \pause You need to acquire a new customer! The other type of error is less costly, the $FP$. Who are they? \pause These are the people you thought were going to churn and did not. Cost? \pause Whatever the incentive package is.
+Imagine we really are the Telecom business manager. It costs 5-10x more to acquire a new customer than to engage a customer who is likely to churn. So you give an incentive package to those who are predicted to churn. \pause Which of the two types of errors specifically is \textit{very} costly? \pause The $FN$. Who are they? \pause These are those who you said were not going to churn \textit{and they did}! Cost? \pause You need to acquire a new customer! The other type of error is less costly, the $FP$. Who are they? \pause These are the people you thought were going to churn and did not. Cost? \pause Whatever the incentive package is.
 	
 \end{frame}
 
 \begin{frame}\frametitle{Weighted Misclassification Error}
 
-We now define two costs: (1) the cost of the $FP$ denoted $c_{FP}$ and (2) the cost of the $FN$ denoted $c_{FN}$. We then define the weighted misclassification error evaluation metric:
+We now define two costs: (1) \pause the cost of the $FP$ denoted $c_{FP}$ and  \pause (2) the cost of the $FN$ denoted $c_{FN}$.  \pause We then define the weighted misclassification error evaluation metric:
 
 \beqn
 ME_w := \oneover{n} \sum_{i=1}^n c_{FP} \indic{y_i = 0 \& \yhat = 1} + c_{FN} \indic{y_i = 1 \& \yhat_i = 0}
-\eeqn
+\eeqn \pause 
 
 We now vary $p_0$ to locate the model that optimizes this error to be minimum.
 	
@@ -815,7 +852,7 @@ Let's assume that $c_{FN} = \$1000$ and $c_{FP} = \$100$ just for the example's 
 \hspace{-0.5cm}\includegraphics[width=3.1in]{weighted_misclassification_costs.png}
 \end{figure}
 
-We now calculate the cost and find the minimum model (i.e. the $p_0$ to ship). [JMP] \pause Or alternatively, we can select the model with the closest $FN / FP \approx 10:1$ to match the stakeholder preference of the desired cost ratio.
+We now calculate the cost and find the minimum model (i.e. the $p_0$ to ship). [JMP] \pause Or alternatively, we can select the model with the closest $FN / FP \approx 10:1$ to match the stakeholder preference of the desired cost ratio. Why would this be good?
 
 
 
