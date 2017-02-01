@@ -7,7 +7,8 @@ This is the course homepage for STAT 422/722 for the Spring semester 2017 at The
 Audio for lectures should be on canvas except for the first lecture (links below).
 
 * Lecture 1 [(audio sec A)](https://clyp.it/ty1cebu4) [(audio sec B)](https://clyp.it/d3tmzv0b) [(slides)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec01/slides.pdf)
-* Lecture 2 [(slides)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec01/slides.pdf)
+* Lecture 2 [(slides)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec02/slides.pdf)
+* Lecture 3 [(slides)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec03/slides.pdf)
 
 
 ## Assignments
