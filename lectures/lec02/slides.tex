@@ -739,15 +739,13 @@ Be careful about featurization... try to at least have some inkling of an idea f
 \small
 If you \qu{see} all of the parameter tests, what theory were you testing? \pause  Every single one... it is as if you were \qu{looking for \pause  variables} that matter (this is called \emph{variable selection} and we will be doing this later on in the course). But again, that $\alpha := \prob{\text{Type I error}}$ gets you... the false positives. What can we do to curb this? \pause Do a \qu{multiple testing correction}. \\~\\
 
-Imagine $K$ tests. The strictest correction will be when considering that they fail to reject $H_0$ implying that their $p$ values are $\sim \stduniform$. A rejection occurs at $p < \alpha$ which has probability $\alpha$. This is called the false positive rate / Type I error. \\~\\ 
-
-
-\pause We want to control the \qu{family-wise error rate} (FWER) meaning the probability of one or more Type I errors is $\leq \alpha_{FWER}$.
+Imagine $K$ tests. The strictest correction will be when considering that they fail to reject $H_0$ implying that their $p$ values are $\sim \stduniform$. A rejection occurs at $p < \alpha$ which has probability $\alpha$. This is called the false positive rate / Type I error. \pause We want to control the \qu{family-wise error rate} (FWER) meaning the probability of one or more Type I errors is $\leq \alpha_{FWER}$.
 
 \footnotesize
 \beqn
 \alpha_{FWER} &:=& \prob{\geq \text{1 rejection}} = 1 - \prob{\text{0 rejections}} = 1 - \binom{K}{0} \alpha^0 \tothepow{1-\alpha}{K} \\
-&=& 1 - (1 - \alpha)^K \eqncomment{AKA the Sidak Correction}
+&=& 1 - (1 - \alpha)^K\\
+&\Rightarrow& \alpha = 1 - \tothepow{1 - \alpha_{FWER}}{\oneover{K}}  \eqncomment{AKA the Sidak Correction} 
 \eeqn
 
 What does this assume among the $K$ tests? \pause Independence.
