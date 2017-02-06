@@ -25,6 +25,64 @@
 \section{Evaluating Binary Classification Models}
 
 
+\begin{frame}\frametitle{Review: Generalizing the Classification Rule}
+
+Recall the classification rule $\yhat = \indic{\phat \geq 0.5}$. Using 0.5 is a principled default but we can use any rule $p_0 \in (0,1)$:
+
+\beqn
+\yhat = \indic{\phat \geq p_0} := \pause \begin{cases} 1 ~~~\text{if}~~~ \phat \geq p_0 \\ 0 ~~~\text{if}~~~ \phat < p_0 \end{cases}
+\eeqn
+
+What happens when we change the $p_0$ threshold? If $p_0 \uparrow ~~\Rightarrow~~ \Phat \pause \downarrow$ and $\Nhat \pause \uparrow$. If $p_0 \downarrow ~~\Rightarrow~~ \Phat \pause \uparrow$ and $\Nhat \pause \downarrow$. Changing $p_0$ changes the column totals and obviously creates a whole new confusion matrix.
+\\~\\
+
+So now it's simple, vary $p_0$ and pick the best model according to your cost / error / loss function (the $ME$ at the moment). Let's just do every $p_0$!
+	
+\end{frame}
+
+\begin{frame}\frametitle{All Possible Confusion Matrices}
+
+\begin{figure}
+\centering
+\hspace{-0.5cm}\includegraphics[width=3.0in]{roc_table.png}
+\end{figure}
+
+\vspace{-0.3cm}
+Here, \texttt{Prob} is what we denoted $p_0$. %\qu{Best model} is not defined here by highest $ACC$ (lowest $ME$), it's determined by highest \textbf{specificity + sensitivity} or equivalently, the highest \textbf{sensitivity - (1 - specificity)}.JMP indicates that row with a $\star$. This is an arbitrary metric, but is a good default.
+
+\end{frame}
+
+\begin{frame}\frametitle{Receiver-Operator Characteristic Curve}
+
+\vspace{-0.2cm}
+\begin{figure}
+\centering
+\hspace{-0.5cm}\includegraphics[width=2.4in]{roc_curve.png}
+\end{figure}
+
+\small
+\vspace{-0.3cm}
+The \emph{ROC Curve}. Each dot represents the sensitivity-specificity tradeoff for each $p_0$. \pause The starred row of maximum sensitivity + specificity is indicated here by a yellow tangent line. %\pause I drew the diagonal line to indicate predictive performance that is expected \qu{by chance}. Why? \pause Also, are there other ROC variants? \pause Yes (HW?).
+
+\end{frame}
+
+
+\begin{frame}\frametitle{Area Under the Curve (AUC) Metric}
+
+\vspace{-0.2cm}
+\begin{figure}
+\centering
+\hspace{-0.5cm}\includegraphics[width=1.3in]{roc_curve.png}
+\end{figure}
+
+\small
+\vspace{-0.3cm}
+If you built a model by chance the \qu{area under the curve} (or to the right of the curve) on the graph would be ... \pause 0.5 since the graph is a unit square. Under the ROC curve itself (or to its right) is an area ... \pause greater than 0.5. Here, it's 0.844. \pause This metric is called AUC and is widely used as a metric to assess performance of all possible classifiers in this set of models together, it is a composite metric unlike $ME$ or anything derived from an individual confusion table.\\~\\ \pause
+
+AUC is nice to evaluate overall performance of all possible models... but at the end of the day... \pause you ship \emph{ONE} model! \pause So we still need a means of evaluating our one model from one confusion table.
+
+\end{frame}
+
 \begin{frame}\frametitle{Churn Example Where $p_0 = 0.10$}
 \pause
 \tiny
@@ -153,17 +211,407 @@ Highest expected value model is shipped (ex. from Provost \& Fawcett, 2013).
 	
 \end{frame}
 
-\begin{frame}\frametitle{$\phat$'s as Ordinal Values}
+%\begin{frame}\frametitle{$\phat$'s as Ordinal Values}
+%
+%One final point... If we were on a mission to find the top $m$ churners. What would we do? \pause Sort the $\phat$'s and return the top $m$.
+%	
+%\end{frame}
 
-One final point... If we were on a mission to find the top $m$ churners. What would we do? \pause Sort the $\phat$'s and return the top $m$.
+\section{Survival Models}
+
+\begin{frame}\frametitle{New Type of Response Metric: TTL}
+\small
+What if your response was time? For example: \pause
+
+\begin{itemize}
+\item Time for a patient to live (typical in clinical trials)? \pause
+\item How long will a customer be a customer? \pause
+\item How long will a car engine last? \pause
+\end{itemize}
+
+What kind of data type is the response? \pause Continuous. For each object we will have features and response. But what does response look like at the time of sampling? \\~\\
+
+For example, revall the Telecom churn dataset. If the observation has ...
+
+\begin{table}
+\centering
+\begin{tabular}{ccc}
+Tenure Time & Churn? & Total Time as a Customer \\ \hline
+2 & Yes & \pause 3 \\
+8 & Yes & \pause 9 \\
+45 & No & \pause unknown \\
+\end{tabular}
+\end{table}
+\normalsize
+
+That third observation's response is \emph{censored}. \pause What are we supposed to do??
+
+\end{frame}
+
+\begin{frame}\frametitle{Dealing with censoring}
+
+One option is to disregard all censored observations. Why is this a bad idea? \pause Selection bias. Our results will only apply to people who have churned. Those people may be different that the general population. \pause Another option is to use \emph{survival modeling}.\\~\\ \pause
+
+This is a very well-studied field with many possible models!
 	
 \end{frame}
 
-\section{Non-linear Models}
+\begin{frame}\frametitle{The Exponential Model}
+\small
+Assume $Y$ now is time. Time must be positive!
+
+\beqn
+Y = f(x_1, \ldots, x_p) + \errorrv
+\eeqn
+
+We have to be careful to make $f$ positive and $\errorrv$ negative but not too negative to make $Y < 0$. \pause One such model is the exponential model with conditional mean $f(x_1, \ldots, x_p)$.
+
+\beqn
+Y \sim Exp(f(x_1, \ldots, x_p))
+\eeqn
+
+Let's review the exponential r.v. \pause If $Y \sim Exp(\mu)$, then its density function and cumulative density functions are
+
+\beqn
+p(y) = \oneover{\mu} e^{-\oneover{\mu} y} \quad \text{and} \quad F(y) = 1 - e^{-\oneover{\mu} y}
+\eeqn
+
+with mean $\expe{Y} = \mu$ where $\mu > 0$. \pause So if $Y \sim Exp(17)$, you expect the observation to be ... \pause 17 on average.
+
+\end{frame}
+
+\begin{frame}\frametitle{The Exponential Log-Linear Model (ELLM)}
+
+Let's say we want to use our linear model $\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p$ for the conditional mean. Problem? \pause Yes. The mean can only be a number greater than zero. Hence we need the $\lambda$ link function again! How can we convert $s_\reals = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p$ to something between $0$ and $+\infty$? \pause Without going into many different link function, let's just use the natural log:
+
+\beqn
+s = \lambda(s_\reals) = \pause \natlog{s_\reals} \quad \Rightarrow \quad \pause s = e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p} \pause
+\eeqn
+
+And voila we have our survival model:
+
+\beqn
+Y \sim Exp(e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p})
+\eeqn
+
+Interpretation of a unit change in $x_1$? \pause With all other variables kept constant, a unit change in $x_1$ will multiply the expected survival by $e^{\beta_1}$ in a naturally observed new object.
+	
+\end{frame}
+
+\begin{frame}\frametitle{Assumptions of an ELLM}
+
+Next up in the recipe... we need to get estimates of the true parameters, we have been denoting these $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$. How to do so? \pause Maximum Likelihood (just like linear regression and logistic regression). We will first need the \qu{ELLM assumptions}
+
+
+\begin{enumerate}
+\item Independence among observations. Thus,\pause 
+
+\footnotesize
+\beqn
+&&\cprob{Y_1 = y_1, Y_2 = y_2, \ldots, Y_n = y_n}{\X_1 = \x_1, \X_2 = \x_2, \ldots, \X_n = \x_n} \\
+&=& \prod_{i=1}^n \cprob{Y_i = y_i}{\X_1 = \x_i}
+\eeqn
+
+\small
+\item Exponential Model. Thus, \pause
+\footnotesize
+\beqn
+= \prod_{i=1}^n \oneover{\mu} e^{-\oneover{\mu} y_i}
+\eeqn \pause
+\small
+\item Log-Linear conditional expectation. Thus,
+
+
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}\frametitle{Fitting an ELLM}
+\footnotesize
+\beqn
+= \prod_{i=1}^n \oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} e^{-\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} y_i}
+\eeqn \pause
+Can we just maximize the above over all values of the $\beta$'s like before? \pause We are missing one thing. What if $y_i$ is a censored value? All we know about that $y_i$ is that it's greater than the last value recorded! \pause Recall $\prob{Y > y} = 1 - F(y) = e^{-\oneover{\mu} y}$\\~\\
+
+Let $c_i$ indicate censorship: 1 if censored and 0 if not. Our likelihood is now in two pieces:
+
+\beqn
+&=& \prod_{i=1}^n \tothepow{\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} e^{-\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} y_i}}{1 - c_i} \pause \prob{Y > y_i}^{c_i} \\
+&=& \prod_{i=1}^n \tothepow{\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} e^{-\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} y_i}}{1 - c_i} \tothepow{e^{-\oneover{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}} y}}{c_i} \pause
+\eeqn 
+	
+Now the computer crunches away (similar to a logistic regression fit) and we get values of $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$ back in a split second. \pause Now for inference...
+\end{frame}
+
+\begin{frame}\frametitle{Global Test in Survival ELLM Regression}
+
+\footnotesize
+Just like in logistic regression, we can make use of the ... \pause likelihood ratio test. \pause Recall:
+
+\vspace{-0.2cm}
+\beqn
+LR :=
+%
+\displaystyle \max_{\theta \in \Theta} \lik{\theta; x}
+%
+/
+%
+\displaystyle \max_{\theta \in \Theta_R}  \lik{\theta; x}
+%
+\eeqn
+
+Let's now do a \qu{whole model} / \qu{global} / \qu{omnibus} test: \pause
+
+\beqn
+&& H_0: \beta_1 = 0, \beta_2 = 0, \ldots, \beta_p = 0, \quad H_a: \text{at least one is non-zero}
+\eeqn
+
+So $\Theta$ would be the space of all $\beta_0, \beta_1, \ldots, \beta_p$ and $\Theta_R$ will restrict the space to only $\beta_0$ with zeroes for all other \qu{slope} parameters.
+
+\tiny
+\beqn
+LR = \frac{
+\displaystyle \max_{\beta_0, \beta_1, \ldots, \beta_p} 
+\lik{\beta_0, \beta_1, \ldots, \beta_p; y_1, \ldots, y_n, c_1, \ldots, c_n, \x_1, \ldots, \x_n}
+}{
+\displaystyle \max_{\beta_0} 
+\lik{\beta_0, \beta_1 = 0, \ldots, \beta_p = 0; y_1, \ldots, y_n, y_n, c_1, \ldots, c_n,  \x_1, \ldots, \x_n}
+}
+\eeqn \pause
+
+\small
+So on top the computer iterates to find $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$, plugs it in and computes the likelihood and on the bottom the computer independently iterates to find $\braces{\betahat_0}$, plugs it in and computes the likelihood, then together, the $LR$.
+\end{frame}
+
+\begin{frame}\frametitle{Partial Tests in Survival Regression}
+
+\small
+We then look at $Q = 2\natlog{LR}$ and compare it to the appropriate $\chi^2$ distribution. Here, since we've dropped $p$ parameters / degrees of freedom, we look at the critical $\chisq{p, \alpha}$ value.\\~\\ \pause
+
+Let's say we want to test something like:
+
+\beqn
+&& H_0: \beta_1 = 0 ~\&~ \beta_2 = 0, \quad H_a: \text{at least one is non-zero}
+\eeqn
+
+We can again use the likelihood ratio test:
+
+\tiny
+\beqn
+LR = \frac{
+\displaystyle \max_{\beta_0, \beta_1, \ldots, \beta_p} 
+\lik{\beta_0, \beta_1, \ldots, \beta_p; y_1, \ldots, y_n, c_1, \ldots, c_n, \x_1, \ldots, \x_n}
+}{
+\displaystyle \max_{\beta_0, \beta_3, \ldots, \beta_p} 
+\lik{\beta_0, \beta_1 = 0, \beta_2 = 0, \beta_3, \ldots, \beta_p = 0; y_1, \ldots, y_n, c_1, \ldots, c_n, \x_1, \ldots, \x_n}
+}
+\eeqn \pause
+\small
+We then look at $Q = 2\natlog{LR}$ and compare it to the appropriate $\chi^2$ distribution. Here, since we've dropped $2$ parameters / degrees of freedom, we look at the critical $\chisq{2, \alpha}$ value.
+
+\end{frame}
+
+\begin{frame}\frametitle{Individual Tests in Survival Regression}
+
+Let's say we want to test an individual slope coefficient:
+
+\beqn
+&& H_0: \beta_j = 0, \quad H_a: \beta_j \neq 0
+\eeqn
+	
+(a la the \qu{partial-F test}). We can again use the likelihood ratio test:
+
+\tiny
+\beqn
+\hspace{-10pt} LR = \frac{
+\displaystyle \max_{\beta_0, \beta_1, \ldots, \beta_p} 
+\lik{\beta_0, \beta_1, \ldots, \beta_p; y_1, \ldots, y_n, c_1, \ldots, c_n, \x_1, \ldots, \x_n}
+}{
+\displaystyle \max_{\beta_0, \beta_1, \ldots, \beta_{j-1}, \beta_{j+1}, \ldots \beta_p} 
+\lik{\beta_0, \beta_1, \ldots, \beta_{j-1}, \beta_j = 0, \beta_{j+1}, \ldots \beta_p; y_1, \ldots, y_n, c_1, \ldots, c_n, \x_1, \ldots, \x_n}
+}
+\eeqn \pause
+
+\small
+We then look at $Q = 2\natlog{LR}$ and compare it to the appropriate $\chi^2$ distribution. Here, since we've dropped 1 parameter / degrees of freedom; thus we look at the critical $\chisq{1, \alpha}$ value. \\~\\ \pause
+
+And again: a $\chisq{}$ r.v. with one degree of freedom has the following cool property: $Q \sim \chisq{1} \Rightarrow \pause \sqrt{Q} \sim \stdnormnot$ i.e. a \qu{z-score}. This is how JMP produces standard errors for survival regression coefficients.
+
+\end{frame}
+
+\begin{frame}\frametitle{Simple Survival Regression and Predictions}
+\small
+\pause
+How do we predict?
+
+\beqn
+\yhat= \yhat(\x^*) = \pause \exp{\betahat_0 + \betahat_1 x_1^* +  \ldots + \betahat_p x_p^*}
+\eeqn
+
+What are we predicting? \pause Average time to survive. \\~\\
+
+Let's return to the Telecom example and look at just \qu{\texttt{SeniorCitizen}} on customer lifetime. [JMP] \pause Is this variable significant? \pause Yes. \pause Now let's predict the time for a new non-senior citizen:
+
+\beqn
+\yhat = \yhat(\x^*) = \pause e^{\betahat_0 + \betahat_1 (0)} = \pause e^{4.922} = 137.28
+\eeqn
+
+Now let's predict the time for a new senior citizen: \pause
+
+\beqn
+\yhat = \yhat(\x^*) = \pause e^{\betahat_0 + \betahat_1 (1)} = \pause e^{4.922 + -0.430} = 80.80
+\eeqn
+
+(1) Is the reduction of 5yr expected? \pause (2) Why are these numbers so large? \pause Likely the exponential model is not a great fit here. The tail is too long and the memorylessness property is not realistic.
+	
+\end{frame}
+
+\begin{frame}\frametitle{Multivariable Survival Regression}
+
+[JMP] 
+\begin{itemize}
+\item Do these coefficients make sense? \pause 
+\item What's wrong with this dataset?? \pause The max survival is 72mo and there's thousands of cases that are censored. \pause
+\item Evaluating survival models is complicated... not covered.
+\end{itemize}	
+\end{frame}
+
+\section{Non-linearity and Interactions}
+
+\begin{frame}\frametitle{Simple Test of Linearity}
+
+Here's the \qu{Medicorp} dataset. The response is sales (in \$1000's) and the features are advertising (in \$1000's), American region and bonus for the sales team (in \$1000's). \\~\\ \pause
+
+Let's look at a simple regression of sales on bonus. \pause Are we sure this is linear? Or are there diminishing returns? How to test diminishing returns? \pause Quadratic fit is one way. We should see what kind of sign on the squared term? \pause Negative. And we do. And it's pretty significant... could you make a case of dredging here? \pause Probably not. Are we sure it's quadratic diminishing returns? \pause Nope... that's much harder to test... beyond scope of course... and probably not all that interesting. \pause What's the takeaway message here? \pause You should give bonuses but don't make them \qu{too} big. \\~\\
+
+\small
+Interpretation of unit change in $x:$ bonus? Depends on the value where you start from (we are moving away from simple interpretations).
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{Polynomial Regression}
+
+Let's try to fit a better curve to bonus --- a 4-degree polynomial. Seems to fit better than a quadratic [see LRT in R]. What's the interpretation of a 4-degree polynomial model?? \pause Not so intuitive unfortunately. Rarely do we see models with more than a second degree.
+
+\end{frame}
+
+\begin{frame}\frametitle{Continuous : Categorical Interactions}
+
+It's possible that bonuses may have different effects in different regions. The way to test this is to allow for a differential slope. [JMP] \pause
+
+
+\begin{figure}
+\centering\includegraphics[width=3in]{interactions.png}
+\end{figure}
+
+How can we interpret this? \pause Could we also interact two continuous features? Two categorical features? Could we interact features with others' polynomials? Yes, yes, yes...
+	
+\end{frame}
+
+\begin{frame}\frametitle{Theories versus Prediction}
+
+Above we tested the predictive power of non-linearities in two ways \pause (1) creating polynomial extensions to given features and finding curvilinear patterns and \pause (2) creating differential slopes based of one variable when isolating based on the value of another variable. \\~\\
+
+However, we had specific theories to test in mind \pause (1) diminishing returns and (2) effects of incentivizing bonuses in different parts of the country. \\~\\
+
+What if we had no theories to test, but we wanted to fit the data as best as possible? \pause Try everything... all polynomial terms up to 5, all interactions with up to the squared terms. [JMP medicorp\_exp] \pause We got $R^2 = 98\%$ which rocks!! But none of our variables are significant.... why? \pause Massive collinearity all over the place! \pause Is the $R^2 = 98\%$ real? \pause NO...
+	
+\end{frame}
 
 \section{Overfitting}
 
-\begin{frame}\frametitle{}
+\begin{frame}\frametitle{The First Clue...}
+
+was that F-test demo from Lecture 2 where
+
+\beqn
+x &=& \braces{0, 0.1, 0.2, \ldots, 10.0} \\
+Y &\sim& x + \errorrv \\
+\errorrv &\sim& \normnot{0}{5^2}
+\eeqn
+
+ [repeat in R]. \pause Here, the $R^2$ goes from 22\% up to 
+
+\begin{itemize}
+\item 99.5\% all on completely random data. 
+\item 99.9\% on splines (polynomials on steroids)
+\end{itemize}
+
+You know that this amount of variance explained is fake. But why?
+	
+\end{frame}
+
+\begin{frame}\frametitle{Recall the Modeling Basics}
+
+In lecture 1 we spoke about how
+
+\beqn
+Y = f(x_1, \ldots, x_p) + \errorrv
+\eeqn
+
+where $x_1, \ldots, x_p$ denotes \pause predictors available (including all polynomials and interactions and whatnot!) and $\errorrv$ denotes \emph{irreducible error} due to predictors not available (and independent of $x_1, \ldots, x_p$), the inaccessible information. \\~\\ \pause
+
+\tiny
+Note: recall that we fit $\hat{s}$ which generally speaking fails to estimate $s$ correctly (model error) and $s$ generally speaking fails to represent $f$ correctly since its a parametric model which lacks flexibility. \\~\\ \pause
+
+\normalsize
+By including all sorts of polynomials and interactions, we become more nonparametric thereby losing the benefits of the parametric worldview of $s$ (i.e. interpretability and inference) but gaining a closer fit of the true $f$. But what could go wrong if we take this liberty?
+	
+\end{frame}
+
+\begin{frame}\frametitle{Going Too Far}
+
+\beqn
+Y = f(x_1, \ldots, x_p) + \errorrv
+\eeqn
+
+It's possible our $\hat{f}$ can estimate $f$ and more... it can encroach on and start fitting and optimizing the $\errorrv$. Why is this bad? \pause Since $\errorrv$ is independent of $x_1, \ldots, x_p$, it is creating a random fit. \pause Random fits are akin to \qu{making up a model} and it is the opposite of the \qu{data-driven approach}. \\~\\ \pause
+
+Any value different from $f$ is not \emph{generalizable} as the conditional mean minimizes squared error. \\~\\ \pause
+
+But the BIG problem is: we don't know what the form of $f$ is and we don't know the individual values of $\errorrv$. Thus, we have NO WAY to know if we've overfit!
+	
+\end{frame}
+
+\begin{frame}\frametitle{When Does This Happen?}
+\small
+Essentially, when $p$ is close to $n$. Here's the linear model case with $n=2$ and there's one slope so $p=1$ (+1 for the intercept) so really, the number of predictors is 2 since there is two degrees of freedom. [R demo]
+
+\vspace{-0.3cm}
+\begin{figure}
+\centering
+\hspace{-0.5cm}\includegraphics[width=2.1in]{overfitting_simple}
+\end{figure}
+\vspace{-0.5cm}
+\footnotesize
+The green is the true conditional expectation function $f(x)$ and the brown is the fitted model and the red are the true $\errorrv_1$ and $\errorrv_2$ values. Where are $e_1$ and $e_2$? \pause They are zero (and thus not pictured). The fitted model has $R^2 = 100\%$. Recall from middle school... when they asked you to draw a line between two points --- the line perfectly goes through two points. \pause Why are the $\se{\betahat_j}$'s \texttt{NA}? \pause Division by zero. \pause Can you imagine two predictors and three points and a plane?
+	
+\end{frame}
+
+\begin{frame}\frametitle{Assessing Overfitting and its Cost to You}
+\small
+Overfitting comes from over-optimizing a sample (fitting $\errorrv$) and thus having poor generalizability and thus poor predictive performance in the future! \\~\\ \pause
+
+Let's return to the [R demo] to witness the cost of overfitting. \pause How did we demonstrate overfittedness? \pause We used \qu{new data} generated from the same realization process as the historical dataframe (our sample). Hence this new data is called \emph{out of sample (oos)} data. And then we calculated familiar metrics such as SSE, RMSE, $R^2$ but since these are done oos, we call them oosSSE, oosRMSE, oos$R^2$ and they are our \emph{out of sample statistics}. Everything we spoke about previously we will now call \emph{in-sample statistics}.
+
+\begin{table}
+\centering
+\begin{tabular}{rcc}
+& In Sample & Out of Sample \\ \hline
+RMSE   & 2.0 & 84.7 \\
+$R^2$ & 99.9\% & 9.5\%
+\end{tabular}
+\end{table}
+
+Overfitting can get arbitrarily bad and this is an extreme example.
+	
+\end{frame}
+
+\begin{frame}\frametitle{Assessments in the Real World}
+
+It is easy to assess if you have access to the data-generating process. But in the real world, you only have a limited set of historical data from the data-generating process. What to do?
+
 
 	
 \end{frame}
