@@ -22,7 +22,7 @@
 %immediately create a title page
 \frame{\titlepage}
 
-\section{Evaluating Binary Classification Models}
+\section{Evaluating Binary Classifi. Models}
 
 
 \begin{frame}\frametitle{Review: Generalizing the Classification Rule}
@@ -476,7 +476,7 @@ Now let's predict the time for a new senior citizen: \pause
 \end{itemize}	
 \end{frame}
 
-\section{Non-linearity and Interactions}
+\section{Non-linearity \& Interactions}
 
 \begin{frame}\frametitle{Simple Test of Linearity}
 
@@ -608,6 +608,8 @@ Overfitting can get arbitrarily bad and this is an extreme example.
 	
 \end{frame}
 
+\section{Model Validation}
+
 \begin{frame}\frametitle{Assessments in the Real World}
 \small
 It is easy to assess if you have access to the data-generating process --- you can just generate more data and see how you do. But in the real world, you only have a limited set of historical data from the data-generating process. What to do?\\~\\ \pause
@@ -629,7 +631,8 @@ Building the model on the training set and predicting on the test set and compar
 \centering
 \includegraphics[width=4.1in]{oos_validation}
 \end{figure}
-	
+
+Can oos metrics be better than in-sample metrics (on average)? \pause No...
 \end{frame}
 
 \begin{frame}\frametitle{A Possible Spin on Validation}
@@ -644,7 +647,7 @@ Procedure outlined above:
 \end{enumerate}
 
 
-Does the following seem reasonable?
+Does the following procedure also seem reasonable?
 	
 \begin{enumerate}\footnotesize
 \item Split dataframe into training and test.
@@ -661,7 +664,7 @@ Does the following seem reasonable?
 
 \begin{frame}\frametitle{Valid Validation}
 
-What's wrong? \pause You snooped the test set... \pause analagous to looking into the future, seeing results and saying \qu{I don't like em}, returning to the past and trying again. \pause This can lead to very optimistic results --- it is essentially legalized overfitting. \\~\\
+What's wrong? \pause You snooped the test set... \pause analagous to looking into the future and \pause seeing results and saying \qu{I don't like em}, \pause then returning to the past and trying again. \pause This can lead to very optimistic results --- it is essentially overfitting and you've tricked yourself into thinking you are honest. \\~\\
 
 \pause The oos validation is only valid if...
 
@@ -672,19 +675,63 @@ What's wrong? \pause You snooped the test set... \pause analagous to looking int
 
 you treat the test set as a lockbox. Once you open it up, that's it!
 	
+\end{frame}
 
+\begin{frame}\frametitle{Training-Test Splitting}
+\footnotesize
+We have a choice to split our dataframe into two pieces. Assuming each data point is independent (the running assumption), you should do this completely randomly. When would this assumption not be true? \pause For example, a time series.\\~\\ \pause
+\vspace{-0.2cm}
 
+How large should the test set be? Usual sizes are 10-30\%. What's the tradeoff? If the test set is larger, then ...\pause
+ 
+\begin{enumerate}\footnotesize
+\item the more accurate the assessment of generalization error would be (less variance) and \pause
+\item the less accurate the model will be since it's fitting with less data (more bias) \pause
+\end{enumerate}
+
+If the test set is smaller then vice versa:
+
+\begin{enumerate}\footnotesize
+\item the less accurate the assessment of generalization error would be (more variance) and \pause
+\item the more accurate the model will be since it's fitting with less data (less bias) \pause
+\end{enumerate}
+
+Note: the in-sample and oos statistics are statistics! Thus, they are random!
+
+\end{frame}
+
+\begin{frame}\frametitle{Doing oos Validation in JMP}
+
+Let's take a look at the medicorp data and validate it. Recall, the in-sample $R^2 \approx 98\%$ and the in-sample RMSE is about 48.9. \pause \\~\\
+
+[JMP Cols...Modeling Utilities...Make Validation Col...fit model... validation option is the validation col...crossvalidation tab] Note: \qu{RASE} = root average squared error = root mean squared error = oosRMSE. \qu{Validation} = \qu{test}. \qu{Freq} is the sample sizes in training and test. Looks like we were overoptimistic by 6x the standard error on predictions! Substantial overfitting.
+
+\end{frame}
+
+\begin{frame}\frametitle{Validating Multiple Models}
+
+Let's look at three models for the White Wine data. Here the response is wine quality as measured by professional raters and features are 11 features (e.g. acidity, sugar, pH and alcohol content).
+
+\begin{enumerate}
+\item[A] plain linear model \pause
+\item[B] six-degree polynomials for all features \pause
+\item[C] six-degree polynomials and all first-order interactions \pause
+\item[D] six-degree polynomials and all interactions up to 11th order \pause
+\end{enumerate}
+
+[JMP col validation... fit all models with validation ... save prediction formula cols... analyze model... model comparison] Conclusions? \pause Model C looks the best. Where to go from here?\\~\\
+
+What did I do that wasn't legal? Remember a few slides ago? I looked at the test set four times! We need to solve this problem...
 	
 \end{frame}
+
+
+
 
 \end{document}
 	
 
 
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
 
 \begin{frame}\frametitle{}
 
