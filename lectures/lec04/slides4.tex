@@ -556,7 +556,7 @@ where $x_1, \ldots, x_p$ denotes \pause predictors available (including all poly
 Note: recall that we fit $\hat{s}$ which generally speaking fails to estimate $s$ correctly (model error) and $s$ generally speaking fails to represent $f$ correctly since its a parametric model which lacks flexibility. \\~\\ \pause
 
 \normalsize
-By including all sorts of polynomials and interactions, we become more nonparametric thereby losing the benefits of the parametric worldview of $s$ (i.e. interpretability and inference) but gaining a closer fit of the true $f$. But what could go wrong if we take this liberty?
+By including all sorts of polynomials and interactions, we become more nonparametric thereby losing the benefits of the parametric worldview of $s$... \pause (i.e. parsimony, \pause interpretability \pause and inference) but gaining a closer fit of the true $f$. But what could go wrong if we take this liberty?
 	
 \end{frame}
 
@@ -609,13 +609,73 @@ Overfitting can get arbitrarily bad and this is an extreme example.
 \end{frame}
 
 \begin{frame}\frametitle{Assessments in the Real World}
+\small
+It is easy to assess if you have access to the data-generating process --- you can just generate more data and see how you do. But in the real world, you only have a limited set of historical data from the data-generating process. What to do?\\~\\ \pause
 
-It is easy to assess if you have access to the data-generating process. But in the real world, you only have a limited set of historical data from the data-generating process. What to do?
+Why not \textit{imagine} some of your historical data is future data. That is, split your dataframe into two pieces:
+
+\begin{enumerate}
+\item What we've been calling the historical dataframe but now will calling the \qu{training set}. We use this to build the model, as we've done. \pause
+\item The \qu{test set} that is the piece you are imagining to come in the future. his gives you a means to evaluate your model you built from the training set. \pause
+\end{enumerate}
+
+Building the model on the training set and predicting on the test set and comparing these predictions to the real, known values of the response in the test set constitutes \textit{out of sample validation}. Why is it called that?
+
+\end{frame}
+
+\begin{frame}\frametitle{OOS Validation}
+
+\begin{figure}
+\centering
+\includegraphics[width=4.1in]{oos_validation}
+\end{figure}
+	
+\end{frame}
+
+\begin{frame}\frametitle{A Possible Spin on Validation}
+\footnotesize
+Procedure outlined above:
+	
+\begin{enumerate}\footnotesize
+\item Split dataframe into training and test. \pause
+\item Build model on training. \pause
+\item Predict using the test set. \pause 
+\item Calculate estimate of future generalization error.
+\end{enumerate}
+
+
+Does the following seem reasonable?
+	
+\begin{enumerate}\footnotesize
+\item Split dataframe into training and test.
+\item Build model A on training.
+\item Predict using the test set. 
+\item Calculate estimate of future generalization error of model A. \pause
+\item Build a different model B on training. \pause
+\item Predict using the test set.  \pause
+\item Calculate estimate of future generalization error of model B. \pause
+\item Pick whichever model has better generalization error.
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}\frametitle{Valid Validation}
+
+What's wrong? \pause You snooped the test set... \pause analagous to looking into the future, seeing results and saying \qu{I don't like em}, returning to the past and trying again. \pause This can lead to very optimistic results --- it is essentially legalized overfitting. \\~\\
+
+\pause The oos validation is only valid if...
+
+\begin{figure}
+\centering
+\includegraphics[width=1.2in]{lockbox.png}
+\end{figure}
+
+you treat the test set as a lockbox. Once you open it up, that's it!
+	
 
 
 	
 \end{frame}
-
 
 \end{document}
 	
