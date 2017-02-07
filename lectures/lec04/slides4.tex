@@ -12,7 +12,7 @@
 
 \title[Lec 1]{Predictive Analytics Lecture 4}
 \institute[Wharton, Statistics]{Stat 422/722\\ at The Wharton School of the University of Pennsylvania}
-\date{February 8 \& 9, 2017}
+\date{February 7 \& 8, 2017}
 
 \author{Adam Kapelner}
 
@@ -30,10 +30,10 @@
 Recall the classification rule $\yhat = \indic{\phat \geq 0.5}$. Using 0.5 is a principled default but we can use any rule $p_0 \in (0,1)$:
 
 \beqn
-\yhat = \indic{\phat \geq p_0} := \pause \begin{cases} 1 ~~~\text{if}~~~ \phat \geq p_0 \\ 0 ~~~\text{if}~~~ \phat < p_0 \end{cases}
+\yhat = \indic{\phat \geq p_0} := \begin{cases} 1 ~~~\text{if}~~~ \phat \geq p_0 \\ 0 ~~~\text{if}~~~ \phat < p_0 \end{cases}
 \eeqn
 
-What happens when we change the $p_0$ threshold? If $p_0 \uparrow ~~\Rightarrow~~ \Phat \pause \downarrow$ and $\Nhat \pause \uparrow$. If $p_0 \downarrow ~~\Rightarrow~~ \Phat \pause \uparrow$ and $\Nhat \pause \downarrow$. Changing $p_0$ changes the column totals and obviously creates a whole new confusion matrix.
+What happens when we change the $p_0$ threshold? If $p_0 \uparrow ~~\Rightarrow~~ \Phat \downarrow$ and $\Nhat  \uparrow$. If $p_0 \downarrow ~~\Rightarrow~~ \Phat \uparrow$ and $\Nhat \downarrow$. Changing $p_0$ changes the column totals and obviously creates a whole new confusion matrix.
 \\~\\
 
 So now it's simple, vary $p_0$ and pick the best model according to your cost / error / loss function (the $ME$ at the moment). Let's just do every $p_0$!
@@ -62,7 +62,7 @@ Here, \texttt{Prob} is what we denoted $p_0$. %\qu{Best model} is not defined he
 
 \small
 \vspace{-0.3cm}
-The \emph{ROC Curve}. Each dot represents the sensitivity-specificity tradeoff for each $p_0$. \pause The starred row of maximum sensitivity + specificity is indicated here by a yellow tangent line. %\pause I drew the diagonal line to indicate predictive performance that is expected \qu{by chance}. Why? \pause Also, are there other ROC variants? \pause Yes (HW?).
+The \emph{ROC Curve}. Each dot represents the sensitivity-specificity tradeoff for each $p_0$. The starred row of maximum sensitivity + specificity is indicated here by a yellow tangent line. %\pause I drew the diagonal line to indicate predictive performance that is expected \qu{by chance}. Why? \pause Also, are there other ROC variants? \pause Yes (HW?).
 
 \end{frame}
 
@@ -77,9 +77,9 @@ The \emph{ROC Curve}. Each dot represents the sensitivity-specificity tradeoff f
 
 \small
 \vspace{-0.3cm}
-If you built a model by chance the \qu{area under the curve} (or to the right of the curve) on the graph would be ... \pause 0.5 since the graph is a unit square. Under the ROC curve itself (or to its right) is an area ... \pause greater than 0.5. Here, it's 0.844. \pause This metric is called AUC and is widely used as a metric to assess performance of all possible classifiers in this set of models together, it is a composite metric unlike $ME$ or anything derived from an individual confusion table.\\~\\ \pause
+If you built a model by chance the \qu{area under the curve} (or to the right of the curve) on the graph would be ...  0.5 since the graph is a unit square. Under the ROC curve itself (or to its right) is an area ...  greater than 0.5. Here, it's 0.844.  This metric is called AUC and is widely used as a metric to assess performance of all possible classifiers in this set of models together, it is a composite metric unlike $ME$ or anything derived from an individual confusion table.\\~\\ 
 
-AUC is nice to evaluate overall performance of all possible models... but at the end of the day... \pause you ship \emph{ONE} model! \pause So we still need a means of evaluating our one model from one confusion table.
+AUC is nice to evaluate overall performance of all possible models... but at the end of the day...  you ship \emph{ONE} model! So we still need a means of evaluating our one model from one confusion table.
 
 \end{frame}
 
@@ -229,9 +229,9 @@ What if your response was time? For example: \pause
 \item How long will a car engine last? \pause
 \end{itemize}
 
-What kind of data type is the response? \pause Continuous. For each object we will have features and response. But what does response look like at the time of sampling? \\~\\
+What kind of data type is the response? \pause Continuous. \pause But what does response look like at the time of sampling? \\~\\
 
-For example, revall the Telecom churn dataset. If the observation has ...
+For example, recall the Telecom churn dataset with one feature (tenure). If the observation has ...
 
 \begin{table}
 \centering
@@ -282,10 +282,10 @@ with mean $\expe{Y} = \mu$ where $\mu > 0$. \pause So if $Y \sim Exp(17)$, you e
 
 \begin{frame}\frametitle{The Exponential Log-Linear Model (ELLM)}
 
-Let's say we want to use our linear model $\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p$ for the conditional mean. Problem? \pause Yes. The mean can only be a number greater than zero. Hence we need the $\lambda$ link function again! How can we convert $s_\reals = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p$ to something between $0$ and $+\infty$? \pause Without going into many different link function, let's just use the natural log:
+Let's say we want to use our linear model $\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p$ for the conditional mean. Problem? \pause Yes. The mean can only be a number greater than zero. Hence we need the $\lambda$ link function again! How can we convert $s_\reals = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p$ to something between $0$ and $+\infty$? \pause Without going into many different link function, let's just use the natural exponential:
 
 \beqn
-s = \lambda(s_\reals) = \pause \natlog{s_\reals} \quad \Rightarrow \quad \pause s = e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p} \pause
+s = \lambda(s_\reals) = \pause e^{s_\reals} \quad \Rightarrow \quad \pause s = e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p} \pause
 \eeqn
 
 And voila we have our survival model:
@@ -337,7 +337,7 @@ Let $c_i$ indicate censorship: 1 if censored and 0 if not. Our likelihood is now
 
 \beqn
 &=& \prod_{i=1}^n \tothepow{\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} e^{-\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} y_i}}{1 - c_i} \pause \prob{Y > y_i}^{c_i} \\
-&=& \prod_{i=1}^n \tothepow{\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} e^{-\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} y_i}}{1 - c_i} \tothepow{e^{-\oneover{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}} y}}{c_i} \pause
+&=& \prod_{i=1}^n \tothepow{\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} e^{-\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} y_i}}{1 - c_i} \tothepow{e^{-\oneover{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}} y_i'}}{c_i} \pause
 \eeqn 
 	
 Now the computer crunches away (similar to a logistic regression fit) and we get values of $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$ back in a split second. \pause Now for inference...
@@ -380,7 +380,7 @@ LR = \frac{
 \eeqn \pause
 
 \small
-So on top the computer iterates to find $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$, plugs it in and computes the likelihood and on the bottom the computer independently iterates to find $\braces{\betahat_0}$, plugs it in and computes the likelihood, then together, the $LR$.
+So in the numerator the computer iterates to find $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$, plugs it in and computes the likelihood and in the denominator the computer independently iterates to find $\braces{\betahat_0}$, plugs it in and computes the likelihood, then together, the $LR$.
 \end{frame}
 
 \begin{frame}\frametitle{Partial Tests in Survival Regression}
@@ -441,15 +441,15 @@ And again: a $\chisq{}$ r.v. with one degree of freedom has the following cool p
 
 \begin{frame}\frametitle{Simple Survival Regression and Predictions}
 \small
-\pause
 How do we predict?
 
+\vspace{-0.2cm}
 \beqn
 \yhat= \yhat(\x^*) = \pause \exp{\betahat_0 + \betahat_1 x_1^* +  \ldots + \betahat_p x_p^*}
 \eeqn
 
 What are we predicting? \pause Average time to survive. \\~\\
-
+\vspace{-0.2cm}
 Let's return to the Telecom example and look at just \qu{\texttt{SeniorCitizen}} on customer lifetime. [JMP] \pause Is this variable significant? \pause Yes. \pause Now let's predict the time for a new non-senior citizen:
 
 \beqn
@@ -462,7 +462,7 @@ Now let's predict the time for a new senior citizen: \pause
 \yhat = \yhat(\x^*) = \pause e^{\betahat_0 + \betahat_1 (1)} = \pause e^{4.922 + -0.430} = 80.80
 \eeqn
 
-(1) Is the reduction of 5yr expected? \pause (2) Why are these numbers so large? \pause Likely the exponential model is not a great fit here. The tail is too long and the memorylessness property is not realistic.
+ Is the reduction expected? \pause Yes. Why are these numbers so large? \pause (1) Likely the exponential model is not a great fit here since the tail is too long and the memorylessness property is not realistic. Also, \pause (2) Dataset is not a good sample... was not \emph{designed} for survival.
 	
 \end{frame}
 
@@ -472,7 +472,7 @@ Now let's predict the time for a new senior citizen: \pause
 \begin{itemize}
 \item Do these coefficients make sense? \pause 
 \item What's wrong with this dataset?? \pause The max survival is 72mo and there's thousands of cases that are censored. \pause
-\item Evaluating survival models is complicated... not covered.
+\item Evaluating the fitness (i.e. $R^2, RMSE, ME_w$, etc) of survival models is complicated... not covered.
 \end{itemize}	
 \end{frame}
 
@@ -492,13 +492,13 @@ Interpretation of unit change in $x:$ bonus? Depends on the value where you star
 
 \begin{frame}\frametitle{Polynomial Regression}
 
-Let's try to fit a better curve to bonus --- a 4-degree polynomial. Seems to fit better than a quadratic [see LRT in R]. What's the interpretation of a 4-degree polynomial model?? \pause Not so intuitive unfortunately. Rarely do we see models with more than a second degree.
+Let's try to fit a better curve to bonus --- a 4-degree polynomial. Seems to fit better than a quadratic [see LRT in R]. What's the interpretation of a 4-degree polynomial model?? \pause Not so intuitive unfortunately. Rarely do we see parametric pre-designed models with more than a quadratic term.
 
 \end{frame}
 
 \begin{frame}\frametitle{Continuous : Categorical Interactions}
 
-It's possible that bonuses may have different effects in different regions. The way to test this is to allow for a differential slope. [JMP] \pause
+It's possible that bonuses may have differential effects in the different American \qu{regions}. The way to test this is to allow for a differential slope for each region. [JMP] \pause
 
 
 \begin{figure}
@@ -515,14 +515,14 @@ Above we tested the predictive power of non-linearities in two ways \pause (1) c
 
 However, we had specific theories to test in mind \pause (1) diminishing returns and (2) effects of incentivizing bonuses in different parts of the country. \\~\\
 
-What if we had no theories to test, but we wanted to fit the data as best as possible? \pause Try everything... all polynomial terms up to 5, all interactions with up to the squared terms. [JMP medicorp\_exp] \pause We got $R^2 = 98\%$ which rocks!! But none of our variables are significant.... why? \pause Massive collinearity all over the place! \pause Is the $R^2 = 98\%$ real? \pause NO...
+What if we had no theories to test, but we wanted to fit the data as best as possible (i.e. non-parametric)? \pause Try everything... all polynomial terms up to 5, all interactions with up to the squared terms. [JMP medicorp\_exp] \pause We got $R^2 = 98\%$ which rocks!! But none of our variables are significant.... why? \pause Massive collinearity all over the place! do we give a hoot if we only care about predictive accuracy? \pause NO. \pause But... is the $R^2 = 98\%$ real? \pause NO...
 	
 \end{frame}
 
 \section{Overfitting}
 
-\begin{frame}\frametitle{The First Clue...}
-
+\begin{frame}\frametitle{The First Clue of Trouble in Paradise...}
+\pause
 was that F-test demo from Lecture 2 where
 
 \beqn
@@ -534,11 +534,11 @@ Y &\sim& x + \errorrv \\
  [repeat in R]. \pause Here, the $R^2$ goes from 22\% up to 
 
 \begin{itemize}
-\item 99.5\% all on completely random data. 
-\item 99.9\% on splines (polynomials on steroids)
+\item 99.5\% all on completely random data which you know is fake!! \pause
+\item 99.9\% on splines (polynomials on steroids) which may not be fake??
 \end{itemize}
 
-You know that this amount of variance explained is fake. But why?
+How do we know?
 	
 \end{frame}
 
@@ -550,10 +550,10 @@ In lecture 1 we spoke about how
 Y = f(x_1, \ldots, x_p) + \errorrv
 \eeqn
 
-where $x_1, \ldots, x_p$ denotes \pause predictors available (including all polynomials and interactions and whatnot!) and $\errorrv$ denotes \emph{irreducible error} due to predictors not available (and independent of $x_1, \ldots, x_p$), the inaccessible information. \\~\\ \pause
+where $x_1, \ldots, x_p$ denotes \pause predictors available (including all polynomials and interactions and whatnot!) and $\errorrv$ denotes \pause \emph{irreducible error} due to information not available (and thus independent of $x_1, \ldots, x_p$), the inaccessible information. \\~\\ \pause
 
 \tiny
-Note: recall that we fit $\hat{s}$ which generally speaking fails to estimate $s$ correctly (model error) and $s$ generally speaking fails to represent $f$ correctly since its a parametric model which lacks flexibility. \\~\\ \pause
+Non-germain footnote: recall that we fit $\hat{s}$ which generally speaking fails to estimate $s$ correctly (model error) and $s$ generally speaking fails to represent $f$ correctly since its a parametric model which lacks flexibility. \\~\\ \pause
 
 \normalsize
 By including all sorts of polynomials and interactions, we become more nonparametric thereby losing the benefits of the parametric worldview of $s$... \pause (i.e. parsimony, \pause interpretability \pause and inference) but gaining a closer fit of the true $f$. But what could go wrong if we take this liberty?
@@ -566,34 +566,34 @@ By including all sorts of polynomials and interactions, we become more nonparame
 Y = f(x_1, \ldots, x_p) + \errorrv
 \eeqn
 
-It's possible our $\hat{f}$ can estimate $f$ and more... it can encroach on and start fitting and optimizing the $\errorrv$. Why is this bad? \pause Since $\errorrv$ is independent of $x_1, \ldots, x_p$, it is creating a random fit. \pause Random fits are akin to \qu{making up a model} and it is the opposite of the \qu{data-driven approach}. \\~\\ \pause
+It's possible our $\hat{f}$ can estimate $f$ (which is good) but... \pause it can encroach on and start fitting and optimizing the $\errorrv$. Why is this bad? \pause Since $\errorrv$ is independent of $x_1, \ldots, x_p$, it is creating a random fit. \pause Random fits are akin to \qu{making up a model} and it is the opposite of the \qu{data-driven approach}. \\~\\ \pause
 
 Any value different from $f$ is not \emph{generalizable} as the conditional mean minimizes squared error. \\~\\ \pause
 
-But the BIG problem is: we don't know what the form of $f$ is and we don't know the individual values of $\errorrv$. Thus, we have NO WAY to know if we've overfit!
+But the BIG problem is: we don't know what the form of $f$ is and we don't know the individual values of $\errorrv$. Thus, we have NO WAY to know if we've overfit (as of now)!
 	
 \end{frame}
 
 \begin{frame}\frametitle{When Does This Happen?}
-\small
-Essentially, when $p$ is close to $n$. Here's the linear model case with $n=2$ and there's one slope so $p=1$ (+1 for the intercept) so really, the number of predictors is 2 since there is two degrees of freedom. [R demo]
+\footnotesize
+Essentially, when $p$ gets closer to $n$. Here's the linear model case with $n=2$ and there's one slope so $p=1$ (+1 for the intercept) so really, the number of predictors is 2 since there is two degrees of freedom. [R demo]
 
 \vspace{-0.3cm}
 \begin{figure}
 \centering
-\hspace{-0.5cm}\includegraphics[width=2.1in]{overfitting_simple}
+\hspace{-0.5cm}\includegraphics[width=2.0in]{overfitting_simple}
 \end{figure}
 \vspace{-0.5cm}
 \footnotesize
-The green is the true conditional expectation function $f(x)$ and the brown is the fitted model and the red are the true $\errorrv_1$ and $\errorrv_2$ values. Where are $e_1$ and $e_2$? \pause They are zero (and thus not pictured). The fitted model has $R^2 = 100\%$. Recall from middle school... when they asked you to draw a line between two points --- the line perfectly goes through two points. \pause Why are the $\se{\betahat_j}$'s \texttt{NA}? \pause Division by zero. \pause Can you imagine two predictors and three points and a plane?
+The green is the true conditional expectation function $f(x)$ and the brown is the fitted model and the red are the true $\errorrv_1$ and $\errorrv_2$ values. Where are $e_1$ and $e_2$? \pause They are zero (and thus not pictured). The fitted model has $R^2 = 100\%$. Recall from middle school... when they asked you to draw a line between two points --- the line perfectly goes through two points. \pause Why are the $\se{\betahat_j}$'s \texttt{NA}? \pause Division by zero. \pause Can you imagine two predictors and three points and a plane? \pause What about in a logistic regression? [Whiteboard demo]
 	
 \end{frame}
 
 \begin{frame}\frametitle{Assessing Overfitting and its Cost to You}
 \small
-Overfitting comes from over-optimizing a sample (fitting $\errorrv$) and thus having poor generalizability and thus poor predictive performance in the future! \\~\\ \pause
+Overfitting comes from over-optimizing a sample (i.e. fitting $\errorrv$) and thus having poor generalizability and thus poor predictive performance in the future! \\~\\ \pause
 
-Let's return to the [R demo] to witness the cost of overfitting. \pause How did we demonstrate overfittedness? \pause We used \qu{new data} generated from the same realization process as the historical dataframe (our sample). Hence this new data is called \emph{out of sample (oos)} data. And then we calculated familiar metrics such as SSE, RMSE, $R^2$ but since these are done oos, we call them oosSSE, oosRMSE, oos$R^2$ and they are our \emph{out of sample statistics}. Everything we spoke about previously we will now call \emph{in-sample statistics}.
+Let's return to the [R demo] to witness the cost of overfitting. \pause How did we demonstrate overfittedness? \pause We used \qu{new data} not in the dataframe generated from the same realization process as the historical dataframe (our sample). Hence this new data is called \emph{out of sample (oos)} data. And then we calculated familiar metrics such as SSE, RMSE, $R^2$ but since these are done oos, we call them oosSSE, oosRMSE, oos$R^2$ and they are our \emph{out of sample statistics}. Everything we spoke about previously we will now call \emph{in-sample statistics}.
 
 \begin{table}
 \centering
@@ -614,7 +614,7 @@ Overfitting can get arbitrarily bad and this is an extreme example.
 \small
 It is easy to assess if you have access to the data-generating process --- you can just generate more data and see how you do. But in the real world, you only have a limited set of historical data from the data-generating process. What to do?\\~\\ \pause
 
-Why not \textit{imagine} some of your historical data is future data. That is, split your dataframe into two pieces:
+Why not \textit{imagine} some of your historical data is future data. That is, split your dataframe into two pieces: \pause
 
 \begin{enumerate}
 \item What we've been calling the historical dataframe but now will calling the \qu{training set}. We use this to build the model, as we've done. \pause
@@ -625,7 +625,7 @@ Building the model on the training set and predicting on the test set and compar
 
 \end{frame}
 
-\begin{frame}\frametitle{OOS Validation}
+\begin{frame}\frametitle{Model Fitting with OOS Validation}
 
 \begin{figure}
 \centering
