@@ -156,7 +156,7 @@ We now vary $p_0$ to locate the model that optimizes this error to be minimum.
 
 \begin{frame}\frametitle{Minimum Weighted Misclassification Error}
 
-Let's assume that $c_{FN} = \$1000$ and $c_{FP} = \$100$ just for the example's sake. Note: this is a \emph{cost ratio} of 10:1.
+Let's assume that $c_{FN} = \$1000$ and $c_{FP} = \$100$ just for the example's sake. Note: this is a \emph{cost ratio} of 10:1 (only the ratio matters for the optimal $p_0$ solution).
 
 \vspace{-0.2cm}
 \begin{figure}
@@ -164,7 +164,7 @@ Let's assume that $c_{FN} = \$1000$ and $c_{FP} = \$100$ just for the example's 
 \hspace{-0.5cm}\includegraphics[width=3.1in]{weighted_misclassification_costs.png}
 \end{figure}
 
-We now calculate the cost and find the minimum model (i.e. the $p_0$ to ship). [JMP] \pause Or alternatively, we can select the model with the closest $FN / FP \approx 10:1$ to match the stakeholder preference of the desired cost ratio. Why would this be good?
+We now calculate the cost and find the minimum model (i.e. the $p_0$ to ship). [JMP] Beyond scope: some people select the model with the closest $\#FP/\#FN \approx 10:1$ to match the stakeholder preference of the desired cost ratio. I'm not entirely clear on why this fitness function is used. [JMP ratios sheet]
 
 
 
@@ -237,9 +237,9 @@ For example, recall the Telecom churn dataset with one feature (tenure). If the 
 \centering
 \begin{tabular}{ccc}
 Tenure Time & Churn? & Total Time as a Customer \\ \hline
-2 & Yes & \pause 3 \\
-8 & Yes & \pause 9 \\
-45 & No & \pause unknown \\
+2 & Yes & \pause 2 \\
+8 & Yes & \pause 8 \\
+45 & No & \pause unknown (but known to be $> 45$) \\
 \end{tabular}
 \end{table}
 \normalsize
@@ -331,12 +331,12 @@ Next up in the recipe... we need to get estimates of the true parameters, we hav
 \beqn
 = \prod_{i=1}^n \oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} e^{-\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} y_i}
 \eeqn \pause
-Can we just maximize the above over all values of the $\beta$'s like before? \pause We are missing one thing. What if $y_i$ is a censored value? All we know about that $y_i$ is that it's greater than the last value recorded! \pause Recall $\prob{Y > y} = 1 - F(y) = e^{-\oneover{\mu} y}$\\~\\
+Can we just maximize the above over all values of the $\beta$'s like before? \pause We are missing one thing. What if survival time is a censored value (denoted $y_i'$)? All we know about that $y_i$ is that it's greater than the last value recorded! \pause Recall $\prob{Y > y} = 1 - F(y) = e^{-\oneover{\mu} y}$\\~\\
 
 Let $c_i$ indicate censorship: 1 if censored and 0 if not. Our likelihood is now in two pieces:
 
 \beqn
-&=& \prod_{i=1}^n \tothepow{\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} e^{-\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} y_i}}{1 - c_i} \pause \prob{Y > y_i}^{c_i} \\
+&=& \prod_{i=1}^n \tothepow{\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} e^{-\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} y_i}}{1 - c_i} \pause \prob{Y > y_i'}^{c_i} \pause \\
 &=& \prod_{i=1}^n \tothepow{\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} e^{-\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} y_i}}{1 - c_i} \tothepow{e^{-\oneover{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}} y_i'}}{c_i} \pause
 \eeqn 
 	
@@ -445,7 +445,7 @@ How do we predict?
 
 \vspace{-0.2cm}
 \beqn
-\yhat= \yhat(\x^*) = \pause \exp{\betahat_0 + \betahat_1 x_1^* +  \ldots + \betahat_p x_p^*}
+\yhat= \yhat(\x^*) = \pause e^{\betahat_0 + \betahat_1 x_1^* +  \ldots + \betahat_p x_p^*}
 \eeqn
 
 What are we predicting? \pause Average time to survive. \\~\\
@@ -453,13 +453,13 @@ What are we predicting? \pause Average time to survive. \\~\\
 Let's return to the Telecom example and look at just \qu{\texttt{SeniorCitizen}} on customer lifetime. [JMP] \pause Is this variable significant? \pause Yes. \pause Now let's predict the time for a new non-senior citizen:
 
 \beqn
-\yhat = \yhat(\x^*) = \pause e^{\betahat_0 + \betahat_1 (0)} = \pause e^{4.922} = 137.28
+\yhat = \yhat(\x^*) = \pause e^{\betahat_0 + \betahat_1 (0)} = \pause e^{4.915} = 136.6
 \eeqn
 
 Now let's predict the time for a new senior citizen: \pause
 
 \beqn
-\yhat = \yhat(\x^*) = \pause e^{\betahat_0 + \betahat_1 (1)} = \pause e^{4.922 + -0.430} = 80.80
+\yhat = \yhat(\x^*) = \pause e^{\betahat_0 + \betahat_1 (1)} = \pause e^{4.915 + -0.535} = 79.84
 \eeqn
 
  Is the reduction expected? \pause Yes. Why are these numbers so large? \pause (1) Likely the exponential model is not a great fit here since the tail is too long and the memorylessness property is not realistic. Also, \pause (2) Dataset is not a good sample... was not \emph{designed} for survival.
@@ -552,12 +552,10 @@ Y = f(x_1, \ldots, x_p) + \errorrv
 
 where $x_1, \ldots, x_p$ denotes \pause predictors available (including all polynomials and interactions and whatnot!) and $\errorrv$ denotes \pause \emph{irreducible error} due to information not available (and thus independent of $x_1, \ldots, x_p$), the inaccessible information. \\~\\ \pause
 
-\tiny
-Non-germain footnote: recall that we fit $\hat{s}$ which generally speaking fails to estimate $s$ correctly (model error) and $s$ generally speaking fails to represent $f$ correctly since its a parametric model which lacks flexibility. \\~\\ \pause
-
-\normalsize
-By including all sorts of polynomials and interactions, we become more nonparametric thereby losing the benefits of the parametric worldview of $s$... \pause (i.e. parsimony, \pause interpretability \pause and inference) but gaining a closer fit of the true $f$. But what could go wrong if we take this liberty?
+By including all sorts of polynomials and interactions, we become more nonparametric thereby losing the benefits of the parametric worldview of $s$... \pause (i.e. parsimony, \pause interpretability \pause and inference) but gaining a closer fit of the true $f$. But what could go wrong if we take this liberty? \\~\\
 	
+\tiny
+Non-germane footnote: recall that we fit $\hat{s}$ which generally speaking fails to estimate $s$ correctly (model error) and $s$ generally speaking fails to represent $f$ correctly since its a parametric model which lacks flexibility. \\~\\ \pause
 \end{frame}
 
 \begin{frame}\frametitle{Going Too Far}
