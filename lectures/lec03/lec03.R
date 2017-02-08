@@ -13,7 +13,7 @@ plot(x, y, xlim = c(0, 25), ylim = c(0, 25))
 lin_mod = lm(y ~ x)
 abline(lin_mod, col = "blue")
 
-poly_mod = lm(y ~ poly(x, 6))
+poly_mod = lm(y ~ poly(x, 15))
 xstars = seq(0, 25, length.out = 10000)
 yhats = predict(poly_mod, data.frame(x = xstars))
 points(xstars, yhats, type = "l", col = "green")

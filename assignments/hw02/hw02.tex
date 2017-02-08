@@ -79,25 +79,179 @@ Test the theory in (a)
 
 \end{enumerate}
 
-\problem{We will be investigating dredging and multiple testing corrections. I have provided a data file for you called \qu{xyrand.csv} located \href{}{here}.}
+\problem{We will be investigating dredging and multiple testing corrections. I have provided a data file for you called \qu{xyrand.csv} located \href{https://raw.githubusercontent.com/kapelner/Wharton_Stat_422_722/master/assignments/hw02/xyrand.csv}{here} (right click and downlod from the browser). This file is fully random data from a standard normal and thus there is no systematic connection between the column $y$ and any of the $x_j$ columns.}
 
 \begin{enumerate}
 
-\easysubproblem{.}\spc{3}
+\easysubproblem{Run a regression of $y$ on the $x_j$'s and report $R^2$. Why is this $R^2$ not \emph{exactly} zero?}\spc{4}
+
+\intermediatesubproblem{Explain why RMSE is the value that it is. What number do you feel it should it be closer to?}\spc{4}
+
+\easysubproblem{Which variables were significant and what are their significance levels? Why should any variables be significant in the first place if they're all just $\iid$ random realizations?}\spc{4}
+
+\intermediatesubproblem{Calculate the probability you see this many significant variables \emph{or more} in a 50-predictor linear regression. Is your number of significant variables \qu{expected}?}\spc{4}
+
+\easysubproblem{Calculate both a Sidak and a Bonferroni corrected individual $\alpha$ that preserves 5\% familywise error.}\spc{4}
+
+\easysubproblem{Using the Sidak and/or the Bonferroni correction, are there any significant variables anymore? Yes/no}\spc{1}
+
+\intermediatesubproblem{Explain precisely what I would need to simulated in this same setup with one response and 50 predictors randomly realized to expect one significant variable if the familywise correction is employed.}\spc{4}
+
+\intermediatesubproblem{Report the overall $F$ value and it's corresponding significance level. Explain how it is possible that there exist $t$ tests which are significant for some linear predictors but the $F$ test is not.}\spc{4}
 
 \end{enumerate}
+
+\problem{These are some conceptual questions concerning hypothesis testing, Type I errors, Type II errors and power.}
+
+\begin{enumerate}
+
+
+\easysubproblem{Given some predetermined level of $\alpha$ we have two ways of setting up hypothesis tests:
+
+\beqn
+&& H_0: \text{UFOs do not exist} \\
+&& H_a: \text{UFOs do exist}
+\eeqn
+
+and the inverse:
+
+\beqn
+&& H_0: \text{UFOs do exist} \\
+&& H_a: \text{UFOs do not exist}
+\eeqn
+
+Which set should be employed and \emph{precisely} why?
+}\spc{3}
+
+\easysubproblem{Imagine a situation where you are trying to convince your friends that UFOs exist. What do you provide to your friend to help your case? (One word).} \spc{1}
+
+
+\intermediatesubproblem{You cannot convince your friend. In the hypothesis testing framework there are two separate reasons why he is not convinced. What are they?} \spc{3}
+
+
+\hardsubproblem{The Shapiro-Wilk Test of Normality is used to assess normality of a given sample of data. It is a goodness-of-fit test where 
+
+\beqn
+&& H_0:\text{ the data generating process is normal} \\
+&& H_a: \text{ the data generating process is not normal.}
+\eeqn
+
+Usually, you want to prove normality (e.g. the case of testing the residuals from a linear regression). Why does this test reward small sample sizes?}~\spc{3}
+
+
+\end{enumerate}
+
+
+\problem{These questions will be about extrapolation and generalization.}
+
+\begin{enumerate}
+
+\intermediatesubproblem{Is model extrapolation and model generalizablity the same concept (lecture 3, slide 6)? Discuss.}\spc{3}
+
+
+\hardsubproblem{Provide an example of a model that you use regularly that does not generalize to the observations you use to predict with it.}\spc{3}
+
+\intermediatesubproblem{Run lines 5--27 of the \href{https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec03/lec03.R}{lecture 3 R demos}. Which of the three models would be the worst extrapolator and why?}\spc{3}
+
+\hardsubproblem{You are provided a new $\x^*$ with $p$ features in which are to guess $y$. How would assess extrapolation? Explain.}\spc{3}
+
+\end{enumerate}
+
+\problem{These questions will be about optimal design.}
+
+\begin{enumerate}
+
+
+\easysubproblem{In the case of a simple linear regression with $n=20$ points where $x$ ranges from 6 to 17, what would be the optimal design?}\spc{3}
+
+\easysubproblem{Show that for fixed $n$ under least squares regression that the optimal design is half the points on the minimum and half the points on the maximum.}\spc{3}
+
+\easysubproblem{Take the case of $n=20$ and three continuous predictors ranging in $\zeroonecl$. Use JMP to create an optimal design for the model with all factorial interactions and all polynomials up until degree 3. Take the optimal design right click and make data table. Then sort the data table first by $x_1$ then by $x_2$ and by $x_3$. Are they all about the same? Yes/no.}\spc{1}
+
+\hardsubproblem{The optimal design in the previous problem is what you'd probably like to do for non-parametric linear model with lots of interactions and curves. What is the takehome message in this case?}\spc{4}
+
+\extracreditsubproblem{Your goals are prediction and you have the choice bertween D-optimality and I-optimality. Which is likely better and why?}\spc{4}
+\end{enumerate}
+
+
+\problem{These questions will be about logistic regression using the Telecom Churn dataset that can be downloaded \href{https://raw.githubusercontent.com/kapelner/Wharton_Stat_422_722/master/lectures/lec03/telecom_churn.csv}{here}.}
+
+\begin{enumerate}
+
+
+\easysubproblem{Give an expression for the conditional mean in a logistic regression problem with $p$ features using the standard logistic regression assumptions.}\spc{3}
+
+\easysubproblem{Do the multivariable logistic regression in class with target response churn (remember to delete those 6 variables which are fully collinear). Provide an interpretation on the monthly charges coefficient.}\spc{3}
+
+\extracreditsubproblem{If we used the cloglog link function and got the same coefficient, what would be the interpretation. This one is fun!}\spc{4}
+
+
+\easysubproblem{Predict the mean probability of churn for a senior citzen who has been with the company for 36 months and then predict whether or not this person will churn.}\spc{3}
+
+
+\hardsubproblem{Test whether or not removing both gender and partner makes a difference in terms of linear predictive power versus the full model from (b).}\spc{3}
+
+
+\hardsubproblem{In my regression output, the $\chi^2$ value for \texttt{senior citizen} is 14.37. Calculate the standard error from this.}\spc{3}
+
+
+\easysubproblem{Use the model from (b) and use JMP to compute the AUC and misclassification error.}\spc{3}
+
+\hardsubproblem{Graph the false negative proportion versus the false positive proportion. Is this more useful than an ROC curve for the case of churn?}\spc{5}
+
+\extracreditsubproblem{Create a \href{https://en.wikipedia.org/wiki/Detection_error_tradeoff}{detection error tradeoff plot} for this dataset (no need to use normal deviates for $x$ and $y$ axes).}\spc{0}
+
+
+\intermediatesubproblem{Imagine the cost ratio is 7.5:1 for the more costly mistake. What is the $p_0$ of the optimal model?}\spc{0}
+
+\easysubproblem{Why is this $p_0$ less than the naive value of 50\%?}\spc{3}
+
+\intermediatesubproblem{Create a flowchart of the optimal model in (j) similar to lecture 3, slide 35.}\spc{0}
+
+
+\end{enumerate}
+
+
 
 
 \end{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%
 
-\problem{These questions are about prediction and modeling theory.}
-
-\begin{enumerate}
 
 
-\easysubproblem{Give three examples of \qu{predictions}.}\spc{3}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \easysubproblem{Considering the etymological definitions, do we \qu{predict} or do we \qu{forecast}? Explain your answer.}\spc{3}
 
