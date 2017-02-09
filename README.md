@@ -15,12 +15,13 @@ Audio for lectures should be on canvas except for the first lecture (links below
 
 * Homework 1 [(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw01/hw01.pdf?raw=true) [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw01/hw01.pdf)
 (due 2/2/17)
-
+* Homework 2 [(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw02/hw02.pdf?raw=true) [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw02/hw02.pdf)
+(due 2/15/17)
 * Project [(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/project/project.pdf?raw=true) [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/project/project.pdf) (due 2/23/17 and 2/24/17)
 
 ## Exams
 
-* Final 2/28/17 and 3/1/17 in class (last 90-120 minutes).
+* Final 2/28/17 and 3/1/17 in class (last 120 minutes).
 
 ## Office Hours
 
