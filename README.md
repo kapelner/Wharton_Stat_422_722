@@ -9,17 +9,19 @@ Audio for lectures should be on canvas except for the first lecture (links below
 * Lecture 1 [(audio sec A)](https://clyp.it/ty1cebu4) [(audio sec B)](https://clyp.it/d3tmzv0b) [(slides)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec01/slides.pdf)
 * Lecture 2 [(slides)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec02/slides.pdf)
 * Lecture 3 [(slides)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec03/slides.pdf)
+* Lecture 4 [(slides)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec04/slides4.pdf)
 
 
 ## Assignments
 
 * Homework 1 [(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw01/hw01.pdf?raw=true) [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw01/hw01.pdf)
 (due 2/2/17)
-* Homework 2 [(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw02/hw02.pdf?raw=true) [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw02/hw02.pdf)
+* Optional Homework 2 [(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw02/hw02.pdf?raw=true) [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw02/hw02.pdf)
 (due 2/15/17)
+* Optional Homework 3 (due 2/27/17)
 * Project [(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/project/project.pdf?raw=true) [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/project/project.pdf) (due 2/23/17 and 2/24/17)
 
-## Exams
+## Examination
 
 * Final 2/28/17 and 3/1/17 in class (last 120 minutes).
 
