@@ -25,6 +25,14 @@ Audio for lectures should be on canvas except for the first lecture (links below
 
 * Final 2/28/17 and 3/1/17 in class (last 120 minutes).
 
+List of topics *not* covered on the final exam:
+
+* Calculating likelihoods (but you will need to understand likelihood values given to you and the likelihood ratio test as I will be giving you critiical chi-squared values)
+* You will only need to know the Bonferroni correction (Sidak and Scheffe are not covered on the exam)
+* Anything about how the computer numerically maximizes likelihood to find a fit (but you will need to know that this process exists)
+
+
+
 ## Office Hours
 
 * Wed 3-4:30PM SHDH 109 Gemma Moran
