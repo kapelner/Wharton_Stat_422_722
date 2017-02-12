@@ -129,9 +129,13 @@ There are a few other things that need to be reported on:
 
 \section{The Prediction Competition}
 
-You will then have one day to predict the selling prices of a 500 apartments currently on the market (found in the \href{https://docs.google.com/spreadsheets/d/12cOzcQlz9WCayasqB-sx_9E6gjQH0-eCuryqJUucZ50/edit#gid=0}{listing URLs} Google sheet). This list will be complete one week before the competition but not before then as we want to have the most up-to-date listings.
+You will then have one day to predict the selling prices of a set a of 947 apartments currently on the market found in the \href{https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/project/stat_422_722_project_prediction_set.csv}{prediction CSV file}. 
 
-You will upload a file named \texttt{<Your Penn ID>.csv} to canvas by Friday, Feb 24 5PM. (More details on upload specifics coming soon). The number of lines in your CSV will be the same number of lines in the listing URLs sheet. Each line will consist of a single prediction value (in dollars without the dollar symbol or commas). For instance:
+This file was MTurked and thus contains a lot of the MTurk metadata (which you will ignore). It has also been cleaned by me in a few hours so the cleaning is not perfect. This is a example of what you get in the real world on the higher end of quality.
+
+I've included some features in this prediction set. You are under no obligation to use them whatsoever. You can capture your own features by using the link provided in the \texttt{URL} column.
+
+You will upload a file named \texttt{<Your Penn ID>.csv} to canvas by Friday, Feb 24 5PM. (More details on upload specifics coming soon). The number of lines in your CSV will be the same number of lines as the \href{https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/project/stat_422_722_project_prediction_set.csv}{prediction CSV file} less one (for the header line). Each line will consist of a single prediction value (in dollars without the dollar symbol or commas). For instance:
 
 \begin{figure}[htp]
 \begin{Verbatim}[frame=single, fontsize = \small]
@@ -146,10 +150,10 @@ You will upload a file named \texttt{<Your Penn ID>.csv} to canvas by Friday, Fe
 \caption{An example file \texttt{<Your Penn ID>.csv}}
 \end{figure}
 
-I will then wait until the grading deadline. Approximately 8 apartments are sold per day. The listing URL sheet has 500 apartments representing about 1/6 of the market. Thus we can expect 1.3 apartments to sell per day and thus we will have about 18 data points to evaluate our future predictions against.
+I will then wait until the grading deadline May 12 or until 100 apartments are sold. I estimate 2-3 apartments sell per day of the 947 on this sheet thus we will have a nice set to evaluate \emph{your} future predictions against.
 
 You will be graded on your out-of-sample $R^2$ value. How to allocate the points I have not determined yet.
 
-If you finish in the top five among the two sections of Stat 422/722, I (or the TA) will try to reproduce your results via your submitted data frame and your crystal clear writeup explaining your modeling technique. Reproducible work / research is a becoming more and more demanded these days.
+If you finish in the top five among the two sections of Stat 422/722, I (or the TA) will try to reproduce your results via your submitted data frame and your crystal clear writeup explaining your modeling technique. Reproducible work / research is a becoming more and more demanded these days. I will also want to ensure a fair playing field.
 
 \end{document}
