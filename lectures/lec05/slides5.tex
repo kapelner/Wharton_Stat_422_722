@@ -73,7 +73,7 @@ But knowing where you are on that y-axis would involve knowing the truth. We nee
 We have a choice to split our dataframe into two pieces. Assuming each data point is independent (the running assumption), you should do this completely randomly. When would this assumption not be true? \pause For example, a time series.\\~\\
 \vspace{-0.2cm}
 
-Additionally, we need a non-stationary model relationship. So, 
+Additionally, we need to assume a non-stationary model relationship. So, 
 
 \beqn
 Y = f(x_1, \ldots, x_p) + \errorrv \quad \text{and not} \quad Y = f_t(x_1, \ldots, x_p) + \errorrv 
@@ -94,15 +94,16 @@ If the test set is smaller then, vice versa. Note: the in-sample and oos statist
 \end{frame}
 
 
-\section{Cross-Validation}
+\section{Cross-Validation (CV)}
 
 \begin{frame}\frametitle{Less Randomness in the OOS Statistics}
-
-If we change the observations in the training/test splits, we will get different models and different estimates of future error. \pause Thus, our oosRMSE was really oosRMSE conditional on the idiosyncratic split we happened to get.\\~\\ \pause 
+\small
+If we change the observations in the training/test splits, we will get different models and different estimates of future error. \pause Thus, our oosRMSE was really oosRMSE conditional on the idiosyncratic split we happened to get!\\~\\ \pause 
 
 We can at the very least... \pause  get rid of this idiosyncratic error by ... \pause averaging over all training-test splits. If we have $n=100$ and the test set is 10\%, that means we only have $\binom{100}{10} = 1.73 \times 10^{13}$ split configurations to average over! \\~\\ \pause 
 
-We can approximate the averaging over all splits by just taking $100\% / 10\% = 10$ random but unique splits called \emph{folds}. \pause Thus, each observation is represented in the test set once. This is known as \emph{$K$-fold cross validation (CV)} where here $K = \pause100\% / 10\% = 10$ (and this procedure seems to be the industry standard).
+\normalsize
+We can approximate the averaging over all splits by just taking $\frac{100\%}{10\%} = 10$ random but unique splits called \emph{folds}. \pause Thus, each observation is represented in the test set once (leading to a more stable estimate). \pause This is known as \emph{$K$-fold cross validation (CV)} where here $K = \pause \frac{100\%}{10\%} = 10$ (and this procedure seems to be the industry standard).
 	
 \end{frame}
 
@@ -111,56 +112,125 @@ We can approximate the averaging over all splits by just taking $100\% / 10\% = 
 
 \begin{figure}
 \centering
-\includegraphics[width=3.1in]{10_fold_cv.png}
+\includegraphics[width=3.1in]{10_fold_cv2.png}
 \end{figure}
 
 \vspace{-0.3cm}
 \small
-$K=10$ is arbitrary but it is based on the 10-30\% test set proportion. In practice, I've only used 5 or 10 fold CV. \\~\\
+$K=10$ is arbitrary (but remember where it was based on: the 10-30\% test set recommendation). In practice, I've only used 5 or 10 fold CV. \\~\\ \pause
 
 \vspace{-0.2cm}
 This does not really solve any of our big problems but gives us a little boost in terms of a reduction in standard error of our generalization error estimate. \pause That's OK; we can take all the help we can get if it's costless!! \\~\\
 
 \vspace{-0.2cm}\footnotesize
-Note 1: If $K=n$ then we the test set as one sample; this is known as \qu{leave on out CV} (LOOCV) and it not generally recommended --- super high variance! Note 2: bleeding edge of stats --- find CI's for generalization error.
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
+Note 1: If $K=n$ then we the test set as one sample; this is known as \qu{leave on out CV} (LOOCV) and it not recommended --- high variance and \pause computat- ional cost! \pause Note 2: bleeding edge of stats --- find CI's for generalization error.
 
 	
 \end{frame}
 
 
-\begin{frame}\frametitle{}
+\begin{frame}\frametitle{$K=3$-fold CV on a Linear Model Ex. 1/5}
 
+Imagine the following data $n=9$ where we are fitting a response by one feature (ignore the colors):
+
+\begin{figure}
+\centering
+\includegraphics[width=2.1in]{data.PNG}
+\end{figure}
+
+Imagine we choose a linear model. 
 	
 \end{frame}
 
-\begin{frame}\frametitle{}
 
+\begin{frame}\frametitle{$K=3$-fold CV on a Linear Model Ex. 2/5}
+
+In the first fold, the red is left out and thus we fit a line to the blue and green points:
+
+\begin{figure}
+\centering
+\includegraphics[width=1.8in]{l1.PNG}
+\end{figure}
+
+Then we calculate the residuals to the red points (the test set in this fold) and calculate
+
+\beqn
+SSE = (2 - 2.2)^2 + (3.8 - 2.1)^2 + (3.5 - 2.05)^2 = 5.03
+\eeqn
+
+\end{frame}
+
+
+\begin{frame}\frametitle{$K=3$-fold CV on a Linear Model Ex. 3/5}
+
+In the second fold, the green is left out and thus we fit a line to the blue and red points:
+
+\begin{figure}
+\centering
+\includegraphics[width=1.8in]{l2.PNG}
+\end{figure}
+
+Then we calculate the residuals to the red points (the test set in this fold) and calculate
+
+\beqn
+SSE = (1.2 - 2.3)^2 + (3.4 - 2.25)^2 + (1.3 - 2.2)^2 = 3.34
+\eeqn
 	
 \end{frame}
 
+
+\begin{frame}\frametitle{$K=3$-fold CV on a Linear Model Ex. 4/5}
+
+In the third (last) fold, the blue is left out and thus we fit a line to the green and red points:
+
+\begin{figure}
+\centering
+\includegraphics[width=1.8in]{l3.PNG}
+\end{figure}
+
+Then we calculate the residuals to the red points (the test set in this fold) and calculate
+
+\beqn
+SSE = (2.35 - 2.3)^2 + (2.4 - 1.5)^2 + (2.2 - 1.4)^2 = 1.45
+\eeqn
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{$K=3$-fold CV on a Linear Model Ex. 1/5}
+
+Then we aggregate all oos results together (SSE's are additive) and we can compute a final oos statistics e.g. the oosRMSE:
+
+\beqn
+oosRMSE = \sqrt{\frac{5.03 + 3.34 + 1.45}{9}} = 1.045
+\eeqn
+	
+\end{frame}
+
+\begin{frame}\frametitle{Limits of JMP / Intro to R's MLR Package}
+
+And... \pause JMP can't do $K$-fold CV! (Except in one limited case which doesn't help us right now). But of course R can do it... [R Demo with MLR]
+	
+\end{frame}
 
 
 \begin{frame}\frametitle{Validating Multiple Models}
 \footnotesize
-Let's look at three models for the White Wine data. Here the response is wine quality as measured by professional raters and features are 11 features (e.g. acidity, sugar, pH and alcohol content).
+Let's look at a few models for the White Wine data with no validation (but no cross-validation). Here the response is wine quality as measured by professional raters and features are 11 features (e.g. acidity, sugar, pH and alcohol content).
 
 \vspace{-0.1cm}
 \begin{enumerate}\footnotesize
 \item[A] plain linear model \pause
-\item[B] six-degree polynomials for all features \pause
-\item[C] six-degree polynomials and all interactions up to 2nd degree (AKA 1st order) \pause
-\item[D] six-degree polynomials and all interactions up to 3rd degree (AKA 2nd order) \pause
-\item[E] six-degree polynomials and all interactions up to 4th degree (AKA 3rd order) \pause
-\item[F] six-degree polynomials and all interactions up to 11th order \pause
+\item[B] 6-degree polynomials for all features \pause
+\item[C] 6$^{\text{o}}$ polynomials and all 1st order interactions  \pause
+\item[D] 6$^{\text{o}}$ polynomials and all interactions up to 3rd degree (AKA 2nd order) \pause
+\item[E] 6$^{\text{o}}$ polynomials and all interactions up to 4th degree (AKA 3rd order) \pause
+\item[F] 6$^{\text{o}}$ polynomials and all interactions up to 11th order \pause
 \end{enumerate}
 \footnotesize
 \vspace{-0.1cm}
-[JMP col validation... fit all models with validation ... save prediction formula cols... analyze model... model comparison] \pause Conclusions? \pause Model C looks the best. \pause Note: another popular assessment metric besides oosRMSE is oosAAE which is just average absoute value difference. Strange ... given that linear models optimize for squared error. \pause \inred{What did I do that wasn't legal?} 
+[JMP col validation... fit all models with validation ... save prediction formula cols... analyze model... model comparison... \pause complexity tradeoff illustration] \pause Conclusions? \pause Model C looks the best. \pause Note: another popular assessment metric besides oosRMSE is oosAAE which is just average absoute value difference. Strange ... given that linear models optimize for squared error. \pause 
+Show Demo with MLR w/ 10-fold CV \pause \inred{What \textit{precisely} did I do that wasn't legal?} 
 	
 \end{frame}
 
@@ -184,7 +254,7 @@ Recall the proposal from last class:
 \item Pick whichever model has better generalization error.
 \end{enumerate}
 
-What was wrong with is?
+This is a form of \emph{Model Selection}. What was wrong with is?
 
 \end{frame}
 
@@ -199,752 +269,138 @@ The oos validation is only valid if...
 
 you treat the test set as a lockbox. Once you open it up, that's it! And we opened it up $M$ times!\\~\\ \pause
 
-What to do?
+This is indeed a \emph{Model Selection} procedure but ... \pause our estimate of future generalization error is invalid. How can we do both?
 	
 \end{frame}
 
-\end{document}
+\section{Three Splits and CV}
 
-\section{Evaluating Binary Classifi. Models}
-
-
-\begin{frame}\frametitle{Review: Generalizing the Classification Rule}
-
-Recall the classification rule $\yhat = \indic{\phat \geq 0.5}$. Using 0.5 is a principled default but we can use any rule $p_0 \in (0,1)$:
-
-\beqn
-\yhat = \indic{\phat \geq p_0} := \begin{cases} 1 ~~~\text{if}~~~ \phat \geq p_0 \\ 0 ~~~\text{if}~~~ \phat < p_0 \end{cases}
-\eeqn
-
-What happens when we change the $p_0$ threshold? If $p_0 \uparrow ~~\Rightarrow~~ \Phat \downarrow$ and $\Nhat  \uparrow$. If $p_0 \downarrow ~~\Rightarrow~~ \Phat \uparrow$ and $\Nhat \downarrow$. Changing $p_0$ changes the column totals and obviously creates a whole new confusion matrix.
-\\~\\
-
-So now it's simple, vary $p_0$ and pick the best model according to your cost / error / loss function (the $ME$ at the moment). Let's just do every $p_0$!
-	
-\end{frame}
-
-\begin{frame}\frametitle{All Possible Confusion Matrices}
-
-\begin{figure}
-\centering
-\hspace{-0.5cm}\includegraphics[width=3.0in]{roc_table.png}
-\end{figure}
-
-\vspace{-0.3cm}
-Here, \texttt{Prob} is what we denoted $p_0$. %\qu{Best model} is not defined here by highest $ACC$ (lowest $ME$), it's determined by highest \textbf{specificity + sensitivity} or equivalently, the highest \textbf{sensitivity - (1 - specificity)}.JMP indicates that row with a $\star$. This is an arbitrary metric, but is a good default.
-
-\end{frame}
-
-\begin{frame}\frametitle{Receiver-Operator Characteristic Curve}
-
+\begin{frame}\frametitle{In One Fold Let's Focus on the Training Set}
 \vspace{-0.2cm}
 \begin{figure}
 \centering
-\hspace{-0.5cm}\includegraphics[width=2.4in]{roc_curve.png}
+\includegraphics[width=3.1in]{oos_validation_highlighted}
 \end{figure}
 
 \small
 \vspace{-0.3cm}
-The \emph{ROC Curve}. Each dot represents the sensitivity-specificity tradeoff for each $p_0$. The starred row of maximum sensitivity + specificity is indicated here by a yellow tangent line. %\pause I drew the diagonal line to indicate predictive performance that is expected \qu{by chance}. Why? \pause Also, are there other ROC variants? \pause Yes (HW?).
-
-\end{frame}
-
-
-\begin{frame}\frametitle{Area Under the Curve (AUC) Metric}
-
-\vspace{-0.2cm}
-\begin{figure}
-\centering
-\hspace{-0.5cm}\includegraphics[width=1.3in]{roc_curve.png}
-\end{figure}
-
-\small
-\vspace{-0.3cm}
-If you built a model by chance the \qu{area under the curve} (or to the right of the curve) on the graph would be ...  0.5 since the graph is a unit square. Under the ROC curve itself (or to its right) is an area ...  greater than 0.5. Here, it's 0.844.  This metric is called AUC and is widely used as a metric to assess performance of all possible classifiers in this set of models together, it is a composite metric unlike $ME$ or anything derived from an individual confusion table.\\~\\ 
-
-AUC is nice to evaluate overall performance of all possible models... but at the end of the day...  you ship \emph{ONE} model! So we still need a means of evaluating our one model from one confusion table.
-
-\end{frame}
-
-\begin{frame}\frametitle{Churn Example Where $p_0 = 0.10$}
-\pause
-\tiny
-\begin{table}
-\centering
-\begin{tabular}{cc|cc|cc}
-& $p_0 = 0.5$ & \multicolumn{2}{c|}{$\yhat$} & & Model \\
-& & 1 & 0 & Totals &  Errors\\ \hline
-\multirow{2}{*}{$y$} & 1 & $TP$ = 1012 & $FN$ = 857 & $P$ = 1869 & $FNR$ = 45.9\% \\ 
-& 0 & $FP$ = 531 & $TN$ = 4632 & $N$ = 5163 & $FPR$ = 10.2\% \\ \hline
-& Totals & $\Phat$ = 1543 & $\Nhat$ = 5489 & $n=$ 7032 \\
-& Use errors & $FDR$ = 34.3\% & $FOR$ = 15.6\% & & \fbox{$ME$ = 19.7\%}
-\end{tabular}
-\end{table}
-\normalsize
-\pause
-
-\footnotesize
-\begin{table}
-\centering
-\begin{tabular}{cc|cc|cc}
-& $p_0 = 0.1$ & \multicolumn{2}{c|}{$\yhat$} & & Model \\
-& & 1 & 0 & Totals &  Errors\\ \hline
-\multirow{2}{*}{$y$} & 1 & $TP$ = 1772 & $FN$ = 97 & $P$ = 1869 & $FNR$ = 5.1\% \\ 
-& 0 & FP = 2669 & $TN$ = 2494 & $N$ = 5163 & $FPR$ = 51.6\% \\ \hline
-& Totals & $\Phat$ = 4441 & $\Nhat$ = 2591 & $n=$ 7032 \\
-& Use errors & $FDR$ = 60.1\% & $FOR$ =3.7\% & & \fbox{$ME$ = 39.3\%}
-\end{tabular}
-\end{table}\pause
-\small
-
-
-Which numbers did not change? \pause $n$, $P$ and $N$. Why? \pause These are fixed according to the dataframe. All other numbers changed! What happend to our first means of evaluation, the Misclassification Error? \pause It increased from 19.7\% $\rightarrow$ 39.3\%. So isn't this a worse model?? \\~\\ \pause 
-
-Not necessarily... It depends on what your goal is!
-\end{frame}
-
-\begin{frame}\frametitle{Asymmetric Costs in a Classifier}
-
-These are always two types of errors but the costs are not always the same.
-
-\tiny
-\begin{table}
-\centering
-\begin{tabular}{cc|cc|cc}
-& $p_0 = 0.1$ & \multicolumn{2}{c|}{$\yhat$} & & Model \\
-& & 1 & 0 & Totals &  Errors\\ \hline
-\multirow{2}{*}{$y$} & 1 & $TP$ = 1772 & $FN$ = 97 & $P$ = 1869 & $FNR$ = 5.1\% \\ 
-& 0 & FP = 2669 & $TN$ = 2494 & $N$ = 5163 & $FPR$ = 51.6\% \\ \hline
-& Totals & $\Phat$ = 4441 & $\Nhat$ = 2591 & $n=$ 7032 \\
-& Use errors & $FDR$ = 60.1\% & $FOR$ = 3.7\% & & \fbox{$ME$ = 39.3\%}
-\end{tabular}
-\end{table}
-\small
-
-Imagine we really are the Telecom business manager. It costs 5-10x more to acquire a new customer than to engage a customer who is likely to churn. So you give an incentive package to those who are predicted to churn. \pause Which of the two types of errors specifically is \textit{very} costly? \pause The $FN$. Who are they? \pause These are those who you said were not going to churn \textit{and they did}! Cost? \pause You need to acquire a new customer! The other type of error is less costly, the $FP$. Who are they? \pause These are the people you thought were going to churn and did not. Cost? \pause Whatever the incentive package is.
+\pause This procedure was completely valid as long as we did not touch the test set, right? \pause As long as we operate only within the training set... we're OK!
 	
 \end{frame}
 
-\begin{frame}\frametitle{Weighted Misclassification Error}
-
-We now define two costs: (1) \pause the cost of the $FP$ denoted $c_{FP}$ and  \pause (2) the cost of the $FN$ denoted $c_{FN}$.  \pause We then define the weighted misclassification error evaluation metric:
-
-\beqn
-ME_w := \oneover{n} \sum_{i=1}^n c_{FP} \indic{y_i = 0 \& \yhat = 1} + c_{FN} \indic{y_i = 1 \& \yhat_i = 0}
-\eeqn \pause 
-
-We now vary $p_0$ to locate the model that optimizes this error to be minimum.
-	
-\end{frame}
-
-\begin{frame}\frametitle{Minimum Weighted Misclassification Error}
-
-Let's assume that $c_{FN} = \$1000$ and $c_{FP} = \$100$ just for the example's sake. Note: this is a \emph{cost ratio} of 10:1 (only the ratio matters for the optimal $p_0$ solution).
-
-\vspace{-0.2cm}
-\begin{figure}
-\centering
-\hspace{-0.5cm}\includegraphics[width=3.1in]{weighted_misclassification_costs.png}
-\end{figure}
-
-We now calculate the cost and find the minimum model (i.e. the $p_0$ to ship). [JMP] Beyond scope: some people select the model with the closest $\#FP/\#FN \approx 10:1$ to match the stakeholder preference of the desired cost ratio. I'm not entirely clear on why this fitness function is used. [JMP ratios sheet]
-
-
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{Expected Value Calculation}
-
-You can also imagine assignment of both costs \textit{and} benefits:
-
-\tiny
-\begin{table}
-\centering
-\begin{tabular}{cc|cc|}
-& $p_0 = 0.1$ & \multicolumn{2}{c|}{$\yhat$}   \\
-& & 1 & 0  \\ \hline
-\multirow{2}{*}{$y$} & 1 & $b_{TP}$ & $c_{FN}$  \\ 
-& 0 & $c_{FP}$ &$b_{TN}$  \\ \hline
-\end{tabular}
-\end{table}\pause
-\small
-
-and then use the confusion matrix to estimate probabilities:
-
-\begin{table} \small
-\centering
-\begin{tabular}{cc|cc|}
-& $p_0 = 0.1$ & \multicolumn{2}{c|}{$\yhat$}  \\
-& & 1 & 0 \\ \hline
-\multirow{2}{*}{$y$} & 1 & 25.1\% & 1.3\%  \\ 
-& 0 & 40.0\% & 35.5\%  \\ \hline
-\end{tabular}
-\end{table}\pause
-\small
-
-The expected value would be? 
-
-\beqn
-\expe{T} &=& p_{TP} \times b_{TP} +  p_{TN} \times b_{TN} + p_{FP} \times c_{FP} +  p_{FN} \times c_{FN} \\
-&\approx& \phat_{TP} \times b_{TP} +  \phat_{TN} \times b_{TN} + \phat_{FP} \times c_{FP} +  \phat_{FN} \times c_{FN}
-\eeqn
-
-Highest expected value model is shipped (ex. from Provost \& Fawcett, 2013).
-	
-\end{frame}
-
-%\begin{frame}\frametitle{$\phat$'s as Ordinal Values}
-%
-%One final point... If we were on a mission to find the top $m$ churners. What would we do? \pause Sort the $\phat$'s and return the top $m$.
-%	
-%\end{frame}
-
-\section{Survival Models}
-
-\begin{frame}\frametitle{New Type of Response Metric: TTL}
-\small
-What if your response was time? For example: \pause
-
-\begin{itemize}
-\item Time for a patient to live (typical in clinical trials)? \pause
-\item How long will a customer be a customer? \pause
-\item How long will a car engine last? \pause
-\end{itemize}
-
-What kind of data type is the response? \pause Continuous. \pause But what does response look like at the time of sampling? \\~\\
-
-For example, recall the Telecom churn dataset with one feature (tenure). If the observation has ...
-
-\begin{table}
-\centering
-\begin{tabular}{ccc}
-Tenure Time & Churn? & Total Time as a Customer \\ \hline
-2 & Yes & \pause 2 \\
-8 & Yes & \pause 8 \\
-45 & No & \pause unknown (but known to be $> 45$) \\
-\end{tabular}
-\end{table}
-\normalsize
-
-That third observation's response is \emph{censored}. \pause What are we supposed to do??
-
-\end{frame}
-
-\begin{frame}\frametitle{Dealing with censoring}
-
-One option is to disregard all censored observations. Why is this a bad idea? \pause Selection bias. Our results will only apply to people who have churned. Those people may be different that the general population. \pause Another option is to use \emph{survival modeling}.\\~\\ \pause
-
-This is a very well-studied field with many possible models!
-	
-\end{frame}
-
-\begin{frame}\frametitle{The Exponential Model}
-\small
-Assume $Y$ now is time. Time must be positive!
-
-\beqn
-Y = f(x_1, \ldots, x_p) + \errorrv
-\eeqn
-
-We have to be careful to make $f$ positive and $\errorrv$ negative but not too negative to make $Y < 0$. \pause One such model is the exponential model with conditional mean $f(x_1, \ldots, x_p)$.
-
-\beqn
-Y \sim Exp(f(x_1, \ldots, x_p))
-\eeqn
-
-Let's review the exponential r.v. \pause If $Y \sim Exp(\mu)$, then its density function and cumulative density functions are
-
-\beqn
-p(y) = \oneover{\mu} e^{-\oneover{\mu} y} \quad \text{and} \quad F(y) = 1 - e^{-\oneover{\mu} y}
-\eeqn
-
-with mean $\expe{Y} = \mu$ where $\mu > 0$. \pause So if $Y \sim Exp(17)$, you expect the observation to be ... \pause 17 on average.
-
-\end{frame}
-
-\begin{frame}\frametitle{The Exponential Log-Linear Model (ELLM)}
-
-Let's say we want to use our linear model $\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p$ for the conditional mean. Problem? \pause Yes. The mean can only be a number greater than zero. Hence we need the $\lambda$ link function again! How can we convert $s_\reals = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p$ to something between $0$ and $+\infty$? \pause Without going into many different link function, let's just use the natural exponential:
-
-\beqn
-s = \lambda(s_\reals) = \pause e^{s_\reals} \quad \Rightarrow \quad \pause s = e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p} \pause
-\eeqn
-
-And voila we have our survival model:
-
-\beqn
-Y \sim Exp(e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p})
-\eeqn
-
-Interpretation of a unit change in $x_1$? \pause With all other variables kept constant, a unit change in $x_1$ will multiply the expected survival by $e^{\beta_1}$ in a naturally observed new object.
-	
-\end{frame}
-
-\begin{frame}\frametitle{Assumptions of an ELLM}
-
-Next up in the recipe... we need to get estimates of the true parameters, we have been denoting these $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$. How to do so? \pause Maximum Likelihood (just like linear regression and logistic regression). We will first need the \qu{ELLM assumptions}
-
-
-\begin{enumerate}
-\item Independence among observations. Thus,\pause 
-
-\footnotesize
-\beqn
-&&\cprob{Y_1 = y_1, Y_2 = y_2, \ldots, Y_n = y_n}{\X_1 = \x_1, \X_2 = \x_2, \ldots, \X_n = \x_n} \\
-&=& \prod_{i=1}^n \cprob{Y_i = y_i}{\X_1 = \x_i}
-\eeqn
-
-\small
-\item Exponential Model. Thus, \pause
-\footnotesize
-\beqn
-= \prod_{i=1}^n \oneover{\mu} e^{-\oneover{\mu} y_i}
-\eeqn \pause
-\small
-\item Log-Linear conditional expectation. Thus,
-
-
-\end{enumerate}
-
-\end{frame}
-
-\begin{frame}\frametitle{Fitting an ELLM}
-\footnotesize
-\beqn
-= \prod_{i=1}^n \oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} e^{-\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} y_i}
-\eeqn \pause
-Can we just maximize the above over all values of the $\beta$'s like before? \pause We are missing one thing. What if survival time is a censored value (denoted $y_i'$)? All we know about that $y_i$ is that it's greater than the last value recorded! \pause Recall $\prob{Y > y} = 1 - F(y) = e^{-\oneover{\mu} y}$\\~\\
-
-Let $c_i$ indicate censorship: 1 if censored and 0 if not. Our likelihood is now in two pieces:
-
-\beqn
-&=& \prod_{i=1}^n \tothepow{\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} e^{-\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} y_i}}{1 - c_i} \pause \prob{Y > y_i'}^{c_i} \pause \\
-&=& \prod_{i=1}^n \tothepow{\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} e^{-\oneover{e^{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}}} y_i}}{1 - c_i} \tothepow{e^{-\oneover{\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}} y_i'}}{c_i} \pause
-\eeqn 
-	
-Now the computer crunches away (similar to a logistic regression fit) and we get values of $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$ back in a split second. \pause Now for inference...
-\end{frame}
-
-\begin{frame}\frametitle{Global Test in Survival ELLM Regression}
-
-\footnotesize
-Just like in logistic regression, we can make use of the ... \pause likelihood ratio test. \pause Recall:
-
-\vspace{-0.2cm}
-\beqn
-LR :=
-%
-\displaystyle \max_{\theta \in \Theta} \lik{\theta; x}
-%
-/
-%
-\displaystyle \max_{\theta \in \Theta_R}  \lik{\theta; x}
-%
-\eeqn
-
-Let's now do a \qu{whole model} / \qu{global} / \qu{omnibus} test: \pause
-
-\beqn
-&& H_0: \beta_1 = 0, \beta_2 = 0, \ldots, \beta_p = 0, \quad H_a: \text{at least one is non-zero}
-\eeqn
-
-So $\Theta$ would be the space of all $\beta_0, \beta_1, \ldots, \beta_p$ and $\Theta_R$ will restrict the space to only $\beta_0$ with zeroes for all other \qu{slope} parameters.
-
-\tiny
-\beqn
-LR = \frac{
-\displaystyle \max_{\beta_0, \beta_1, \ldots, \beta_p} 
-\lik{\beta_0, \beta_1, \ldots, \beta_p; y_1, \ldots, y_n, c_1, \ldots, c_n, \x_1, \ldots, \x_n}
-}{
-\displaystyle \max_{\beta_0} 
-\lik{\beta_0, \beta_1 = 0, \ldots, \beta_p = 0; y_1, \ldots, y_n, y_n, c_1, \ldots, c_n,  \x_1, \ldots, \x_n}
-}
-\eeqn \pause
-
-\small
-So in the numerator the computer iterates to find $\braces{\betahat_0, \betahat_1,  \ldots, \betahat_p}$, plugs it in and computes the likelihood and in the denominator the computer independently iterates to find $\braces{\betahat_0}$, plugs it in and computes the likelihood, then together, the $LR$.
-\end{frame}
-
-\begin{frame}\frametitle{Partial Tests in Survival Regression}
-
-\small
-We then look at $Q = 2\natlog{LR}$ and compare it to the appropriate $\chi^2$ distribution. Here, since we've dropped $p$ parameters / degrees of freedom, we look at the critical $\chisq{p, \alpha}$ value.\\~\\ \pause
-
-Let's say we want to test something like:
-
-\beqn
-&& H_0: \beta_1 = 0 ~\&~ \beta_2 = 0, \quad H_a: \text{at least one is non-zero}
-\eeqn
-
-We can again use the likelihood ratio test:
-
-\tiny
-\beqn
-LR = \frac{
-\displaystyle \max_{\beta_0, \beta_1, \ldots, \beta_p} 
-\lik{\beta_0, \beta_1, \ldots, \beta_p; y_1, \ldots, y_n, c_1, \ldots, c_n, \x_1, \ldots, \x_n}
-}{
-\displaystyle \max_{\beta_0, \beta_3, \ldots, \beta_p} 
-\lik{\beta_0, \beta_1 = 0, \beta_2 = 0, \beta_3, \ldots, \beta_p = 0; y_1, \ldots, y_n, c_1, \ldots, c_n, \x_1, \ldots, \x_n}
-}
-\eeqn \pause
-\small
-We then look at $Q = 2\natlog{LR}$ and compare it to the appropriate $\chi^2$ distribution. Here, since we've dropped $2$ parameters / degrees of freedom, we look at the critical $\chisq{2, \alpha}$ value.
-
-\end{frame}
-
-\begin{frame}\frametitle{Individual Tests in Survival Regression}
-
-Let's say we want to test an individual slope coefficient:
-
-\beqn
-&& H_0: \beta_j = 0, \quad H_a: \beta_j \neq 0
-\eeqn
-	
-(a la the \qu{partial-F test}). We can again use the likelihood ratio test:
-
-\tiny
-\beqn
-\hspace{-10pt} LR = \frac{
-\displaystyle \max_{\beta_0, \beta_1, \ldots, \beta_p} 
-\lik{\beta_0, \beta_1, \ldots, \beta_p; y_1, \ldots, y_n, c_1, \ldots, c_n, \x_1, \ldots, \x_n}
-}{
-\displaystyle \max_{\beta_0, \beta_1, \ldots, \beta_{j-1}, \beta_{j+1}, \ldots \beta_p} 
-\lik{\beta_0, \beta_1, \ldots, \beta_{j-1}, \beta_j = 0, \beta_{j+1}, \ldots \beta_p; y_1, \ldots, y_n, c_1, \ldots, c_n, \x_1, \ldots, \x_n}
-}
-\eeqn \pause
-
-\small
-We then look at $Q = 2\natlog{LR}$ and compare it to the appropriate $\chi^2$ distribution. Here, since we've dropped 1 parameter / degrees of freedom; thus we look at the critical $\chisq{1, \alpha}$ value. \\~\\ \pause
-
-And again: a $\chisq{}$ r.v. with one degree of freedom has the following cool property: $Q \sim \chisq{1} \Rightarrow \pause \sqrt{Q} \sim \stdnormnot$ i.e. a \qu{z-score}. This is how JMP produces standard errors for survival regression coefficients.
-
-\end{frame}
-
-\begin{frame}\frametitle{Simple Survival Regression and Predictions}
-\small
-How do we predict?
-
-\vspace{-0.2cm}
-\beqn
-\yhat= \yhat(\x^*) = \pause e^{\betahat_0 + \betahat_1 x_1^* +  \ldots + \betahat_p x_p^*}
-\eeqn
-
-What are we predicting? \pause Average time to survive. \\~\\
-\vspace{-0.2cm}
-Let's return to the Telecom example and look at just \qu{\texttt{SeniorCitizen}} on customer lifetime. [JMP] \pause Is this variable significant? \pause Yes. \pause Now let's predict the time for a new non-senior citizen:
-
-\beqn
-\yhat = \yhat(\x^*) = \pause e^{\betahat_0 + \betahat_1 (0)} = \pause e^{4.915} = 136.6
-\eeqn
-
-Now let's predict the time for a new senior citizen: \pause
-
-\beqn
-\yhat = \yhat(\x^*) = \pause e^{\betahat_0 + \betahat_1 (1)} = \pause e^{4.915 + -0.535} = 79.84
-\eeqn
-
- Is the reduction expected? \pause Yes. Why are these numbers so large? \pause (1) Likely the exponential model is not a great fit here since the tail is too long and the memorylessness property is not realistic. Also, \pause (2) Dataset is not a good sample... was not \emph{designed} for survival.
-	
-\end{frame}
-
-\begin{frame}\frametitle{Multivariable Survival Regression}
-
-[JMP] 
-\begin{itemize}
-\item Do these coefficients make sense? \pause 
-\item What's wrong with this dataset?? \pause The max survival is 72mo and there's thousands of cases that are censored. \pause
-\item Evaluating the fitness (i.e. $R^2, RMSE, ME_w$, etc) of survival models is complicated... not covered.
-\end{itemize}	
-\end{frame}
-
-\section{Non-linearity \& Interactions}
-
-\begin{frame}\frametitle{Simple Test of Linearity}
-
-Here's the \qu{Medicorp} dataset. The response is sales (in \$1000's) and the features are advertising (in \$1000's), American region and bonus for the sales team (in \$1000's). \\~\\ \pause
-
-Let's look at a simple regression of sales on bonus. \pause Are we sure this is linear? Or are there diminishing returns? How to test diminishing returns? \pause Quadratic fit is one way. We should see what kind of sign on the squared term? \pause Negative. And we do. And it's pretty significant... could you make a case of dredging here? \pause Probably not. Are we sure it's quadratic diminishing returns? \pause Nope... that's much harder to test... beyond scope of course... and probably not all that interesting. \pause What's the takeaway message here? \pause You should give bonuses but don't make them \qu{too} big. \\~\\
-
-\small
-Interpretation of unit change in $x:$ bonus? Depends on the value where you start from (we are moving away from simple interpretations).
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{Polynomial Regression}
-
-Let's try to fit a better curve to bonus --- a 4-degree polynomial. Seems to fit better than a quadratic [see LRT in R]. What's the interpretation of a 4-degree polynomial model?? \pause Not so intuitive unfortunately. Rarely do we see parametric pre-designed models with more than a quadratic term.
-
-\end{frame}
-
-\begin{frame}\frametitle{Continuous : Categorical Interactions}
-
-It's possible that bonuses may have differential effects in the different American \qu{regions}. The way to test this is to allow for a differential slope for each region. [JMP] \pause
-
-
-\begin{figure}
-\centering\includegraphics[width=3in]{interactions.png}
-\end{figure}
-
-How can we interpret this? \pause Could we also interact two continuous features? Two categorical features? Could we interact features with others' polynomials? Yes, yes, yes...
-	
-\end{frame}
-
-\begin{frame}\frametitle{Theories versus Prediction}
-
-Above we tested the predictive power of non-linearities in two ways \pause (1) creating polynomial extensions to given features and finding curvilinear patterns and \pause (2) creating differential slopes based of one variable when isolating based on the value of another variable. \\~\\
-
-However, we had specific theories to test in mind \pause (1) diminishing returns and (2) effects of incentivizing bonuses in different parts of the country. \\~\\
-
-What if we had no theories to test, but we wanted to fit the data as best as possible (i.e. non-parametric)? \pause Try everything... all polynomial terms up to 5, all interactions with up to the squared terms. [JMP medicorp\_exp] \pause We got $R^2 = 98\%$ which rocks!! But none of our variables are significant.... why? \pause Massive collinearity all over the place! do we give a hoot if we only care about predictive accuracy? \pause NO. \pause But... is the $R^2 = 98\%$ real? \pause NO...
-	
-\end{frame}
-
-\section{Overfitting}
-
-\begin{frame}\frametitle{The First Clue of Trouble in Paradise...}
-\pause
-was that F-test demo from Lecture 2 where
-
-\beqn
-x &=& \braces{0, 0.1, 0.2, \ldots, 10.0} \\
-Y &\sim& x + \errorrv \\
-\errorrv &\sim& \normnot{0}{5^2}
-\eeqn
-
- [repeat in R]. \pause Here, the $R^2$ goes from 22\% up to 
-
-\begin{itemize}
-\item 99.5\% all on completely random data which you know is fake!! \pause
-\item 99.9\% on splines (polynomials on steroids) which may not be fake??
-\end{itemize}
-
-How do we know?
-	
-\end{frame}
-
-\begin{frame}\frametitle{Recall the Modeling Basics}
-
-In lecture 1 we spoke about how
-
-\beqn
-Y = f(x_1, \ldots, x_p) + \errorrv
-\eeqn
-
-where $x_1, \ldots, x_p$ denotes \pause predictors available (including all polynomials and interactions and whatnot!) and $\errorrv$ denotes \pause \emph{irreducible error} due to information not available (and thus independent of $x_1, \ldots, x_p$), the inaccessible information. \\~\\ \pause
-
-By including all sorts of polynomials and interactions, we become more nonparametric thereby losing the benefits of the parametric worldview of $s$... \pause (i.e. parsimony, \pause interpretability \pause and inference) but gaining a closer fit of the true $f$. But what could go wrong if we take this liberty? \\~\\
-	
-\tiny
-Non-germane footnote: recall that we fit $\hat{s}$ which generally speaking fails to estimate $s$ correctly (model error) and $s$ generally speaking fails to represent $f$ correctly since its a parametric model which lacks flexibility. \\~\\ \pause
-\end{frame}
-
-\begin{frame}\frametitle{Going Too Far}
-
-\beqn
-Y = f(x_1, \ldots, x_p) + \errorrv
-\eeqn
-
-It's possible our $\hat{f}$ can estimate $f$ (which is good) but... \pause it can encroach on and start fitting and optimizing the $\errorrv$. Why is this bad? \pause Since $\errorrv$ is independent of $x_1, \ldots, x_p$, it is creating a random fit. \pause Random fits are akin to \qu{making up a model} and it is the opposite of the \qu{data-driven approach}. \\~\\ \pause
-
-Any value different from $f$ is not \emph{generalizable} as the conditional mean minimizes squared error. \\~\\ \pause
-
-But the BIG problem is: we don't know what the form of $f$ is and we don't know the individual values of $\errorrv$. Thus, we have NO WAY to know if we've overfit (as of now)!
-	
-\end{frame}
-
-\begin{frame}\frametitle{When Does This Happen?}
-\footnotesize
-Essentially, when $p$ gets closer to $n$. Here's the linear model case with $n=2$ and there's one slope so $p=1$ (+1 for the intercept) so really, the number of predictors is 2 since there is two degrees of freedom. [R demo]
-
-\vspace{-0.3cm}
-\begin{figure}
-\centering
-\hspace{-0.5cm}\includegraphics[width=2.0in]{overfitting_simple}
-\end{figure}
+\begin{frame}\frametitle{Training $\Rightarrow$ Training \& Validation}
 \vspace{-0.5cm}
-\footnotesize
-The green is the true conditional expectation function $f(x)$ and the brown is the fitted model and the red are the true $\errorrv_1$ and $\errorrv_2$ values. Where are $e_1$ and $e_2$? \pause They are zero (and thus not pictured). The fitted model has $R^2 = 100\%$. Recall from middle school... when they asked you to draw a line between two points --- the line perfectly goes through two points. \pause Why are the $\se{\betahat_j}$'s \texttt{NA}? \pause Division by zero. \pause Can you imagine two predictors and three points and a plane? \pause What about in a logistic regression? [Whiteboard demo]
-	
-\end{frame}
-
-\begin{frame}\frametitle{Assessing Overfitting and its Cost to You}
-\small
-Overfitting comes from over-optimizing a sample (i.e. fitting $\errorrv$) and thus having poor generalizability and thus poor predictive performance in the future! \\~\\ \pause
-
-Let's return to the [R demo] to witness the cost of overfitting. \pause How did we demonstrate overfittedness? \pause We used \qu{new data} not in the dataframe generated from the same realization process as the historical dataframe (our sample). Hence this new data is called \emph{out of sample (oos)} data. And then we calculated familiar metrics such as SSE, RMSE, $R^2$ but since these are done oos, we call them oosSSE, oosRMSE, oos$R^2$ and they are our \emph{out of sample statistics}. Everything we spoke about previously we will now call \emph{in-sample statistics}.
-
-\begin{table}
+\begin{figure}
 \centering
-\begin{tabular}{rcc}
-& In Sample & Out of Sample \\ \hline
-RMSE   & 2.0 & 84.7 \\
-$R^2$ & 99.9\% & 9.5\%
-\end{tabular}
-\end{table}
-
-Overfitting can get arbitrarily bad and this is an extreme example.
+\includegraphics[width=4.4in]{training_validation}
+\end{figure}
 	
 \end{frame}
 
-\section{Model Validation}
+\begin{frame}\frametitle{3-way Splitting: The Full Picture}
+\vspace{-0.8cm}
+\begin{figure}
+\centering
+\includegraphics[width=4.26in]{3_way_validation}
+\end{figure}
+	
+\end{frame}
 
-\begin{frame}\frametitle{Assessments in the Real World}
-\small
-It is easy to assess if you have access to the data-generating process --- you can just generate more data and see how you do. But in the real world, you only have a limited set of historical data from the data-generating process. What to do?\\~\\ \pause
+\begin{frame}\frametitle{Why Training-Validation-Test Splitting?}
 
-Why not \textit{imagine} some of your historical data is future data. That is, split your dataframe into two pieces: \pause
+\begin{itemize}
+\item Training set: \pause provides fits for many models where overfitting is \qu{okay}
+\item Validation set: \pause provides out-of-sample validation for each of the models. If the models are overfit, they will get wrecked at this stage.
+\item Test set: \pause this lockbox provides a layer of security against overfitting within the training-validation union set. \pause
+\end{itemize}
 
-\begin{enumerate}
-\item What we've been calling the historical dataframe but now will calling the \qu{training set}. We use this to build the model, as we've done. \pause
-\item The \qu{test set} that is the piece you are imagining to come in the future. his gives you a means to evaluate your model you built from the training set. \pause
-\end{enumerate}
+Just like in the previous 2-way training-test split, you can overfit the training, get killed on the test set and be stuck. How could you similaryl overfit here? \pause Be careful of optimizing to the validation set. Models $1, 2, \ldots, M$ should still be reasonable thought-through models.
 
-Building the model on the training set and predicting on the test set and comparing these predictions to the real, known values of the response in the test set constitutes \textit{out of sample validation}. Why is it called that?
 
 \end{frame}
 
-\begin{frame}\frametitle{Model Fitting with OOS Validation}
+
+\begin{frame}\frametitle{Sizes of Training-Validation-Test Splits}
+
+Previously, we had the test set being 10-30\%. This recommendation remains. Thus, the training-validation sets together should make up 70-90\% of which a portion is the validation set \pause (which is like a test set) and should be \pause 10-30\% of the total. \pause Thus we arrive at proportions like 50-25-25 or 50-30-20 or 70-20-10. \pause There is no exact guidance here. \\~\\ \pause
+
+The same tradeoffs apply to the test set size but now we have new tradeoffs for the training set size vs. the validation set size:
+
+\begin{itemize}
+\item The larger the training set, \pause the better the fit of the model (less bias) but the more variance in its assessment versus its peers
+\item The smaller the training set, \pause the worse the fit of the model (more bias) but the less variance in its assessment versus its peers
+\end{itemize}
+	
+\end{frame}
+
+\begin{frame}\frametitle{Back to Wine...}
+
+We can do a single 3-partition split in JMP using the validation column... then data filter... then fit the 6 models again... then use model comparison to select best model ... then undo the filter ... then use model comparison again to find our test set error (the guess of the generalization error)... then build the full model for public consumption.
+	
+\end{frame}
+
+\begin{frame}\frametitle{Can you CV this 3-Split Procedure?}
+
+\pause
+
+\begin{minipage}{0.6\textwidth}
+\begin{figure}
+\centering
+\includegraphics[width=2.56in]{nested_resampling}
+\end{figure}
+\end{minipage}~
+\begin{minipage}{0.35\textwidth}
+\small
+Yes. It is called \qu{nested resampling} and $K=10$ fold CV is illustrated here. But... \pause what are you now evaluating? \\~\\
+
+\pause Without CV, it was just model $m^*$. But here $m^*$ varies with the 10 folds! \pause You are testing the entire procedure i.e. given models $1, 2, \ldots, M$, pick the best one and ship it. How well you do in the future is estimated by the CV test set.
+\end{minipage}
+
+
+	
+\end{frame}
+
+
+
+\begin{frame}\frametitle{Not the First Means for Model Selection}
+
+CV with nested resampling is not generally done in the way it was described here as a means to evaluate a model selection procedure. \pause Beyond scope of course: it is usually done to compare tuning settings in a non-parametric machine learning algorithm. We will see what this means next class. \\~\\ \pause
+
+Neither R nor JMP (to my knowledge) can do this out-of-the-box. In R, even with MLR, you have to program it (MLR uses it for tuning an algorithm). Maybe I will write to them?
+	
+\end{frame}
+
+\begin{frame}\frametitle{Nested Resampling for Tuning}
 
 \begin{figure}
 \centering
-\includegraphics[width=4.1in]{oos_validation}
+\includegraphics[width=3.56in]{nested_resampling_for_tuning.png}
 \end{figure}
 
-Can oos metrics be better than in-sample metrics (on average)? \pause No...
+(from \href{https://mlr-org.github.io/mlr-tutorial/devel/html/nested_resampling/index.html}{MLR's tutorial website}).
 \end{frame}
 
-\begin{frame}\frametitle{A Possible Spin on Validation}
-\footnotesize
-Procedure outlined above:
-	
-\begin{enumerate}\footnotesize
-\item Split dataframe into training and test. \pause
-\item Build model on training. \pause
-\item Predict using the test set. \pause 
-\item Calculate estimate of future generalization error.
-\end{enumerate}
+\section{Model Selection}
 
+\begin{frame}\frametitle{3-way splits for model selection \& evaluation}
+\small
+Forget CV for a moment since it complicates things ... the \qu{inner split} consisted of the training-validation. We used this to \qu{select} a model based on lowest oos error (RMSE, or highest $R^2$). 
 
-Does the following procedure also seem reasonable?
-	
-\begin{enumerate}\footnotesize
-\item Split dataframe into training and test.
-\item Build model A on training.
-\item Predict using the test set. 
-\item Calculate estimate of future generalization error of model A. \pause
-\item Build a different model B on training. \pause
-\item Predict using the test set.  \pause
-\item Calculate estimate of future generalization error of model B. \pause
-\item Pick whichever model has better generalization error.
-\end{enumerate}
-
-\end{frame}
-
-\begin{frame}\frametitle{Valid Validation}
-
-What's wrong? \pause You snooped the test set... \pause analagous to looking into the future and \pause seeing results and saying \qu{I don't like em}, \pause then returning to the past and trying again. \pause This can lead to very optimistic results --- it is essentially overfitting and you've tricked yourself into thinking you are honest. \\~\\
-
-\pause The oos validation is only valid if...
-
-\begin{figure}
-\centering
-\includegraphics[width=1.2in]{lockbox.png}
-\end{figure}
-
-you treat the test set as a lockbox. Once you open it up, that's it!
-	
-\end{frame}
-
-\begin{frame}\frametitle{Training-Test Splitting}
-\footnotesize
-We have a choice to split our dataframe into two pieces. Assuming each data point is independent (the running assumption), you should do this completely randomly. When would this assumption not be true? \pause For example, a time series.\\~\\ \pause
 \vspace{-0.2cm}
-
-How large should the test set be? Usual sizes are 10-30\%. What's the tradeoff? If the test set is larger, then ...\pause
- 
-\begin{enumerate}\footnotesize
-\item the more accurate the assessment of generalization error would be (less variance) and \pause
-\item the less accurate the model will be since it's fitting with less data (more bias) \pause
-\end{enumerate}
-
-If the test set is smaller then vice versa:
-
-\begin{enumerate}\footnotesize
-\item the less accurate the assessment of generalization error would be (more variance) and \pause
-\item the more accurate the model will be since it's fitting with less data (less bias) \pause
-\end{enumerate}
-
-Note: the in-sample and oos statistics are statistics! Thus, they are random!
+\begin{figure}
+\centering
+\includegraphics[width=2.1in]{training_validation}
+\end{figure}
+\vspace{-0.2cm}
+What's the cost? \pause We had to use only 70-90\% of the data (save the test set) to build the model. But what's the bigger cost?? \pause You had to provide models $1, 2, \ldots, M$!! This is no trivial task. So far I've been making them up! I've been using elebaorate linear models which pivoted from param- etric to non-parametric with the addition of curves and interactions. Forget finding the best model... how do we know we even employed good candidates?? \pause \inred{We don't!}
 
 \end{frame}
 
-\begin{frame}\frametitle{Doing oos Validation in JMP}
 
-Let's take a look at the medicorp data and validate it. Recall, the in-sample $R^2 \approx 98\%$ and the in-sample RMSE is about 48.9. \pause \\~\\
-
-[JMP Cols...Modeling Utilities...Make Validation Col...fit model... validation option is the validation col...crossvalidation tab] Note: \qu{RASE} = root average squared error = root mean squared error = oosRMSE. \qu{Validation} = \qu{test}. \qu{Freq} is the sample sizes in training and test. Looks like we were overoptimistic by 6x the standard error on predictions! Substantial overfitting.
-
-\end{frame}
-
-\begin{frame}\frametitle{Validating Multiple Models}
-
-Let's look at three models for the White Wine data. Here the response is wine quality as measured by professional raters and features are 11 features (e.g. acidity, sugar, pH and alcohol content).
-
-\begin{enumerate}
-\item[A] plain linear model \pause
-\item[B] six-degree polynomials for all features \pause
-\item[C] six-degree polynomials and all first-order interactions \pause
-\item[D] six-degree polynomials and all interactions up to 11th order \pause
-\end{enumerate}
-
-[JMP col validation... fit all models with validation ... save prediction formula cols... analyze model... model comparison] Conclusions? \pause Model C looks the best. Where to go from here?\\~\\
-
-What did I do that wasn't legal? Remember a few slides ago? I looked at the test set four times! We need to solve this problem...
-	
-\end{frame}
+\end{document} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
-
-\end{document}
-	
-
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-
-
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
 
 
 \begin{frame}\frametitle{}
