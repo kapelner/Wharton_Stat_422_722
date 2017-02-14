@@ -94,15 +94,17 @@ Good imputation requires you to know what's going on i.e. how measurements wound
 \begin{table}[htp]
 \centering
 \begin{tabular}{l|l}
-MDM & $\cprob{\M_j}{X_{j,\text{miss}}, \Xminjmiss, \Xminjobs, \gammavec} = \ldots$ \\ \hline
+MDM & $\cprob{\M_j}{X_{j,\text{miss}}, \Xminjmiss, \Xminjobs, \Z, \gammavec} = \ldots$ \\ \hline
 MCAR & $\cprob{\M_j}{\gammavec}$ \\ 
 MAR & $\cprob{\M_j}{\Xminjmiss, \Xminjobs, \gammavec}$ \\ 
-NMAR & (does not simplify)
+NMAR & (does not simplify) Note: $\Z$ denotes unobserved variables.
 \end{tabular}
-\end{table}
+\end{table}\pause
+
+
+Let's take missing the age field as an example to explore these three conceptually.
 \end{frame}
 
-Conceptually speaking, let's take missing the age field as an example. 
 
 
 
@@ -137,6 +139,16 @@ Studying best ways to handle missingness can take a whole semester (some people 
 \item Delete observations that have missingness \inred{at your peril!!}
 \end{itemize}
 	
+\end{frame}
+
+\begin{frame}\frametitle{How to create $\m$ and impute $\xbar$ in JMP}
+
+\begin{figure}
+\centering
+\includegraphics[width=3.2in]{m_create_and_impute_via_xbar.png}
+\end{figure}
+
+
 \end{frame}
 
 \section{Overfitting Review}
@@ -234,18 +246,31 @@ We can approximate the averaging over all splits by just taking $\frac{100\%}{10
 \end{figure}
 
 \vspace{-0.3cm}
-\small
+\small\pause
 $K=10$ is arbitrary (but remember where it was based on: the 10-30\% test set recommendation). In practice, I've only used 5 or 10 fold CV. \\~\\ \pause
 
 \vspace{-0.3cm}
 This does not really solve any of our big problems but gives us a little boost in terms of a reduction in standard error of our generalization error estimate. \pause That's OK; we can take all the help we can get if it's costless!! \\~\\
 
 \vspace{-0.4cm}\footnotesize
-Note 1: If $K=n$ then we the test set as one sample; this is known as \qu{leave on out CV} (LOOCV) and it not recommended --- high variance and \pause computat- ional cost! \pause Note 2: bleeding edge of stats --- find CI's for generalization error. \pause Note 4: this is not the only way to reduce the variance in oos statistics but it's the one we will use in this class.
+Note 1: If $K=n$ then we the test set as one sample; this is known as \qu{leave on out CV} (LOOCV) and it not recommended --- high variance and \pause computat- ional cost! \pause Note 2: bleeding edge of stats --- find CI's for generalization error. \pause Note 3: this is not the only way to reduce the variance in oos statistics but it's the one we will use in this class.
 
 	
 \end{frame}
 
+
+\begin{frame}\frametitle{What does $K$-fold CV estimate?}
+
+Remember... there will be different models built on each training set. So ...
+
+\begin{itemize}
+\item without $K$-fold CV, you are estimating the generalization of a model defined as the functional form and specific parameter estimates (the model and the fit). \pause
+\item with $K$-fold CV, you are estimating the generalization of a model defined as just the functional form (the model).\pause
+\end{itemize}
+
+I guess it depends on how you define \qu{model}. Usually, it's the latter... this is frequently ill-defined. This is a subtle point... and I won't be testing you on it!
+
+\end{frame}
 
 \begin{frame}\frametitle{$K=3$-fold CV on a Linear Model Ex. 1/5}
 
@@ -339,11 +364,11 @@ Let's look at a few models for the White Wine data with no validation (but no cr
 \vspace{-0.1cm}
 \begin{enumerate}\footnotesize
 \item[A] plain linear model \pause
-\item[B] 6-degree polynomials for all features \pause
-\item[C] 6$^{\text{o}}$ polynomials and all 1st order interactions  \pause
-\item[D] 6$^{\text{o}}$ polynomials and all interactions up to 3rd degree (AKA 2nd order) \pause
-\item[E] 6$^{\text{o}}$ polynomials and all interactions up to 4th degree (AKA 3rd order) \pause
-\item[F] 6$^{\text{o}}$ polynomials and all interactions up to 11th order \pause
+\item[B] 3-degree polynomials for all features \pause
+\item[C] 3$^{\text{o}}$ polynomials and all 1st order interactions  \pause
+\item[D] 3$^{\text{o}}$ polynomials and all interactions up to 3rd degree (AKA 2nd order) \pause
+\item[E] 3$^{\text{o}}$ polynomials and all interactions up to 4th degree (AKA 3rd order) \pause
+\item[F] 3$^{\text{o}}$ polynomials and all interactions up to 11th order \pause
 \end{enumerate}
 \footnotesize
 \vspace{-0.1cm}
@@ -502,7 +527,7 @@ Neither R nor JMP (to my knowledge) can do this out-of-the-box. In R, even with 
 
 \begin{frame}\frametitle{3-way splits for model selection \& evaluation}
 \small
-Forget CV for a moment since it complicates things ... the \qu{inner split} consisted of the training-validation. We used this to \qu{select} a model based on lowest oos error (RMSE, or highest $R^2$). 
+Forget CV for a moment since it complicates things ... the \qu{inner split} consisted of the training-validation. We used this to \qu{select} a model based on lowest oos error on validation set (RMSE, or highest $R^2$). 
 
 \vspace{-0.2cm}
 \begin{figure}
@@ -538,7 +563,7 @@ Y = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p + \tilde{\errorrv}
 Last lecture, we started adding interactions and polynomials (as well as other transformations e.g. log which we did not cover). \pause This was a means of \qu{expanding} the feature set \qu{visible} to the model using \qu{derived} features: \pause
 
 \beqn
-\braces{x_1, \ldots, x_p} \Rightarrow \braces{x'_1, \ldots, x'_{p'}} ~~ \text{where $p' > p$ and maybe much, much greater}
+\braces{x_1, \ldots, x_p} \Rightarrow \braces{x'_1, \ldots, x'_{p'}} ~~ \text{where $p' > p$ and maybe much, much greater.}
 \eeqn
 
 \end{frame}
