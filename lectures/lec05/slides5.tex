@@ -22,6 +22,124 @@
 %immediately create a title page
 \frame{\titlepage}
 
+\section{Missing Data}
+
+
+\begin{frame}\frametitle{The Scourge of Modeling}
+\small
+Finding a good model selection is the big tough problem of statistics ... but missingness is the \qu{scourge} of data analysis and modeling. It's a big nuisance which has to be dealt with in order to get to inference and prediction. What is missingness? \pause Show JMP class project prediction dataframe. \\~\\ \pause
+
+Simply put, missingness is the absence of the measurement for an observation (a hole in the matrix!) I will cover some theory of missingness, of which you will not need to know. But you will need to know the eventual takeaway messages. \\~\\ \pause
+
+We will denote the full data matrix as $\X := \bracks{\x_1, \ldots, \x_p}$ where each $\x$ has length $n$. We will denote the observed data matrix as $\X_{obs} := \bracks{\x_{1,obs}, \ldots, \x_{p,obs}}$ as well as the missingness features as $\M = \bracks{\m_1, \ldots, \m_p}$. \\~\\ \pause
+
+Previously the goal was to fit $f(x_1,\ldots, x_p)$ using $\X$ now we only have $\X_{obs}$ and $\M$.
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{Types of Missingness Models}
+
+There are two ways to view response models with missingness. Given the entire dataset is seen we have:
+\begin{enumerate}
+\item \emph{Selection} Models. The repsonse is independent of missingness.\\ \pause 
+\footnotesize
+Imagine we are predicting whether or not a person will default on their mortgage. The person fills out an application for a mortgage in a bank. One of the fields on the paper form elicits their age. If a person forgot to fill out their age (there are many fields and this one just slipped by them), age will be missing on the final form. This will indeed impact the ability of the built model to predict loan payback (we will discuss workarounds soon), but there is no reason to suspect that there will be a separate model for those who forget to fill it out and those who don't. \pause
+
+\item \emph{Pattern Mixture} Models. The response is not independent of missingness.\\ \pause
+\footnotesize
+Same modeling context but here we have the age filled out by a computerized background check which scours public and FBI records. If age goes missing here... that means... \pause the person may have some legal issues going on. It would make sense to fit two models: $f(x, m = 0)$ and $f(x, m = 1)$. Likely, $\phat$ will be higher in the latter!
+%\beqn
+%\cprob{\Y, \M}{\X, \thetavec, \gammavec} = \cprob{\Y}{\X, \thetavec} \cprob{\M}{\X, \gammavec}
+%\eeqn
+
+%Here, 
+%
+%\beqn
+%\cprob{\Y, \M}{\X, \thetavec, \gammavec} = \cprob{\Y}{\M, \X, \thetavec} \cprob{\M}{\X, \gammavec}.
+%\eeqn
+\end{enumerate}
+
+
+\end{frame}
+
+
+\begin{frame}\frametitle{Default to Pattern Mixture Model}
+
+In the latter, missingness itself affects the response. Unless you have a good reason to believe otherwise (you would need to think about how each variable went missing), you should default to thinking about it as a pattern mixture model.\\~\\  \pause
+
+In the mortgage application example, the fact that age went missing needs to become a feature in its own right. \pause This is handled (usually) by including the dummy variables $\m_1, \ldots, \m_p$ and then... \pause interacting these dummies with other features to allow for differential response models based on missingness.
+	
+\end{frame}
+
+\begin{frame}\frametitle{Night and Day Strategies to Fill in the Holes}
+\footnotesize
+The dichotomy of selection vs. pattern mixture is one piece of the puzzle. Now you have the practical piece of the puzzle --- your dataframe has holes!! What to do?\pause
+
+\begin{enumerate} \footnotesize
+\item \emph{Listwise Deletion} \pause --- simply put, delete all rows with missingness. Why is this bad? \pause Selection Bias!!! This bias will lead to poor future predictive performance (bad generalization). Also, even if there is no selection bias, ... \pause you are throwing out precious information! Your model could have been better if you figure out a principled means to make use of the measurements that you \textit{do} have on those observations.
+\item \emph{Imputation} \pause --- \qu{fill in} the holes with \qu{good guesses}. \pause This essentially means you must create a model for holes in each measurement. What is the simplest imputation strategy (i.e. what is the simplest model)? \pause The average! \pause
+\end{enumerate}
+
+By default, when producing a model, JMP will use listwise deletion (don't do this!!). \pause I you are less lazy, you can generate a dummy columns, i.e. $\m$, and impute by using $\xbar$ (better than nothing). Even better is to create a model to do the imputation by treating the $x$ as the response (meta dude!) and the other $x's$ as the predictors. There are other ideas beyond the scope of the course!
+
+\end{frame}
+
+\begin{frame}\frametitle{Missingness Mechanisms}
+
+Good imputation requires you to know what's going on i.e. how measurements wound up missing. Statisticians split this space up into three categories called \emph{missingness data mechanisms} (MDM): \pause (1) Missing Completely at Random (MCAR) \pause (2) Missing at Random (MAR) and \pause (3) Not Missing at Random (NMAR) and they are defined in the following way:\pause
+	
+	
+\begin{table}[htp]
+\centering
+\begin{tabular}{l|l}
+MDM & $\cprob{\M_j}{X_{j,\text{miss}}, \Xminjmiss, \Xminjobs, \gammavec} = \ldots$ \\ \hline
+MCAR & $\cprob{\M_j}{\gammavec}$ \\ 
+MAR & $\cprob{\M_j}{\Xminjmiss, \Xminjobs, \gammavec}$ \\ 
+NMAR & (does not simplify)
+\end{tabular}
+\end{table}
+\end{frame}
+
+Conceptually speaking, let's take missing the age field as an example. 
+
+
+
+
+\begin{frame}\frametitle{Conceptual Understanding of the MDM's}
+\vspace{-0.25cm}
+\small
+\begin{enumerate}
+\item MCAR means the missingness has nothing to do with any of the characteristics of the person. Is this likely? \pause No. You can think of MCAR as a completely random computer glitch that causes holes (MCAR scenario is usually rare). Are MCAR holes imputable? \pause No. Strategy? \pause Use $\xbar$. \pause \vspace{-0.1cm}
+\item MAR means the missingness is based on other \textit{known} predictors. Thus, imputation is essentially a regression problem (or classification problem if the $x$ that went missing is categorical) where $y$ is one of the features (meta!). MAR holes are the most imputable! \pause Could you think of a reason why that would be in this example? \pause Likely not... Can you think of another example? \pause MAR is imputable! \pause \vspace{-0.1cm}
+\item NMAR means the missingness is based on \textit{unknown features} and/or \textit{the value of this feature itself that we don't know}. \pause Is that the case here? \pause Likely... older people tend to forget to fill in fields... also... maybe the person is hiding something (in which case we are in the pattern mixture scenario). \pause NMAR is likely the most common and it is not so imputable... \pause but people still pretend it's MAR and attempt to impute... likely you're doing better than just using $\xbar$.
+\end{enumerate}
+\end{frame}
+
+
+\begin{frame}\frametitle{Missingness in Future Measurements}
+
+As we see in the prediction dataset, there is missingness in the $x^*$'s i.e. the observations you wish to predict on in the future. \pause If you are building an imputation model based on the other features, you can row-join both the historical dataframe and the $x^*$ data frame to build the models. \pause Also, make sure you create the $\m$ dummy variables for the same variables that had $\m$ dummy variables in the historical dataframe! \\~\\ \pause
+
+Also... obvious but must mention it... listwise deletion is not an option for the $\x^*$'s! You cannot say, \qu{sorry I don't want to predict for this observation}!! You need to impute --- it's your job!
+
+\end{frame}
+
+\begin{frame}\frametitle{Missingness Takeaways}
+
+Studying best ways to handle missingness can take a whole semester (some people have spent their entire careers on it), but for the purposes of this class we have a few takeaways: \pause
+
+\begin{itemize}
+\item Create a missingness dummy column $\m$ and use it in models with appropriate interactions to hedge against pattern mixture models. \pause
+\item Attempt to reason through missingness for each measurement separately. \pause
+\item If MCAR, use $\xbar$ to impute holes; if MAR / NMAR, use a prediction model to impute holes \pause (if you are supremely lazy, use $\xbar$).
+\item Delete observations that have missingness \inred{at your peril!!}
+\end{itemize}
+	
+\end{frame}
+
+\section{Overfitting Review}
 
 \begin{frame}\frametitle{Underfitting \& Overfitting}
 
@@ -491,14 +609,22 @@ AIC = n\natlog{RMSE^2} + 2p
 AICc = AIC + \frac{2p(p+1)}{n-p-1}
 \eeqn
 
-Needless to say, this is all approximate since we are assuming OLS and a whole bunch of other things (beyond scope of course). \pause Note: there are also BIC and Mallow's $C_p$ which are similar metrics, but we will not cover them. \pause \[JMP demo for white wine dataset. Make sure \qu{no rules} checked.\]
-	
-\end{frame}
+Needless to say, this is all approximate since we are assuming OLS and a whole bunch of other things (beyond scope of course). \pause Note: there are also BIC and Mallow's $C_p$ which are similar metrics, but we will not cover them. \pause (JMP demo for white wine dataset and telecom set.)
 
-\begin{frame}\frametitle{}
 
 	
 \end{frame}
+
+\begin{frame}\frametitle{More About Stepwise Linear Regression}
+
+\small
+\emph{Backward selection} begins with all features and then deletes one for each step until no more can justifiably be cut out. \pause Backward selection has a major weakness: it cannot be run on dataframes where the extended feature set is more than the number of rows (only forward or forward with mixed works there). \pause \emph{Mixed selection} begins with either none or all and then looks for both good additions and good subtractions. \\~\\ \pause
+
+Simple case where stepwise doesn't work? \pause How about three features where $x_1$ is most correlated but $x_2$ and $x_3$ together are the best model but there is high collinearity between $x_2$ and $x_3$? What happens? \pause Forward: the model enters $x_1$ and then $x_2$ but it doesn't see $x_3$ as a worthy addition. Backward: the model can nuke $x_2$ or $x_3$ since its p-value or $F$ test is poor. \\~\\ \pause
+	
+This is not the only way to fit a flexible model and hedge against overfitting. We will do more such models. But first, we will talk about \qu{missing data} as it's more relevant to the project which is due soon.
+\end{frame}
+
 
 
 \end{document} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -508,16 +634,6 @@ Needless to say, this is all approximate since we are assuming OLS and a whole b
 
 
 
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
 
 \begin{frame}\frametitle{}
 
