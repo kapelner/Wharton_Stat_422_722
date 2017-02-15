@@ -27,7 +27,7 @@
 
 \begin{frame}\frametitle{The Scourge of Modeling}
 \small
-Finding a good model selection is the big tough problem of statistics ... but missingness is the \qu{scourge} of data analysis and modeling. It's a big nuisance which has to be dealt with in order to get to inference and prediction. What is missingness? \pause Show JMP class project prediction dataframe. \\~\\ \pause
+Missingness is the \qu{scourge} of data analysis and modeling. It's a big nuisance which has to be dealt with in order to get to inference and prediction. What is missingness? \pause Show JMP class project prediction dataframe. \\~\\ \pause
 
 Simply put, missingness is the absence of the measurement for an observation (a hole in the matrix!) I will cover some theory of missingness, of which you will not need to know. But you will need to know the eventual takeaway messages. \\~\\ \pause
 
@@ -43,7 +43,7 @@ Previously the goal was to fit $f(x_1,\ldots, x_p)$ using $\X$ now we only have 
 
 There are two ways to view response models with missingness. Given the entire dataset is seen we have:
 \begin{enumerate}
-\item \emph{Selection} Models. The repsonse is independent of missingness.\\ \pause 
+\item \emph{Selection} Models. The response is independent of missingness.\\ \pause 
 \footnotesize
 Imagine we are predicting whether or not a person will default on their mortgage. The person fills out an application for a mortgage in a bank. One of the fields on the paper form elicits their age. If a person forgot to fill out their age (there are many fields and this one just slipped by them), age will be missing on the final form. This will indeed impact the ability of the built model to predict loan payback (we will discuss workarounds soon), but there is no reason to suspect that there will be a separate model for those who forget to fill it out and those who don't. \pause
 
@@ -604,7 +604,7 @@ That heuristic is called \emph{stepwise} model construction. \pause We begin wit
 If you choose the feature to give you the best in-sample $R^2$, you will eventually take all the features (until $n = p+1$) and you will get $R^2 = 100\%$. We need a metric to tell us when we may be overfitting and halt at that moment. \pause Here are a few:
 
 \begin{enumerate}
-\item oos RMSE (keep a holdout set and quit when this starts increasing) \pause
+\item oosRMSE (keep a holdout set and quit when this starts increasing) \pause
 \item Only include a variable if its $t$ stat (or partial $F$ stat) is significant \pause
 \item Use $AICc$.
 \end{enumerate}
@@ -615,118 +615,6 @@ If you choose the feature to give you the best in-sample $R^2$, you will eventua
 
 The first component (the log-likelihood) represents in-sample fit. \pause $\loglik{}$ is like $R^2$ though... as the fit gets closer to the points, the likelihood goes to 1 (and the log likelihood goes to 0). \pause The $2p$ term is a reality check. If you have more features, you are going to overfit. So each additional feature must be justified in terms of the increase in log-likelihood. \pause Thus, good models maximize $-AIC$ (i.e. minimize $AIC$).\\~\\
 
-
-	
-
 \end{frame}
-
-\begin{frame}\frametitle{$AICc$ for linear models}
-\small
-For linear regression under OLS, we can calculate the log-likelihood explicitly (we approximately did this in Lecture 2) to obtain:
-
-\beqn
-AIC = n\natlog{RMSE^2} + 2p
-\eeqn
-
-\pause So once again, we want this to be small. If we decrease $RMSE$ by adding a feature, it needs to counteract an increase of 2 by $p \rightarrow p+1$. If it can't, we're probably overfitting. \pause $AIC$ works well with large sample sizes. For small sample sizes, we use a corrected version $AICc$ defined as:
-
-\beqn
-AICc = AIC + \frac{2p(p+1)}{n-p-1}
-\eeqn
-
-Needless to say, this is all approximate since we are assuming OLS and a whole bunch of other things (beyond scope of course). \pause Note: there are also BIC and Mallow's $C_p$ which are similar metrics, but we will not cover them. \pause (JMP demo for white wine dataset and telecom set.)
-
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{More About Stepwise Linear Regression}
-
-\small
-\emph{Backward selection} begins with all features and then deletes one for each step until no more can justifiably be cut out. \pause Backward selection has a major weakness: it cannot be run on dataframes where the extended feature set is more than the number of rows (only forward or forward with mixed works there). \pause \emph{Mixed selection} begins with either none or all and then looks for both good additions and good subtractions. \\~\\ \pause
-
-Simple case where stepwise doesn't work? \pause How about three features where $x_1$ is most correlated but $x_2$ and $x_3$ together are the best model but there is high collinearity between $x_2$ and $x_3$? What happens? \pause Forward: the model enters $x_1$ and then $x_2$ but it doesn't see $x_3$ as a worthy addition. Backward: the model can nuke $x_2$ or $x_3$ since its p-value or $F$ test is poor. \\~\\ \pause
-	
-This is not the only way to fit a flexible model and hedge against overfitting. We will do more such models. But first, we will talk about \qu{missing data} as it's more relevant to the project which is due soon.
-\end{frame}
-
-
 
 \end{document} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-
-
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
