@@ -39,7 +39,7 @@ List of topics *not* covered on the final exam:
 * Wed 3-4:30PM SHDH 109 Gemma Moran
 * Thu 4:30-6PM SHDH 109 Gemma Moran
 
-
+<!--
 ## Grades and Class Standing
 
 You can check your grades in realtime at [http://wharton.gradesly.com](http://wharton.gradesly.com). You type in your email address and the password (which was emailed to you at the beginning of the semester).
