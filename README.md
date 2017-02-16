@@ -42,4 +42,4 @@ List of topics *not* covered on the final exam:
 <!--
 ## Grades and Class Standing
 
-You can check your grades in realtime at [http://wharton.gradesly.com](http://wharton.gradesly.com). You type in your email address and the password (which was emailed to you at the beginning of the semester).
+You can check your grades in realtime at [http://wharton.gradesly.com](http://wharton.gradesly.com). You type in your email address and the password (which was emailed to you at the beginning of the semester).-->
