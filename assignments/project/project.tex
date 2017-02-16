@@ -9,7 +9,7 @@
 
 \author{Professor Adam Kapelner}
 
-\date{Due February 23, 5PM at JMHH 4th floor (in the dropoff box)\\ \vspace{0.5cm} \footnotesize (this document last updated \today ~at \currenttime)}
+\date{Due Friday, March 3, Noon, JMHH 4th floor (in the dropoff box)\\ \vspace{0.5cm} \footnotesize (this document last updated \today ~at \currenttime)}
 
 \begin{document}
 \maketitle
@@ -77,8 +77,6 @@ In your writeup, you will write about your observations by
 \item explaining the degree to which you feel this sample is representative of the population.
 \end{itemize}
 
-\noindent If I see no work done on this front by week two of the course, then I will divvy up responsibilities among the class.\\
-
 \noindent Then, you will list the predictors you used and provide
 
 \begin{itemize}
@@ -89,6 +87,8 @@ In your writeup, you will write about your observations by
 \item a report on missingness and the missingness mechanism and
 \item a description about how the measurements were taken.
 \end{itemize}
+
+Note: if you also used derived productors (i.e. interactions, polynomials, etc) list them and explain why they are included.
 
 
 \textbf{There are no collaboration limits on this part of the project.} But you will be responsible for submitting an electronic copy of your data frame to canvas at the time that the project is due. (More details on upload specifics coming soon).
@@ -104,8 +104,8 @@ In your writeup, you must explain the modeling choice you made and describe how 
 \begin{itemize}
 \item $R^2$ 
 \item MSE 
-\item RMSE
-\item MAE
+\item RMSE (RASE)
+\item MAE (AAE)
 \end{itemize}
 
 There are a few other things that need to be reported on:
@@ -135,7 +135,7 @@ This file was MTurked and thus contains a lot of the MTurk metadata (which you w
 
 I've included some features in this prediction set. You are under no obligation to use them whatsoever. You can capture your own features by using the link provided in the \texttt{URL} column.
 
-You will upload a file named \texttt{<Your Penn ID>.csv} to canvas by Friday, Feb 24 5PM. (More details on upload specifics coming soon). The number of lines in your CSV will be the same number of lines as the \href{https://raw.githubusercontent.com/kapelner/Wharton_Stat_422_722/master/assignments/project/stat_422_722_project_prediction_set.csv}{prediction CSV file} less one (for the header line). Each line will consist of a single prediction value (in dollars without the dollar symbol or commas). For instance:
+You will upload a file named \texttt{<Your Penn ID>.csv} to canvas by Sunday, February 26 at 5PM. (More details on upload specifics coming soon). The number of lines in your CSV will be the same number of lines as the \href{https://raw.githubusercontent.com/kapelner/Wharton_Stat_422_722/master/assignments/project/stat_422_722_project_prediction_set.csv}{prediction CSV file} less one (for the header line). Each line will consist of a single prediction value (in dollars without the dollar symbol or commas and to the nearest dollar). For instance:
 
 \begin{figure}[htp]
 \begin{Verbatim}[frame=single, fontsize = \small]
@@ -150,7 +150,7 @@ You will upload a file named \texttt{<Your Penn ID>.csv} to canvas by Friday, Fe
 \caption{An example file \texttt{<Your Penn ID>.csv}}
 \end{figure}
 
-I will then wait until the grading deadline May 12 or until 100 apartments are sold. I estimate 2-3 apartments sell per day of the 944 on this sheet thus we will have a nice set to evaluate \emph{your} future predictions against.
+I will then wait until the grading deadline May 12 or until 100 apartments are sold. I estimate 2-3 apartments sell per day of the 944 on this sheet thus we will have a nice set to evaluate your future predictions against.
 
 You will be graded on your out-of-sample $R^2$ value. How to allocate the points I have not determined yet.
 
