@@ -1,0 +1,175 @@
+%\documentclass[slides]{beamer} %switch "slides" to "handout" for printing out
+\documentclass[handout]{beamer}
+
+\include{preamble}
+
+%presentation preamble
+\usetheme{progressbar}
+\usecolortheme{progressbar} 
+\usefonttheme{progressbar} 
+\useoutertheme{progressbar}
+\useinnertheme{progressbar}
+
+\title[Lecture]{Random Forests in JMP and R}
+\institute[Wharton, Statistics]{Stat 422/722\\ at The Wharton School of the University of Pennsylvania}
+\date{}
+
+\author{Adam Kapelner}
+
+
+\begin{document}
+
+%immediately create a title page
+\frame{\titlepage}
+
+
+\begin{frame}\frametitle{JMP 1/4}
+
+\begin{figure}
+\centering
+\includegraphics[width=3.5in]{jmp01.png}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}\frametitle{JMP 2/4}
+
+\begin{figure}
+\centering
+\includegraphics[width=3.5in]{jmp02.png}
+\end{figure}
+	
+\end{frame}
+
+\begin{frame}\frametitle{JMP 3/4}
+
+\begin{figure}
+\centering
+\includegraphics[width=3.0in]{jmp03.png}
+\end{figure}
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{JMP 4/4}
+
+\begin{figure}
+\centering
+\includegraphics[width=3.1in]{jmp04.png}
+\end{figure}
+You don't need to do oos validation on Random Forests as the \qu{out of bag} is as good as oos.
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{R 1/2}
+
+\begin{verbatim}
+#load the data
+X = read.csv(
+ "stat_422_722_project_example_set_of_historical_data.csv")
+#recode sale_price as a number
+X$sale_price = as.numeric(gsub('[$,]','',
+  as.character(X$sale_price)))
+#install and load up the RF package
+install.packages("randomForest")
+library(randomForest)
+#run the RF
+rf_mod = randomForest(sale_price ~ 
+	coop_condo + num_bedrooms + 
+	num_full_bathrooms + walk_score, X)
+rf_mod #print out its output
+\end{verbatim}
+
+
+\end{frame}
+
+\begin{frame}\frametitle{R 2/2}
+
+\begin{figure}
+\centering
+\includegraphics[width=4.1in]{R01.png}
+\end{figure}
+
+Again: you don't need to do oos validation on Random Forests as the \qu{out of bag} is as good as oos.
+\end{frame}
+
+\end{document} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+
+	
+\end{frame}

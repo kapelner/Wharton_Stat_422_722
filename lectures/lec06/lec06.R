@@ -13,8 +13,9 @@ library(mlr)
 K_FOLDS = 5 #just to save time
 rdesc = makeResampleDesc("CV", iters = K_FOLDS)
 
-r = resample("regr.lm", makeRegrTask(data = X, target = "quality"), rdesc, measures = rmse)
-r = resample("regr.randomForest", makeRegrTask(data = X, target = "quality"), rdesc, measures = rmse)
+white_wine_task = makeRegrTask(data = X, target = "quality")
+r = resample("regr.lm", white_wine_task, rdesc, measures = rmse)
+r = resample("regr.randomForest", white_wine_task, rdesc, measures = rmse)
 
 
 #another example
@@ -26,5 +27,6 @@ summary(lin_mod)
 rf_mod = randomForest(salary_thou ~ ., X)
 rf_mod
 
-r = resample("regr.lm", makeRegrTask(data = X, target = "salary_thou"), rdesc, measures = rmse)
-r = resample("regr.randomForest", makeRegrTask(data = X, target = "salary_thou"), rdesc, measures = rmse)
+baseball_task = makeRegrTask(data = X, target = "salary_thou")
+r = resample("regr.lm", baseball_task, rdesc, measures = rmse)
+r = resample("regr.randomForest", baseball_task, rdesc, measures = rmse)
