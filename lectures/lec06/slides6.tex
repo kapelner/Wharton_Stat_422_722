@@ -23,7 +23,7 @@
 \frame{\titlepage}
 
 
-\section{Automatic Model Selection}
+\section{Automatic Model Selection: Stepwise Linear Model Subset}
 
 
 
@@ -121,10 +121,23 @@ AIC = n\natlog{RMSE^2} + 2p
 AICc = AIC + \frac{2p(p+1)}{n-p-1}
 \eeqn
 
-Needless to say, this is all approximate since we are assuming OLS and a whole bunch of other things (beyond scope of course). \pause Note: there are also BIC and Mallow's $C_p$ which are similar metrics, but we will not cover them. \pause (JMP demo for white wine dataset and telecom set.)
+Needless to say, this is all approximate since we are assuming OLS and a whole bunch of other things (beyond scope of course). \pause Note: there are also BIC and Mallow's $C_p$ which are similar metrics, but we will not cover them. 
 
 
 	
+\end{frame}
+
+\begin{frame}\frametitle{Stepwise Linear \& Logistic Regr. Demos}
+
+\begin{itemize}
+\item white wine on AICc \pause
+\item white wine oos validation $R^2$ and test \pause
+\item white wine $K-$fold on AICc (why is this not a great idea?)
+\item telecom all 1st order interactions with oos validation on AICc
+\item telecom all 1st order interactions with oos validation on min logistic $R^2$
+\end{itemize}
+
+
 \end{frame}
 
 \begin{frame}\frametitle{More About Stepwise Linear Regression}
@@ -132,12 +145,363 @@ Needless to say, this is all approximate since we are assuming OLS and a whole b
 \small
 \emph{Backward selection} begins with all features and then deletes one for each step until no more can justifiably be cut out. \pause Backward selection has a major weakness: it cannot be run on dataframes where the extended feature set is more than the number of rows (only forward or forward with mixed works there). \pause \emph{Mixed selection} begins with either none or all and then looks for both good additions and good subtractions. \\~\\ \pause
 
-Simple case where stepwise doesn't work? \pause How about three features where $x_1$ is most correlated but $x_2$ and $x_3$ together are the best model but there is high collinearity between $x_2$ and $x_3$? What happens? \pause Forward: the model enters $x_1$ and then $x_2$ but it doesn't see $x_3$ as a worthy addition. Backward: the model can nuke $x_2$ or $x_3$ since its p-value or $F$ test is poor. \\~\\ \pause
-	
-This is not the only way to fit a flexible model and hedge against overfitting. We will do more such models. But first, we will talk about \qu{missing data} as it's more relevant to the project which is due soon.
+Simple case where stepwise doesn't work? \pause How about three features where $x_1$ is most correlated but $x_2$ and $x_3$ together are the best model but there is high collinearity between $x_2$ and $x_3$? What happens? \pause Forward: the model enters $x_1$ and then $x_2$ but it doesn't see $x_3$ as a worthy addition. Backward: the model can nuke $x_2$ or $x_3$ since its p-value or $F$ test is poor.
 \end{frame}
 
 
+
+
+\begin{frame}\frametitle{Conceptual Review of What We Just Did}
+\small
+Once again,
+
+\beqn
+Y = f(x_1, \ldots, x_p) + \errorrv
+\eeqn
+
+and we made the parametric assumption that: \pause
+
+\beqn
+Y = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p + \tilde{\errorrv}
+\eeqn
+
+then we take our \qu{raw} features and create \qu{derived features}
+
+\beqn
+\braces{x_1, \ldots, x_p} \Rightarrow \braces{x'_1, \ldots, x'_{p'}} ~~ \text{where $p' > p$ and maybe much, much greater.}
+\eeqn
+
+then we allowed for a large linear model:
+
+
+\beqn
+Y = \beta_0 + \beta_1 x'_1 + \ldots\ldots\ldots\ldots\ldots\ldots\ldots + \beta_p x'_{p'} + \tilde{\errorrv}
+\eeqn
+
+of which we took a subset by \qu{stepping through} and reaching a local optimum:
+
+
+\beqn
+Y = \beta_0 + \beta_1 x'_{(1)} + \ldots\ldots\ldots\ldots  + \beta_p x'_{(p')} + \tilde{\errorrv}
+\eeqn
+
+
+\end{frame}
+
+\section{Decision Trees}
+
+
+\begin{frame}\frametitle{Binning}
+
+
+Our derived predictors
+
+\beqn
+\small \braces{x_1, \ldots, x_p} \Rightarrow \braces{x'_1, \ldots, x'_{p'}} 
+\eeqn
+
+still may not be that \qu{flexible} as \qu{bases} for the $\hat{f}$ (whiteboard demo). \pause \\~\\ 
+
+What if we derived predictors that split up the space of raw predictors into tiny regions. In one dimension, we can make some new derived variables: 
+
+\beqn
+\indic{x \in \bracks{0,1}}, \indic{x \in \bracks{1,2}},\indic{x \in \bracks{2,3}},\indic{x \in \bracks{3,4}},\ldots\indic{x \in \bracks{9,10}}
+\eeqn 
+
+and assign a different $\beta$ parameter (fit to be the average $y$) for each of these 10. This is called \qu{binning} and allows for flexible, non-parametric fits. Why? \pause Did you do any binning on the project?
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{Does Binning Breakdown?}
+
+In multiple dimensions, you can get nice bins by doing interactions between each dimensions' bins. For example in two dimensions, you can bin both into $B=10$ bins. Crossing the bins makes 100 square bins. Each square gets its own $\beta$ parameter (fit to be the average $y$). \\~\\ \pause
+
+In the white wine data, we have 11 predictors and $B=10$ bins per continuous predictor, that's $B^{11} = 100 $ billion \qu{hyper-square} bins. Problem? \pause (1) $n > p$ and you can't use the linear model, \pause (2) most bins are empty how do you take the average of nothing?) and (3) a lot of bins will have similar averages --- useless bins.
+	
+\end{frame}
+
+\begin{frame}\frametitle{Better Bins?}
+
+Instead of just binning each predictor into $B$ bins, why not try to make \qu{custom} or \qu{smart} bins in the regions of $f$ that give the \emph{most} increase in fit (i.e. higher $R^2$, lower $SSE$ or $RMSE$). So you \qu{split} the data into bins that are now \qu{hyper-rectangle} shaped. \\~\\ \pause 
+
+Demo JMP white wine. \pause Within each hyperrectangle (\qu{split} or \qu{partition}), you can split again by taking the best split, and you can keep going. Because the splits are \emph{binary} (i.e. you split one space into two spaces), and they are hierarchical (you can trace the splits back generations), they look like \qu{trees}. \pause JMP. \pause How to predict? \pause \qu{Drop the observation down }and follow instructions all the way until the end. \pause Does this make them interpretable? \pause YES. Simple? \pause Maybe if they are not too complex.
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{Decision Trees}
+\small
+These are known as \emph{decision trees} since you can imagine examine when you predict, you follow the \qu{decisions} (i.e. the \emph{split rules}). There is some terms of anatomy to know:
+
+\begin{itemize}
+\item The top is the \qu{root node}
+\item Nodes that split have \qu{children} and are \qu{inner nodes} or \qu{split nodes}.
+\item Nodes that do not split are called \qu{leaves} or \qu{terminal nodes}.
+\item \qu{Depth} indicates the maximum number of generations in the tree (the root has zero depth).
+\item Nodes that have a split must contain a splitting rule e.g. $x_3 < 14.56$ (or equivalently $x_3 \geq 14.56$) and $x_3$ is called the \qu{split variable} and 14.56 is called the \qu{split value}.
+\end{itemize} \pause
+
+
+For the purposes of this class, there are two types of decision trees. \pause
+
+\begin{itemize}
+\item Regression (for continous responses)
+\item Classification (for categorical responses)
+\end{itemize} \pause
+
+
+	
+\end{frame}
+
+\begin{frame}\frametitle{Making Splits}
+\small
+There are basically three things to decide in the decision tree algorithm:
+
+\begin{itemize}
+\item How to make the split? What metric to optimize? What splits to check? \pause
+\item Leaf assignment? What should the $\yhat$ be if the observation \qu{falls} into a given terminal node?
+\item When to stop splitting? Should we split all the way down so each \qu{terminal} partition (node) has one data point?
+\end{itemize} \pause
+
+The split rule is determined by...\\~\\ \pause
+
+Look at all possible splits ($\approx n \times p$ splits) \emph{greedily} and take the minimum total SSE for continuous and total entropy for categorical. JMP is non-standard; it takes the maximum log worth (which is something I've never heard of) for continuous and the maximum log likelihood for categorical. My bet is the performance will be similar as it's really the same concept: get the best, most homogeneous, split!
+
+
+\end{frame}
+
+\begin{frame}\frametitle{Leaf Assignment \& Stopping / Pruning Rule}
+\small
+The leaf assignment is determined by...\\~\\ \pause
+
+The sample average $\ybar$ among observations in the node for continuous and the most-represented (modal) class in the node for categorical. \\~\\ \pause
+
+The rule that controls whether to stop splitting (and ship the tree) is...\\~\\ \pause
+
+There is no standard stopping / pruning rule. JMP stops when the next 10 splits below does not create a better cross-validated $R^2$. Standard software usually allows for a minimum leaf size or allows you to keep a oos validation set.\\~\\ \pause
+
+What would happen if there is no stopping rule? \pause It would fit until there is one point in each node i.e. ... \pause it would very much overfit $\errorrv$. \\~\\ \pause
+
+More on interpretation: AND rules? \pause Overall effect of $y$ on $x$? \pause No ... not so clear. Categorical variable splitting? \pause Very nice interpretation.
+
+\end{frame}
+
+\begin{frame}\frametitle{Advantages of Decision Trees}
+
+\begin{itemize}
+\item Automatically knows which variables to include and which to not include --- if they help performance, include otherwise not. Linear models include everything or try to ration during a stepwise procedure. \pause
+\item Easily models curves and non-linearities \pause
+\item Easily models interactions due to the AND intersection from parent node to child node \pause
+\item Thus it is non-parametric. However... \pause Low-depth trees have both interpretability and parsimony! (but no inference possible to my knowledge) In fact, the interpretation in trees likely are more similar to how we create models. If income is low and down payment is low ... a default is more likely.\pause
+\item You no longer need to worry about binning! The tree will create the bins for you via splitting.\pause
+\item You no longer need to worry about transformations such as logs since the split variables will take care of optimal splits.
+\end{itemize} 
+
+
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{Disadvantages of Decision Trees}
+
+\begin{itemize}
+\item Non-parametric modeling does not give us inference. Can we ask how important alcohol is in determining wine quality? It looks important since it's the root, but we can't get a reassurance that it will stand up to sampling error formally as a $p$-value. \pause
+\item Trees have difficulty capturing actually linear or near linear relationships. \pause
+\item Trees are high variance. \pause This means that with different samples (different $\errorrv$ values), the tree splits can vary wildly the lower in depth you go.
+\item But most important, tree \inred{predictive performance is not great.} They are called \qu{weak learners}. Why? \pause Basically, we have traded interpretability and simplicity for performance.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}\frametitle{The Tree's History and Improving the Tree}
+
+Trees were conceived in 1963 and were made rigorous in the mid-1980's with the book \qu{Classification and Regression Trees}. The 1990's saw a few huge advances:
+
+\begin{enumerate}
+\item Bagging (bootstrap aggregation) in 1994 (Breiman).
+\item Boosting (finding errors and reweighting to fix them) in 1995 (Freund and Shapire).
+\item Sampling predictors in 1997 (Amit and Geman).
+\end{enumerate}
+
+These were three historical ideas which gave birth to Leo Breiman's Random Forests idea in 2001.\\~\\ \pause 
+
+
+	
+\end{frame}
+
+
+\section{Random Forests}
+
+
+\begin{frame}\frametitle{Many, Many Trees Together}
+\small
+Each of the above combines many decision trees together ($T$ trees instead of one tree). Predictions are generated by the average leaf $\yhat$ (during regression) or the modal class (during classification).
+
+\begin{figure}
+\centering
+\includegraphics[width=3.4in]{tree_average.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}\frametitle{What is Bagging?}
+\small 
+\qu{Bagging} is a portmanteau of \qu{bootstrap} + \qu{aggregation} which are...\pause 
+
+\begin{block}{Bootstrap (in our case, the \qu{nonparametric bootstrap})} \pause 
+Sample the observations $1,\ldots,n$ with replacement. \pause You get only about 2/3 of the unique $n$ observations since you double and triple up.\\~\\ \pause 
+
+What it means in this context is that each of the $T$ trees are built with a bootstrap sample. \pause Each tree itself is a \qu{weak learner} but many slightly different trees together is strong since they reduce variance from overfitting (beyond scope of course).\pause
+\end{block}
+
+\begin{block}{Aggregation}
+What we said before: \qu{aggregate} the $\yhat$'s from the $T$ trees together via average (regression) or majority vote (classification). \pause 
+\end{block}
+
+Bagging beats single trees... but once we bag, no interpretability anymore! Complete black box due to that function $\hat{f}$ being so complicated!!
+
+\end{frame}
+
+\begin{frame}\frametitle{Random Forests (RF)}
+
+To reduce variance between the trees, we have to bust up the correlation structure between each tree. \pause The last piece of the puzzle Breiman cracked in 2001: each tree only sees a sample of the features. \pause Each tree only sees $p^* < p$. \\~\\ \pause
+
+This was we do this, the predictive accuracy then beats bagging (no one uses just bagging anymore). \emph{These many trees taken together as a unit do not overfit!!!}
+	
+\begin{block}{Random Forests (RF) Algorithm} \pause
+\begin{itemize}
+\item Build many overfit trees
+\item In each tree use a sample with replacement of the rows
+\item In each tree use a sample of the availabe features \pause
+\end{itemize}
+\end{block}
+
+
+\end{frame}
+
+
+\begin{frame}\frametitle{RF \qu{Tuning Parameters}}
+
+
+\begin{itemize}
+\item Number of trees --- we want a lot to reduce variance (default is 500 in R)
+\item Number of splitting features for a individual tree --- we want less than $p$ to decorrelate (default $p/3$ for regression and $\sqrt{p}$ for classification)
+\item Number of observations in smallest split node --- we want to overfit (default is 5 in regression, 1 in classification)
+\end{itemize}
+
+The amazing thing is ... \pause the defaults work so well, you hardly ever need to change them!! \emph{RF in my opinion is the best predictive model out-of-the-box.}
+\end{frame}
+
+
+\begin{frame}\frametitle{Tuning RF --- Nested Resampling}
+
+Remember this from last class? Here's where it's used... But I do \inred{not recommend} doing this!
+
+\begin{figure}
+\centering
+\includegraphics[width=3.36in]{nested_resampling_for_tuning.png}
+\end{figure}
+
+(from \href{https://mlr-org.github.io/mlr-tutorial/devel/html/nested_resampling/index.html}{MLR's tutorial website}).
+\end{frame}
+
+\begin{frame}\frametitle{A Nice Perk in RF --- OOB Estimation}
+
+So RF doesn't overfit, but how do we assess this? \pause we can use oos validation (plain or with $K$-fold CV), but we don't have to! Why? \pause Each tree was built with a bootstrap sample. This means $\approx$ 2/3 of the $n$ observations were used to build the tree and therefore $\approx$ 1/3 of the $n$ observations were not! Aren't those $\approx$ 1/3 that were not oos? \pause YES! \pause These $\approx$ 1/3 are called \qu{out of bag} (OOB). Over the many $T$ trees, all $n$ observations went out of bag many times giving us many trees to get oos average for each observation. \\~\\ \pause
+
+
+\tiny
+(Note: this strategy can be used for any modeling procedure as an alternative to $K$-fold CV and MLR in R gives you this option... I'm still not sure why $K$-fold CV is the default). \\~\\ \pause
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{When does RF win / lose?}
+\pause
+\begin{itemize}
+\item Signal is high, noise is low (no one wins when signal is low, noise is high). I've seen the linear model and RF performing about equal in high noise cases. \pause
+\item When there truly are lots of interactions among the predictors and curvilinear relationships with the response. \pause
+\item When there are not \qu{too many} features. $p > n$ is a problem for everyone. RF can find what it believes to be a nice predictor, but it's really fake and only idiosyncratically related to the response.
+\end{itemize}
+
+Demo time...
+
+\end{frame}
+
+\begin{frame}\frametitle{JMP 1/4}
+
+\begin{figure}
+\centering
+\includegraphics[width=3.5in]{jmp01.png}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}\frametitle{JMP 2/4}
+
+\begin{figure}
+\centering
+\includegraphics[width=3.5in]{jmp02.png}
+\end{figure}
+	
+\end{frame}
+
+\begin{frame}\frametitle{JMP 3/4}
+
+\begin{figure}
+\centering
+\includegraphics[width=3.0in]{jmp03.png}
+\end{figure}
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{JMP 4/4}
+
+\begin{figure}
+\centering
+\includegraphics[width=3.1in]{jmp04.png}
+\end{figure}
+You don't need to do oos validation on Random Forests as the \qu{out of bag} is as good as oos.
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{R 1/2}
+
+\begin{verbatim}
+#load the data
+X = read.csv(
+ "stat_422_722_project_example_set_of_historical_data.csv")
+#recode sale_price as a number
+X$sale_price = as.numeric(gsub('[$,]','',
+  as.character(X$sale_price)))
+#install and load up the RF package
+install.packages("randomForest")
+library(randomForest)
+#run the RF
+rf_mod = randomForest(sale_price ~ 
+	coop_condo + num_bedrooms + 
+	num_full_bathrooms + walk_score, X)
+rf_mod #print out its output
+\end{verbatim}
+
+
+\end{frame}
+
+\begin{frame}\frametitle{R 2/2}
+
+\begin{figure}
+\centering
+\includegraphics[width=4.1in]{R01.png}
+\end{figure}
+
+\end{frame}
+
+\section{Course Conclusion!}
+
+\begin{frame}\frametitle{We Made It!}
+
+	
+\end{frame}
 
 \end{document} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -146,11 +510,6 @@ This is not the only way to fit a flexible model and hedge against overfitting. 
 
 
 
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
 
 
 \begin{frame}\frametitle{}

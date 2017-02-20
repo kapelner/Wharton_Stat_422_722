@@ -14,9 +14,10 @@ K_FOLDS = 5 #just to save time
 rdesc = makeResampleDesc("CV", iters = K_FOLDS)
 
 white_wine_task = makeRegrTask(data = X, target = "quality")
-r = resample("regr.lm", white_wine_task, rdesc, measures = rmse)
-r = resample("regr.randomForest", white_wine_task, rdesc, measures = rmse)
-
+resample("regr.lm", white_wine_task, rdesc, measures = rmse)
+#why doesn't lm overfit here??
+resample("regr.randomForest", white_wine_task, rdesc, measures = rmse)
+#why doesn't rf overfit (relative to its OOB estimate)?
 
 #another example
 X = read.csv("baseball.csv")
