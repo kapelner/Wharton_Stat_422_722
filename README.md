@@ -29,11 +29,23 @@ Audio for lectures should be on canvas except for the first lecture (links below
 
 List of topics *not* covered on the final exam:
 
+* Anything about how deep learning works only that it exists and can solve certain types of problems
+* Anything about Laplace's demon, determinism, alternative explanations (e.g. quantum theory) for the noise beyond unavailable information
 * Calculating likelihoods (but you will need to understand likelihood values given to you and the likelihood ratio test as I will be giving you critiical chi-squared values)
-* You will only need to know the Bonferroni correction (Sidak and Scheffe are not covered on the exam)
+* Sidak and Scheffe corrections to multiple testing (you will only need to know the Bonferroni correction)
 * Anything about how the computer numerically maximizes likelihood to find a fit (but you will need to know that this process exists)
-
-
+* I've decided to leave out equivalence testing (much to my dismay)
+* The specifics of D-optimality and I-optimality
+* Anything about probit and cloglog link functions
+* The Wald test or Score test
+* Using the chi-squared with one degree of freedom to product z scores
+* All fit metrics of logistic regression except misclassification error, weighted misclassification error and AUC.
+* Using expected value of profit matrix
+* The interpretation of a single fold's test performance vs. the interpretation of K-fold CV's aggregate oos performance (this was a subtle point)
+* K-fold CV for three splits
+* Nested K-fold CV for tuning machine learning algorithms
+* Backwards and Mixed Stepwise regression (only forward regression is covered)
+* Tuning parameters in RF
 
 ## Office Hours
 

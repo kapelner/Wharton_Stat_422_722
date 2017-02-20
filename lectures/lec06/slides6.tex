@@ -498,81 +498,176 @@ rf_mod #print out its output
 
 \section{Course Conclusion!}
 
-\begin{frame}\frametitle{We Made It!}
+\begin{frame}\frametitle{We Made It! Now a Summary and Review...}
+\small
+A quick review of the topics (and the topics that will not be covered on the final next week).\\~\\
 
+\textbf{Lecture 1}
+
+\begin{itemize}
+\item Definitions of prediction, model, response, feature / predictor, observation \pause
+\item Mathematizing English into measurements so we can create models \pause
+\item We talked about mathematical models, statistical models and the conditional expectation function $f$. \pause
+\item Types of data: continuous, categorical. We talked about binning to convert continuous $\rightarrow$ categorical. \pause
+\item Raw data represenations and deep learning, featurization to $p$ measurable features \pause
+\item Meehl's work on basic statistical models beating humans \pause
+\item Data collection: sampling and measurement to create a data frame
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}\frametitle{Review...}
+
+\begin{itemize}
+\item Good machine learning (sampling and featurization) vs. bad machine learning (mindless data dumps of convenience)
+\item Parametric vs non-parametric worldview when modeling
+\item Definition of parameters
+\item Definition of parameter estimates (model fitting)
+\item Residuals and loss functions (\emph{SSE}$^\star$, SAE)
+\item Measures of fit: $R^2$, $SSE$, $RMSE$ and their interpretations and their equivalence
+\item Empirical rule $\yhat \pm RMSE$
+\end{itemize}
+	
+\end{frame}
+
+\begin{frame}\frametitle{Review...}
+
+\textbf{Lecture 2}
+
+\begin{itemize}
+\item Graphical causal models with bubbles and arrows
+\item Definition of noise in statistical models
+\item Probabilistic Causation
+\item Three sources of noise (1) Irreducible Error (2) Model Misspecification due to a parametric assumption (3) Model Estimation Error
+\item The reasonable assumption of $\errorrv$ distributed normally
+\item The four OLS assumptions and what this buys you
+\item What a likelihood is and what a log-likelihood is
+\item What maximum likelihood estimation is
+\item What the likelihood ratio is and when to reject (big values that exceed critical $\chisq{}$ values)
+\end{itemize}
+	
+\end{frame}
+
+\begin{frame}\frametitle{Review...}
+
+\begin{itemize}
+\item OLS regression: Omnibus / global $F$-tests
+\item OLS regression: Partial $F$-test
+\item OLS regression: $t$-test
+\item OLS regression: how to predict ($\yhat$ calculations)
+\item Proper interpretation of $\betahat_j$
+\item Causation and correlation
+\item Lurking / confounding predictors
+\item Spurious (or coincidental) correlations
+\item Natural observation vs. manipulated measurements
+\item Randomized experiments can reveal additive causal effects
+\item Why \qu{science is impossible}
+\item Why collinearity may invalidate $\betahat_j$ interpretation
+\item Why correlations are still useful
+\end{itemize}
+	
+\end{frame}
+
+\begin{frame}\frametitle{Review...}
+
+\begin{itemize}
+\item Data dredging
+\item Multiple testing correction with Bonferroni (hedges against dredging)
+\item Generalizability of models
+\end{itemize}
+	
+\textbf{Lecture 3}
+
+\begin{itemize}
+\item Extrapolation (a violation of generalizability)
+\item How different modeling strategies extrapolate differently
+\item Optimal design in linear models (over sample predictors' extreme values)
+\item Optimal design in highly non-parametric models (more towards even spacing throughout predictors' ranges)
+\item Odds, logistic link function and its sigmoidal shape, logit function (log odds)
+\item Fitting $\betahat_j$'s in logistic regression
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}\frametitle{Review...}
+%\small
+\begin{itemize}
+\item How to draw inference in logistic regression (likelihood ratio test)
+\item How to predict conditional probabilities $\phat$'s in logistic regression
+\item How to use classification rules based on a threshold $\phat_0$
+\item Confusion Matrices, FN, FP, TP, TN, sensitivity, specificity, FNR, FPR, FDR, FOR
+\item ROC Curve, ROC table and AUC metric
+\end{itemize}
+	
+\textbf{Lecture 4}
+
+\begin{itemize}
+\item Asymmetric costs in classification, weighted misclassification error, minimizing this metric to find best $p_0$
+\item Survival Model --- the response and why it's censored
+\item Interpreting $\betahat_j$ in an exponential survival model
+\item How to draw inference in survival regression (likelihood ratio test)
+\item Predictions in survival models
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Review...}
+
+\begin{itemize}
+\item Testing linearity for one covariate in linear regression
+\item Interpreting quadratic effects
+\item Interpreting interaction effects
+\item Overfitting and optimizing for the idiosyncratic $\errorrv$ terms
+\item In-sample vs. oos metrics of fit (complexity-fit tradeoff curves)
+\item Single training-test splits for oos validation
+\item The test set as a lockbox that can be opened once and only once
+\item Tradeoffs for training-test split sizes
+\end{itemize}
+	
+\textbf{Lecture 5}
+
+\begin{itemize}
+\item $K$-fold cross validation (CV)
+\item Advantage of doing $K$-fold CV
+\item Using three splits to perform model selection
+\end{itemize}
+	
+\end{frame}
+
+\begin{frame}\frametitle{Review...}
+
+\begin{itemize}
+\item Missing data: selection models vs. pattern mixture models
+\item Mechanisms: MCAR, MAR, NMAR
+\item Why listwise deletion is nothing to write home about
+\item Imputation under missingness due to each of the three mechanisms
+\item Creating missingness features (the $\m$'s)
+\item Forward stepwise regression using $t$-test, AICc and $R^2$ in a oos set
+\end{itemize}
+	
+\textbf{Lecture 6}
+
+\begin{itemize}
+\item Binning --- advantages and disadvantages
+\item Better bins through greedy splitting (decision trees)
+\item Leaf assignment in decision trees
+\item Pruning / stopping the growth of decision trees
+\item Advantages and disadvantages of decision trees
+\end{itemize}
+	
+\end{frame}
+
+\begin{frame}\frametitle{Review...}
+
+\begin{itemize}
+\item Model averaging over multiple trees
+\item Bagging (bootstrap and aggregation)
+\item Sampling predictors
+\item The 3 ideas above together = random forests (RF)
+\item OOB estimates as oos estimates
+\item When RF performs well and when it does not
+\end{itemize}
 	
 \end{frame}
 
 \end{document} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-
-
-
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
-
-\begin{frame}\frametitle{}
-
-	
-\end{frame}
