@@ -407,21 +407,39 @@ Remember this from last class? Here's where it's used... But I do \inred{not rec
 
 \begin{frame}\frametitle{A Nice Perk in RF --- OOB Estimation}
 
-So RF doesn't overfit, but how do we assess this? \pause we can use oos validation (plain or with $K$-fold CV), but we don't have to! Why? \pause Each tree was built with a bootstrap sample. This means $\approx$ 2/3 of the $n$ observations were used to build the tree and therefore $\approx$ 1/3 of the $n$ observations were not! Aren't those $\approx$ 1/3 that were not oos? \pause YES! \pause These $\approx$ 1/3 are called \qu{out of bag} (OOB). Over the many $T$ trees, all $n$ observations went out of bag many times giving us many trees to get oos average for each observation. \\~\\ \pause
+So RF doesn't overfit, but how do we assess this? \pause we can use oos validation (plain or with $K$-fold CV), but we don't have to! Why? \pause Each tree was built with a bootstrap sample. This means $\approx$ 2/3 of the $n$ observations were used to build the tree and therefore $\approx$ 1/3 of the $n$ observations were not! Aren't those $\approx$ 1/3 that were not oos? \pause YES! \pause These $\approx$ 1/3 are called \qu{out of bag} (OOB). Over the many $T$ trees, all $n$ observations went out of bag many times giving us many trees to get oos average for each observation. OOB = $K$-fold CV (usually very close... you'll see).\\~\\ \pause
 
 
 \tiny
 (Note: this strategy can be used for any modeling procedure as an alternative to $K$-fold CV and MLR in R gives you this option... I'm still not sure why $K$-fold CV is the default). \\~\\ \pause
-	
+\normalsize
+
+However, RF does overfit in-sample. How? \pause 2/3 of the $T$ trees, it overfits and 1/3 of the $T$ trees is OOB for every observation. Thus it is mostly overfit! Never trust in-sample $R^2$ from an RF! Only look at OOB!
 \end{frame}
 
+
+\begin{frame}\frametitle{Another Nice Perk: $\phat$'s!}
+\pause
+
+In the classification case, there are $T$ trees which each have a $\yhat$ of the class in the leaf. We can now go the reverse direction, aggregate the $\yhat$'s across all $T$ trees and try to estimate the probability of the $k$th class for any observation $\x^*$ 
+
+\beqn
+\phat_k(\x^*) = \oneover{T} \sum_{i=1}^T \indic{\yhat_i(\x^*) = k}.
+\eeqn
+
+\pause This sometimes works and sometimes doesn't... but many data scientists seem to use this procedure in practice. \\~\\ \pause
+
+Note: there is a PhD student right now in this department exploring when this works and how much you can trust it! Bleeding edge of stats...
+
+\end{frame}
 
 \begin{frame}\frametitle{When does RF win / lose?}
 \pause
 \begin{itemize}
 \item Signal is high, noise is low (no one wins when signal is low, noise is high). I've seen the linear model and RF performing about equal in high noise cases. \pause
 \item When there truly are lots of interactions among the predictors and curvilinear relationships with the response. \pause
-\item When there are not \qu{too many} features. $p > n$ is a problem for everyone. RF can find what it believes to be a nice predictor, but it's really fake and only idiosyncratically related to the response.
+\item When there are not \qu{too many} features. $p > n$ is a problem for everyone. RF can find what it believes to be a nice predictor, but it's really fake and only idiosyncratically related to the response. \pause
+\item When you need interpretation, RF cannot give you what you want! Note: many people working on this... it was actually part of my thesis! See package \texttt{ICEBox} in R.
 \end{itemize}
 
 Demo time...
