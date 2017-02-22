@@ -54,7 +54,18 @@ You may collaborate, but hand in your own copy with your own wording. See the \h
 
 \easysubproblem{In the context of linear or logistic regression, if you want to prove that a predictor has a linear effect on the response (controlling for other variables), what are the null and alternative hypotheses?}\spc{1}
 
+\beqn
+&& H_0: \beta_j = 0 \\
+&& H_a: \beta_j \neq 0 \\
+\eeqn
+
 \intermediatesubproblem{In the context of linear or logistic regression, if you want to prove that a predictor does \emph{not} have a linear effect on the response (controlling for other variables), what are the null and alternative hypotheses?}\spc{1}
+\beqn
+&& H_0: \beta_j \neq 0 \\
+&& H_a: \beta_j = 0 \\
+\eeqn
+
+The null and alternative are \qu{flipped} relative to (a).
 
 \easysubproblem{You collect four data points
 
@@ -73,7 +84,19 @@ Test the theory in (a)
 
 }~\spc{3}
 
+Assume $\alpha = 5\%$ for testing purposes. Note: all code can be found in the file \texttt{sol.R} in this directory. Output is equivalent in JMP. \texttt{R} gives us:
+
+\begin{verbatim}
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept)   2.2698     1.0062   2.256    0.153
+x            -0.3646     0.5838  -0.624    0.596
+\end{verbatim}
+
+Since the $p$-value is 0.596 $\nless$ 0.05 this means we fail to reject $H_0$.
+
 \intermediatesubproblem{Test the theory in (b). Use $\delta = 0.5$ as a margin of practical equivalence}\spc{8}
+
+Assume $\alpha = 5\%$ for testing purposes. We use the same output as above. We note that a 95\% CI for $\beta$ is $\bracks{-.3646 \pm 2 \times 0.5838} = \bracks{-1.532, 0.803}$. Since this is not a proper subset of (i.e. within) $\bracks{-\delta, +\delta} = \bracks{-0.5,0.5}$, we fail to reject $H_0$.
 
 \hardsubproblem{How can you get both the answer to (c) and the answer to (d) at the same time? Discuss.}\spc{5}
 
