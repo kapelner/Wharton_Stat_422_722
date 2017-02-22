@@ -1,0 +1,553 @@
+\documentclass[12pt]{article}
+
+\include{preamble}
+\newcommand{\errorrv}{\mathcal{E}}
+
+\newtoggle{professormode}
+%\toggletrue{professormode} %STUDENTS: DELETE or COMMENT this line
+
+
+
+\title{STAT 422/722 Spring 2016 Homework \#2 \\ Limited Solutions}
+
+\author{Professor Adam Kapelner} %STUDENTS: write your name and section here e.g. "\author{John Doe, Section A}"
+
+\iftoggle{professormode}{
+\date{\inblue{\emph{Optionally}} Due \textit{4th floor JMHH} Thursday, February 15 5PM\\ \vspace{0.5cm} \footnotesize (this document last updated \today ~at \currenttime)}
+}
+
+\renewcommand{\abstractname}{Instructions and Philosophy}
+
+
+
+
+\begin{document}
+\maketitle
+
+\iftoggle{professormode}{
+\begin{abstract}
+
+%Reading is still \textit{required}. For this homework set, read ...
+
+The problems below are color coded: \ingreen{green} problems are considered \textit{easy} and marked \qu{[easy]}; \inorange{yellow} problems are considered \textit{intermediate} and marked \qu{[harder]}, \inred{red} problems are considered \textit{difficult} and marked \qu{[difficult]} and \inpurple{purple} problems are extra credit. The  \ingreen{green} problems are intended to be ``giveaways'' if you went to class. Do as much as you can of the others; I expect you to at least attempt the \inpurple{purple} problems.
+
+This homework is worth 100 points but the point distribution will not be determined until after the due date. See syllabus for the policy on late homework.
+
+Up to 10 points are given as a bonus if the homework is typed using \LaTeX. Links to instaling \LaTeX~and the programs for compiling \LaTeX~is written about in the syllabus. You are encouraged to use \url{overleaf.com}. If you are handing in homework this way, (1) upload \texttt{hwxx.tex} and \texttt{preamble.tex} from the correct \href{https://github.com/kapelner/Wharton_Stat_422_722/tree/master/assignments}{github folder}, (2) read the comments in the code as there is \textit{one line to comment out}, (3) you should replace my name with your name and (4) your section. If you are asked to make drawings, you can take a picture of your handwritten drawing and insert them as figures or leave space using the \qu{$\backslash$vspace} command and draw them in after printing or attach them stapled.
+
+The document is available with spaces for you to write your answers. If not using \LaTeX, \inred{you must print this document} and write in your answers. You must print after downloading and opening in Adobe reader (not from Google Chrome viewer). \inred{I do not accept homeworks not on the correctly paginated printout of this document.} Write your name and section below (A or B).
+
+You may collaborate, but hand in your own copy with your own wording. See the \href{https://raw.githubusercontent.com/kapelner/Wharton_Stat_422_722/master/syllabus/syllabus.pdf}{syllabus} for more information.
+
+\end{abstract}
+
+\thispagestyle{empty}
+\vspace{1cm}
+\noindent NAME: \line(1,0){250} ~~COURSE (422 or 722): \line(1,0){30} \\~\\ SECTION (\qu{A} for Tuesday or \qu{B} for Wednesday): \line(1,0){30}
+\pagebreak\newpage
+}
+
+
+\problem{We will be investigating equivalence testing.}
+
+\begin{enumerate}
+
+\easysubproblem{In the context of linear or logistic regression, if you want to prove that a predictor has a linear effect on the response (controlling for other variables), what are the null and alternative hypotheses?}\spc{1}
+
+\intermediatesubproblem{In the context of linear or logistic regression, if you want to prove that a predictor does \emph{not} have a linear effect on the response (controlling for other variables), what are the null and alternative hypotheses?}\spc{1}
+
+\easysubproblem{You collect four data points
+
+\begin{table}[htp]
+\centering
+\begin{tabular}{c|c}
+predictor & response \\ \hline
+2.47 & 0.50 \\ 
+0.57 & 1.95 \\ 
+0.84 & 1.91 \\ 
+2.18 & 2.51 \\\hline
+\end{tabular}
+\end{table}
+
+Test the theory in (a)
+
+}~\spc{3}
+
+\intermediatesubproblem{Test the theory in (b). Use $\delta = 0.5$ as a margin of practical equivalence}\spc{8}
+
+\hardsubproblem{How can you get both the answer to (c) and the answer to (d) at the same time? Discuss.}\spc{5}
+
+\end{enumerate}
+
+\problem{We will be investigating dredging and multiple testing corrections. I have provided a data file for you called \qu{xyrand.csv} located \href{https://raw.githubusercontent.com/kapelner/Wharton_Stat_422_722/master/assignments/hw02/xyrand.csv}{here} (right click and downlod from the browser). This file is fully random data from a standard normal and thus there is no systematic connection between the column $y$ and any of the $x_j$ columns.}
+
+\begin{enumerate}
+
+\easysubproblem{Run a regression of $y$ on the $x_j$'s and report $R^2$. Why is this $R^2$ not \emph{exactly} zero?}\spc{4}
+
+\easysubproblem{Which variables were significant and what are their significance levels? Why should any variables be significant in the first place if they're all just $\iid$ random realizations?}\spc{4}
+
+\intermediatesubproblem{Calculate the probability you see this many significant variables \emph{or more} in a 50-predictor linear regression. Is your number of significant variables \qu{expected}?}\spc{4}
+
+\easysubproblem{Calculate both a Sidak and a Bonferroni corrected individual $\alpha$ that preserves 5\% familywise error.}\spc{4}
+
+\easysubproblem{Using the Sidak and/or the Bonferroni correction, are there any significant variables anymore? Yes/no}\spc{0}
+
+\intermediatesubproblem{Explain precisely what I would need to simulated in this same setup with one response and 50 predictors randomly realized to expect one significant variable if the familywise correction is employed.}\spc{8}
+
+\intermediatesubproblem{Report the overall $F$ value and it's corresponding significance level. Explain how it is possible that there exist $t$ tests which are significant for some linear predictors but the $F$ test is not.}\spc{4}
+
+\end{enumerate}
+
+\problem{These are some conceptual questions concerning hypothesis testing, Type I errors, Type II errors and power.}
+
+\begin{enumerate}
+
+
+\easysubproblem{Given some predetermined level of $\alpha$ we have two ways of setting up hypothesis tests:
+
+\beqn
+&& H_0: \text{UFOs do not exist} \\
+&& H_a: \text{UFOs do exist}
+\eeqn
+
+and the inverse:
+
+\beqn
+&& H_0: \text{UFOs do exist} \\
+&& H_a: \text{UFOs do not exist}
+\eeqn
+
+Which set of hypotheses should be employed and \emph{precisely} why?
+}\spc{4}
+
+
+\intermediatesubproblem{You cannot convince your friend. In the hypothesis testing framework there are two separate reasons why he could remain not convinced. What are they?} \spc{3}
+
+
+\hardsubproblem{The Shapiro-Wilk Test of Normality is used to assess normality of a given sample of data. It is a goodness-of-fit test where 
+
+\beqn
+&& H_0:\text{ the data generating process is normal} \\
+&& H_a: \text{ the data generating process is not normal.}
+\eeqn
+
+Usually, you want to prove normality (e.g. the case of testing the residuals from a linear regression). Why does this test reward small sample sizes?}~\spc{3}
+
+
+\end{enumerate}
+
+
+\problem{These questions will be about extrapolation and generalization.}
+
+\begin{enumerate}
+
+\intermediatesubproblem{Is model extrapolation and model generalizablity the same concept (lecture 3, slide 6)? Discuss.}\spc{3}
+
+
+\hardsubproblem{Provide an example of a model that you use regularly that does not generalize to the observations you use to predict with it.}\spc{3}
+
+\intermediatesubproblem{Run lines 5--27 of the \href{https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec03/lec03.R}{lecture 3 R demos}. Which of the three models would be the worst \qu{extrapolator} and why?}\spc{3}
+
+\hardsubproblem{You are provided a new $\x^*$ with $p$ features in which are to guess $y$. How would assess extrapolation? Explain.}\spc{5}
+
+\end{enumerate}
+
+\problem{These questions will be about optimal design.}
+
+\begin{enumerate}
+
+
+\easysubproblem{In the case of a simple linear regression with $n=20$ points where $x$ ranges from 6 to 17, what would be the optimal design?}\spc{3}
+
+\intermediatesubproblem{Show that for fixed $n$ under least squares regression that the optimal design is half the points on the minimum and half the points on the maximum.}\spc{8}
+
+\easysubproblem{Take the case of $n=20$ and three continuous predictors ranging in $\zeroonecl$. Use JMP to create an optimal design for the model with all factorial interactions and all polynomials up until degree 3. Take the optimal design right click and make data table. Then sort the data table first by $x_1$ then by $x_2$ and by $x_3$. Are they all about the same? Yes/no.}\spc{0}
+
+\hardsubproblem{The optimal design in the previous problem is what you'd probably like to do for non-parametric linear model with lots of interactions and curves. What is the takehome message in this case?}\spc{4}
+
+\extracreditsubproblem{Your goals are prediction and you have the choice bertween D-optimality and I-optimality. Which is likely better and why?}\spc{4}
+
+\end{enumerate}
+
+
+\problem{These questions will be about logistic regression using the Telecom Churn dataset that can be downloaded \href{https://raw.githubusercontent.com/kapelner/Wharton_Stat_422_722/master/lectures/lec03/telecom_churn.csv}{here}.}
+
+\begin{enumerate}
+
+
+\easysubproblem{Give an expression for the conditional mean in a logistic regression problem with $p$ features using the standard logistic regression assumptions.}\spc{3}
+
+\easysubproblem{Do the multivariable logistic regression in class with target response churn (remember to delete those 6 variables which are fully collinear). Provide an interpretation on the monthly charges coefficient.}\spc{3}
+
+\extracreditsubproblem{If we used the \texttt{cloglog} link function and got the same coefficient, what would be the interpretation?}\spc{4}
+
+
+\easysubproblem{Predict the mean probability of churn for a senior citzen who has been with the company for 36 months and then predict whether or not this person will churn.}\spc{3}
+
+
+\extracreditsubproblem{In my regression output, the $\chi^2$ value for \texttt{senior citizen} is 14.37. Calculate the standard error from this.}\spc{7}
+
+\intermediatesubproblem{Test whether or not removing \emph{both} gender and partner makes a difference in terms of linear predictive power versus the full model from (b). You will need a table of critical values of the $\chi^2$ distribution at $\alpha = 5\%$. See below.
+
+\begin{table}[htp]
+\centering
+\begin{tabular}{c|c}
+
+$p$ & $\chisq{p}$ critical value \\ 
+  \hline
+1 & 3.84 \\ 
+2 & 5.99 \\ 
+3 & 7.81 \\ 
+4 & 9.49 \\ 
+5 & 11.07 \\ 
+6 & 12.59 \\ 
+7 & 14.07 \\ 
+8 & 15.51 \\ 
+9 & 16.92 \\ 
+10 & 18.31 \\ 
+11 & 19.68 \\ 
+12 & 21.03 \\ 
+13 & 22.36 \\ 
+14 & 23.68 \\ 
+15 & 25.00 \\ 
+16 & 26.30 \\ 
+17 & 27.59 \\ 
+18 & 28.87 \\ 
+ 19 & 30.14 \\ 
+ 20 & 31.41
+\end{tabular}
+\end{table}
+
+}~\spc{3}
+
+
+
+
+\easysubproblem{Use the model from (b) and use JMP to compute the AUC and misclassification error.}\spc{5}
+
+\hardsubproblem{Attach a graph of the false negative proportion versus the false positive proportion. Is this more useful than an ROC curve for the case of churn?}\spc{0}
+
+\extracreditsubproblem{Create a \href{https://en.wikipedia.org/wiki/Detection_error_tradeoff}{detection error tradeoff plot} for this dataset (no need to use normal deviates for $x$ and $y$ axes).}\spc{0}
+
+
+\intermediatesubproblem{Imagine the cost ratio is 7.5:1 for the more costly mistake. What is the $p_0$ of the optimal model?}\spc{0}
+
+\easysubproblem{Why is this $p_0$ less than the naive value of 50\%?}\spc{3}
+
+\intermediatesubproblem{Create a flowchart illustration of the optimal model in (j) similar to lecture 3, slide 35.}\spc{12}
+
+
+\end{enumerate}
+
+
+\problem{These questions will be about survival regression using the NetLixx dataset that can be downloaded \href{https://raw.githubusercontent.com/kapelner/Wharton_Stat_422_722/master/assignments/hw02/NetLixxCox.csv}{here}. The response is the \qu{time} variable and it's measured in days (ignore the \qu{start} and \qu{followtime} variables. The churn variable is 1 if there is churn.}
+
+\begin{enumerate}
+
+
+\easysubproblem{As we saw in class, the exponential model is not a great real-world model. Nevertheless, assume the model assumptions and run a standard exponetial model with all three predictors. Report overall model fit, each variable's estimate and their significance levels.}\spc{3}
+
+\easysubproblem{Should dredging be considered a problem here when we're looking at all these $H_0: \beta_j = 0$ tests? Yes/no and why.}\spc{3}
+
+
+\easysubproblem{Interpret the value of the fitted coefficient for coupon.}\spc{3}
+
+\easysubproblem{Predict the mean survival time for a new female of age 30 without a coupon.}\spc{1}
+
+\extracreditsubproblem{Calculate a 95\% CI for mean survival time for the new person in (d).}\spc{4}
+
+
+\extracreditsubproblem{Calculate the in-sample $R^2$ for the non-censored rows. How does the model do?}\spc{4}
+
+\extracreditsubproblem{Fit a Weibull model to the same data with the same response, censoring and predictors. Does it fit better? Why / why not?}\spc{2}
+
+
+%\intermediatesubproblem{Is gender \emph{truly} related to mean survival time?}\spc{3}
+
+
+\end{enumerate}
+
+
+\problem{These questions will be about our pivot from parametric linear models to non-parametric non-linear models. To illustrate, we will use the white wine dataset that can be downloaded  \href{https://raw.githubusercontent.com/kapelner/Wharton_Stat_422_722/master/assignments/hw02/white_wine_models.jmp}{here}.}
+
+\begin{enumerate}
+
+
+\intermediatesubproblem{Let's do an exploratory data analysis. Do Fit y by x in JMP where y is quality and x are all variables. Then, fit polynomials of degree 2 to each of them. Which ones have significant squared terms at $\alpha = 5\%$? Make sure you do a multiple testing correction. }\spc{1}
+
+
+\intermediatesubproblem{Let's now look at all first-order interactions. These are interactions that are between two variables. Use the fit model, highlight all variables and do macros... factorial to degree (the default degree in JMP is two indicating first-order interactions). Which interactions are significant at $\alpha = 5\%$? Make sure you do a multiple testing correction.}\spc{3}
+
+\easysubproblem{Interpret the coefficient on \texttt{density} $\times$ \texttt{alcohol}.}\spc{3}
+
+\easysubproblem{Based on your answers to (a) and (b) would it be fair to say that the true model is non-linear? Yes/no.}\spc{0}
+
+\easysubproblem{Based on your answers to (a) and (b) would it be fair to say that you get better predictive power if you add in some quadratic terms and interactions? Yes/no.}\spc{0}
+
+\easysubproblem{If you add some quadratic terms and interactions and interactions, what are the three things you are giving up in your model?}\spc{2}
+
+\easysubproblem{The vanilla multivariable regression gives $R^2 = 28\%$. Now fit a model with \textit{all} interactions. Use \qu{full factorial} in the options. What is $R^2$ in this new absurd model? What are the degrees of freedom?}\spc{1}
+
+\extracreditsubproblem{What are the significant variables now? You may have to use a t-calculator.}\spc{6}
+
+\intermediatesubproblem{Prove that you overfitted.}\spc{3}
+
+\end{enumerate}
+
+
+\problem{We will now explore the concept of overfitting.}
+
+\begin{enumerate}
+
+\easysubproblem{What are you fitting when you \qu{overfit} and why is that not a good idea?}\spc{2}
+
+\hardsubproblem{What are you underfitting when you \qu{underfit} and for what purpose is this usually done?}\spc{3}
+
+\intermediatesubproblem{Explain why running a linear regression with $n=p + 1$ (where the +1 is for $\beta_0$, the intercept) guarantees you overfit always. Note: we are assuming each of the $p$ features are not perfectly collinear with any of the others.}\spc{6}
+
+\hardsubproblem{The illustration in lecture 4, slide 32 shows the final model $\hat{f}$ being built from the entire dataset. Why would you do this?}\spc{5}
+
+\easysubproblem{Explain why using the test set for more than one model generalization error estimate causes you to overfit.}\spc{3}
+
+\hardsubproblem{Describe a scenario where you would want to use out-of-sample validation with a test set consisting of 90\% of the entire dataframe.}\spc{3}
+\end{enumerate}
+
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\easysubproblem{Considering the etymological definitions, do we \qu{predict} or do we \qu{forecast}? Explain your answer.}\spc{3}
+
+\easysubproblem{Explain what each row in a dataframe represents. Give every synonym for the rows in a dataframe. Write a sentence as to why each of the particular vocabulary words were employed here.}\spc{10}
+
+\easysubproblem{Explain what each column in a dataframe represents. Give every synonym for the column. Write a sentence as to why each of the particular vocabulary words were employed here. In the models in this class, there will be \emph{one} special column. Explain what its called and give definitions for all its synonyms.}\spc{10}
+
+\easysubproblem{Explain why theories are mathematical (generally speaking).}\spc{6}
+
+\intermediatesubproblem{Below is an excerpt from Box and Draper (1987, page 424) and contains the famous line \qu{all models are wrong, but some are useful}. Explain what this means. 
+
+\iftoggle{professormode}{
+\begin{figure}[htp]
+\centering
+\includegraphics[width=6in]{box_draper_p424.jpg}
+\end{figure}}}~\spc{6}
+
+
+\intermediatesubproblem{What did we call $\delta(\xi)$ in class (ibid, Equation 13.1.7)?}\spc{1}
+
+\extracreditsubproblem{If the true model were to be found and estimated from the a finite sample dataframe, would it be better for inference than a simple model? Yes / no explain. Would it be better for prediction? Yes / no explain. }\spc{7}
+
+\intermediatesubproblem{In many sciences there is a belief in the so-called \qu{tapering effect} which means that there are large effects, then small effects, then really small effects. How can this be used to explain the success of linear regression in predicting responses with likely myriad inputs (a la slide 32, Lecture 2)?}\spc{5}
+
+
+\extracreditsubproblem{Why will \qu{full reality always remain elusive in the biological sciences}? (Burnham and Anderson, 1998) What does that say about the softer sciences such as economics, psychology, sociology, etc?}\spc{6}
+
+\intermediatesubproblem{Explain why non-parametric models can give you lower misspecification error but possibly higher model estimation error.}\spc{6}
+
+\intermediatesubproblem{I got a phone call from a startup founder who described the idea for a company that predicts startup success. The founder told me their model was that they assign 5 points to a startup for having two or more C-level founders, 10 points for closing an angel round, 5 points for the first employee, etc. What kind of model is this? Why would you trust / not trust its predictions?}\spc{7}
+
+
+\easysubproblem{Look at slide 32 in lecture 2 but not slide 33. Write down all observations you have about this picture.}\spc{6}
+
+
+\extracreditsubproblem{If you find a confounding / lurking variable $Z$, does that mean $Z$ is causal? If yes, explain; if not, provide a counterexample.}\spc{3}
+
+\intermediatesubproblem{Given a model with one response and 10 variables where the 10 variables are realized simultaneously but the response is realized afterwards, how many models can be posited? Ignore the fact that each functional relationship can be different. See slide 35 lecture 2.}\spc{3}
+
+\easysubproblem{Why advantage does a \qu{real} correlation have over a \emph{spurious} correlation?}\spc{3}
+
+\intermediatesubproblem{My friend has six children, all born on Wednesday. Is this \qu{significant}? Discuss.}\spc{5}
+
+\end{enumerate}
+
+\problem{THIS PROBLEM IS OPTIONAL. Here we will be analyzing the theory that \qu{skiing is dangerous}. }
+
+
+\begin{enumerate}
+
+
+\easysubproblem{Define the response(s) and the predictors(s) in this model.}\spc{3}
+
+\intermediatesubproblem{Mathematize this model. Explain clearly what you are measuring and how it is measured.}\spc{3}
+
+
+\easysubproblem{If you were to use a data-driven approach, what would the dataframe look like? What are the datatypes of each variable? Will the eventual model be a regression? Classification? Something else?}\spc{3}
+
+\intermediatesubproblem{Explain why a deterministic model for your response variable is absurd.}\spc{3}
+
+\intermediatesubproblem{Create a stochastic (statistical) model for the response. Pay attention to which letters are lowercase/uppercase.}\spc{3}
+
+\intermediatesubproblem{In this model, would the error term $\errorrv$ be large or small? Explain.}\spc{3}
+
+\intermediatesubproblem{If you were given leeway to collect a multidimensional representation of \qu{skiing}  (i.e. a more natural, raw representation), what would you collect?}\spc{3}
+
+\hardsubproblem{Build a causal model (using bubbles and arrows) for the response.}\spc{9}
+
+
+\hardsubproblem{Does skiing \emph{cause} the response? If so, is it a major contributor? Explain using your diagram from (h).}\spc{7}
+
+\end{enumerate}
+
+\problem{We will discuss confounding here. The prevailing data on wage inequality says that women are paid 90 cents on the dollar that men earn for comparable work.
+
+
+\iftoggle{professormode}{
+\begin{figure}[htp]
+\centering
+\includegraphics[width=3in]{celebrity_heights.jpg}
+\end{figure}}
+}
+
+\begin{enumerate}
+
+\easysubproblem{If you were to do a regression of $y:$ earnings on $x_1:$ employee height, what would the results look like and why? Report the p-values on each $\betahat_j$'s and the omnibus $F$ statistic.}\spc{5}
+
+\easysubproblem{Build a causal model for $y$: earnings and $x_1$: employee height and $x_2:$ employee gender. No need to include unknown variables.}\spc{8}
+
+\easysubproblem{If you were to do a regression of $y:$ earnings on $x_1:$ employee height and $x_2$ gender, what would the results look like? Report the p-values on each $\betahat_j$'s and the omnibus $F$ statistic. Also say if the $\betahat_j$ values changed and which direction vs. the regression in part (a).}\spc{8}
+
+\end{enumerate}
+
+\problem{A few questions about likelihood. Imagine a simple model where you flip the same coin three times. You are modeling the response \qu{flipping a head} with a statistical model and make a parametric assumption that the event is a Bernoulli r.v.
+
+
+\iftoggle{professormode}{
+\begin{figure}[htp]
+\centering
+\includegraphics[width=3in]{three_coins.jpg}
+\end{figure}}
+}
+
+\begin{enumerate}
+
+\easysubproblem{What does $\theta$ represent in this model?}\spc{1}
+
+\intermediatesubproblem{Find the joint probability density / mass function for these three events.}\\
+
+$\prob{Y_1, Y_2, Y_3} = $\spc{2}
+
+\easysubproblem{Find the likelihood function.}\spc{1}
+
+\intermediatesubproblem{Find the maximum likelihood estimator for $\theta$.}\spc{3}
+
+\easysubproblem{If your data was heads, heads, tails (in the image above). What is the maximum likelihood estimate? This will allow you to locate the best possible model given your parametric assumptions.}\spc{1}
+
+\extracreditsubproblem{If your maximum likelihood estimate in (e) was indeed the value of $\theta$, what data would be most probable? Note: this is the inverse question of likelihood and it is meant to trick you.}\spc{12}
+
+\end{enumerate}
+
+\problem{Here we will be considering different types of AI. Imagine you have the following problem: you are tasked with finding the centers of cancer cells in microscopic images. Images are composed of pixels which encode a color. Typical coloring schemes for computer graphics are \qu{true color} and use about 16.8 milion different colors per pixel. Here's a typical image:
+
+\begin{figure}[htp]
+\centering
+\includegraphics[width=3in]{cancer.png}
+\end{figure}
+
+All cells are stained using immunohistochemistry using a compound which appears blue. But cancer cells in this type of immunohistochemical staining appear to have a red membrane due to a surface marker. (In the example above a green dot is placed in the center of every cancer cell to indicate to you what you are looking for; this dot is \emph{not part of the original image}). Assume we are using a data-driven approach to solve this problem.
+}
+
+\begin{enumerate}
+
+\easysubproblem{What type of AI would work the best here? No need to discuss.}\spc{1}
+
+\easysubproblem{What is the raw data representation?}\spc{2}
+
+\intermediatesubproblem{What is the unit of analysis?}\spc{3}
+
+\intermediatesubproblem{Why is it easy for you to find the cell centers but difficult for a computer?}\spc{3}
+
+\hardsubproblem{Consider the situation where you employ classic machine learning. What features would you collect on the units of analysis? Enumerate and describe these features.}\spc{8}
+
+\hardsubproblem{How would you sample to build a dataframe (collect historical data)? Explain the procedure and the goals of this step. This is known as \qu{supervised machine learning}.}\spc{7}
+
+\intermediatesubproblem{Once you built the dataframe, would a human be able to use that dataframe to create a predictive model? Yes / no and discuss.}\spc{3}
+
+\easysubproblem{Considering you selected features in (e) and sampled in (f), would this entire enterprise be considered \qu{good machine learning}? Explain.}\spc{3}
+
+
+\easysubproblem{Now you have the dataframe. Given the problem context, which worldview would you select --- the parametric or the nonparametric and why?}\spc{3}
+
+\hardsubproblem{Assume you went the parametric model route and you built a linear model. Explain where it would be wrong. Be explicit by referencing your predictors in (e).}\spc{10}
+
+
+\end{enumerate}
+
+\problem{These exercises will dicsuss the linear model and linear regressions.}
+
+
+\begin{enumerate}
+
+\easysubproblem{Think of three loss functions $L(e_1, \ldots, e_n)$. Do not list any that we did in class.}\spc{3}
+
+\intermediatesubproblem{You are building a data-driven model and choose to use the linear parametric assumption but not necessarily the other three OLS assumptions. Describe a situation where fitting this model using $L = SSE$ is \emph{not} a good idea because it does not accuractely reflect the loss function in your situation at hand.}\spc{3}
+
+\extracreditsubproblem{Prove that the MLE of the $\beta$'s is the same solution as minimizing SSE.}\spc{10}
+
+
+\extracreditsubproblem{Assume that you have proven the above and plugged in those estimates to the likelihood expression. Now $\sum_{i=1}^n \errorrv_i^2 = \sum_{i=1}^n e_i^2 = SSE$. Prove that $\hat{\sigsq}_{MLE} = MSE$.}\spc{8}
+
+
+
+\end{enumerate}
+
+\problem{We will now analyze the baseball data (\texttt{baseball.csv}). You can use any software package you wish to answer these questions.}
+
+\begin{enumerate}
+
+\easysubproblem{Fit a linear model with reponse variable $y:$ salary in thousands. Use all available predictors. Provide a valid interpretation on $\betahat_j$ for the feature \qu{number of RBI's}.}\spc{3}
+
+\easysubproblem{Is this interpretation reasonable given what you know about number of RBI's and how it is related to other predictors? You may need to ask someone who knows a bit about baseball.}\spc{6}
+
+\easysubproblem{What a causal additive model for number of RBI's make sense? Yes / no.}\spc{1}
+
+\easysubproblem{Would you be able to make a randomized experiment to find the additive causal effect of number of RBI's? Yes / no.}\spc{1}
+
+\easysubproblem{Some of these variables may be significant because we dredged. Why is this likely \emph{not} the case?}\spc{3}
+
+\extracreditsubproblem{Use a likelihood ratio test to test the effect of number of RBI's and Number of Walks.}\spc{10}
+
+
+
+\end{enumerate}
+
+
+
+
+\end{document}
