@@ -11,6 +11,7 @@ Audio for lectures should be on canvas except for the first lecture (links below
 * Lecture 3 [(slides)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec03/slides.pdf)
 * Lecture 4 [(slides)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec04/slides4.pdf)
 * Lecture 5 [(slides)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec05/slides5.pdf)
+* Lecture 6 [(slides)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec06/slides6.pdf)
 
 
 ## Assignments
@@ -21,7 +22,7 @@ Audio for lectures should be on canvas except for the first lecture (links below
 (due 2/15/17) Solutions [(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw02/solutions/hw02.pdf?raw=true) [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw02/solutions/hw02.pdf)
 * Optional Homework 3 [(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw03/hw03.pdf?raw=true) [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw03/hw03.pdf) (due 2/27/17) Solutions [(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw03/solutions/hw03.pdf?raw=true) [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/hw03/solutions/hw03.pdf)
 * Project [(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/project/project.pdf?raw=true) [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/project/project.pdf) (writeup due 3/3/17 NOON in the Statistics office)
-* Forecasting Competition for observations found [here](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/project/stat_422_722_project_prediction_set.jmp?raw=true) (see project, csv file due 2/26/17 5PM on canvas and your historical dataframe as csv or jmp) and an example historical dataset is found [here](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/project/stat_422_722_project_example_set_of_historical_data.jmp?raw=true)
+* Forecasting Competition for observations found [here](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/project/stat_422_722_project_prediction_set.jmp?raw=true) (see project, csv file due 2/26/17 5PM on canvas and your historical dataframe as csv or jmp) and an example historical dataset is found [here](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/assignments/project/stat_422_722_project_example_set_of_historical_data.jmp?raw=true).
 
 ## Examination
 
