@@ -6,12 +6,12 @@ This is the course homepage for STAT 422/722 for the Spring semester 2017 at The
 
 Audio for lectures should be on canvas except for the first lecture (links below).
 
-* Lecture 1 [(audio sec A)](https://clyp.it/ty1cebu4) [(audio sec B)](https://clyp.it/d3tmzv0b) [(slides)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec01/slides.pdf)
-* Lecture 2 [(slides)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec02/slides.pdf)
-* Lecture 3 [(slides)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec03/slides.pdf)
-* Lecture 4 [(slides)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec04/slides4.pdf)
-* Lecture 5 [(slides)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec05/slides5.pdf)
-* Lecture 6 [(slides)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec06/slides6.pdf)
+* Lecture 1 [(audio sec A)](https://clyp.it/ty1cebu4) [(audio sec B)](https://clyp.it/d3tmzv0b) slides [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec01/slides.pdf) [(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec01/slides.pdf?raw=true)
+* Lecture 2 slides [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec02/slides.pdf) [(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec02/slides.pdf?raw=true)
+* Lecture 3 slides [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec03/slides.pdf) [(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec03/slides.pdf?raw=true)
+* Lecture 4 slides [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec04/slides4.pdf) [(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec04/slides4.pdf?raw=true)
+* Lecture 5 slides [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec05/slides5.pdf) [(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec05/slides5.pdf?raw=true)
+* Lecture 6 slides [(view)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec06/slides6.pdf) [(download)](https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec06/slides6.pdf?raw=true)
 
 
 ## Assignments
