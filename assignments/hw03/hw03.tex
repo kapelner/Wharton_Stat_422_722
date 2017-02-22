@@ -143,13 +143,77 @@ You may collaborate, but hand in your own copy with your own wording. See the \h
 
 \easysubproblem{When (and why) does binning break down?}\spc{3}
 
-\hardsubproblem{What would be the problem with allowing for all bins (if the computer can crunch the numbers) in a forward stepwise procedure?}\spc{4}
+\hardsubproblem{What would be the problem with allowing for all bins and all interactions (if of course the computer can crunch the numbers) in a forward stepwise procedure?}\spc{4}
 
+
+\hardsubproblem{Given the data below fit a tree that minimizes SSE. No stopping rule. Do it by hand for the practice.
+
+\begin{table}[htp]
+\centering
+\begin{tabular}{c|c}
+
+$x$ & $y$ \\ 
+  \hline
+1 & 6.12 \\ 
+2 & 6.02 \\ 
+3 & 6.25 \\ 
+4 & 5.95 \\
+5 & 6.09 \\
+6 & -21.34 \\
+7 & -20.85 \\
+8 & -21.03 \\
+9 &  -3.87 \\
+10 & 9.67 \\
+11 & 9.63 \\
+12 & 9.01 \\
+\end{tabular}
+\end{table}}~\spc{3}
+
+\easysubproblem{Why do you suppose the model in the previous question is overfit?}\spc{3}
+
+\easysubproblem{What is its depth? How many leaves? How many inner nodes?}\spc{3}
+
+\easysubproblem{Fit the same data using the stopping rule of minimum nodesize of 5.}\spc{3}
+
+\easysubproblem{How would you determine overfittedness to these two trees?}\spc{3}
+
+\easysubproblem{Fit the best tree you can find for the white wine data with 10 total nodes using a stepwise procedure. Which variables were split on?}\spc{3}
+
+\end{enumerate}
+
+
+\problem{We will be investigating Random Forests (RF).}
+
+\begin{enumerate}
+
+\hardsubproblem{Explain why bagging reduces error.}\spc{3}
+
+\hardsubproblem{Explain why sampling prediction reduces error.}\spc{3}
+
+
+\easysubproblem{Fit an RF to the white wine data. Fit a linear model to the white wine data. Why did the RF do better?}\spc{3}
+
+\hardsubproblem{Report RF's oos $RMSE$ - in-sample $RMSE$. Why is this a large number?}\spc{3}
+
+
+\easysubproblem{Why does RF's in-sample $R^2$ lie?}\spc{3}
+
+\extracreditsubproblem{How would you show the effect of alcohol on quality from the RF model?}\spc{3}
+
+\easysubproblem{Fit an RF to the baseball data. Fit a linear model to the baseball data. Why didn't the RF do better?}\spc{3}
+
+\hardsubproblem{Fit an RF to the churn dataset (the fixed dataset in the Lec 6 folder). Build an ROC curve and eyeball the AUC.}\spc{3}
+
+\hardsubproblem{Why are more trees in the RF better?}\spc{3}
+
+\intermediatesubproblem{Why would the RF do worse if you use all variables in each tree?}\spc{3}
+
+\intermediatesubproblem{Why would the RF do worse if you use only one variable in each tree?}\spc{3}
 
 \end{enumerate}
 
 \end{document}
-
+%-----------------------------------------------------------------------------------
 
 
 \problem{We will be investigating equivalence testing.}
