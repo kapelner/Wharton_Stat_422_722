@@ -108,17 +108,37 @@ Assume $\alpha = 5\%$ for testing purposes. We use the same output as above. We 
 
 \easysubproblem{Run a regression of $y$ on the $x_j$'s and report $R^2$. Why is this $R^2$ not \emph{exactly} zero?}\spc{4}
 
+$R^2 = 29.2\%$ and it's not zero due to chance capitalization of $x$'s being randomly related to $y$.
+
 \easysubproblem{Which variables were significant and what are their significance levels? Why should any variables be significant in the first place if they're all just $\iid$ random realizations?}\spc{4}
+
+$x_{26}$ with a $p$-value of .0499, $x_{27}$ with a $p$-value of .0491, $x_{33}$ with a $p$-value of .0448 and $x_{38}$ with a $p$-value of .0320. These four variables should not be significant in the first place since there is no real correlation. They are only \qu{significant} due to chance.
 
 \intermediatesubproblem{Calculate the probability you see this many significant variables \emph{or more} in a 50-predictor linear regression. Is your number of significant variables \qu{expected}?}\spc{4}
 
+This is a binomial exercise. You have a probability of falsely rejecting $H_0$ if $H_0$ is true (our case of no linear correlation) of $\alpha = 5\%$. Thus we have:
+
+\beqn
+\prob{N \geq 4} = \sum_{i=4}^{50} \tothepow{5\%}{i} \tothepow{95\%}{50-i} = 1 - F(3) \approx 24.0\%
+\eeqn
+
+This type of calculation will not be on the exam.
+
 \easysubproblem{Calculate both a Sidak and a Bonferroni corrected individual $\alpha$ that preserves 5\% familywise error.}\spc{4}
+
+Sidak is not covered on the exam. The Bonferroni $\alpha$ is merely 5\%/50 = 0.01\%.
 
 \easysubproblem{Using the Sidak and/or the Bonferroni correction, are there any significant variables anymore? Yes/no}\spc{0}
 
+No.
+
 \intermediatesubproblem{Explain precisely what I would need to simulated in this same setup with one response and 50 predictors randomly realized to expect one significant variable if the familywise correction is employed.}\spc{8}
 
+The Bonferroni now controls familywise error rate. The \qu{family} here is the set of the 50 $t$ tests. Thus it guarantees that getting one or more Type I errors in that family is at most $\alpha = 5\%$. However, if I run the entire family 20 times. That's 20 simulations of 50 $t$-tests each, I will expect one Type I error since $20 \times 5\% = 1$, the expectation calculation.
+
 \intermediatesubproblem{Report the overall $F$ value and it's corresponding significance level. Explain how it is possible that there exist $t$ tests which are significant for some linear predictors but the $F$ test is not.}\spc{4}
+
+$F = 1.2285$ which has a significance level of 17.34\% i.e. not significant at $\alpha = 5\%$. The $F$ test is testing overall usefulness of the model, not individual variables. The $F$ test \qu{knows} that regressions with many, many variables will chance capitalize and that degree of explantory power is expected. It only allows models to pass which are above the expected level of chance capitalization --- those are \qu{significant} models.
 
 \end{enumerate}
 
@@ -144,9 +164,18 @@ and the inverse:
 Which set of hypotheses should be employed and \emph{precisely} why?
 }\spc{4}
 
+The first set is employed. $H_a$ is the theory you wish to prove. So you are intellectually honest and assume your theory is \textit{not} correct a priori; this is $H_0$. Then, you let the data speak for itself. If the data convinces you overwhelmingly (where \qu{overwhelmingly} is the level of skepticism defined by your level $\alpha$), then you can accept your theory, but only then! 
+
+Contrast that to the second set. Here, you have begun with the belief that your theory is correct. Your theory will remain correct unless the data convinces you otherwise. This is not an intellectually honest means of reasoning.
 
 \intermediatesubproblem{You cannot convince your friend. In the hypothesis testing framework there are two separate reasons why he could remain not convinced. What are they?} \spc{3}
 
+\begin{enumerate}
+\item[1.] His $\alpha$ is too low i.e. he is too skeptical. No amount of data will convince him; he will never budge from his $H_0$.
+\item[2.] You didn't provide enough data --- you are \qu{underpowered}.
+\end{enumerate}
+
+Parenthetically, these two reasons are not either-or. In practice, it may be a combination of both. When statisticians practice, we set up $\alpha$ before hand and we agreed as a community it should be 5\% or 1\%. Conditional on accepting this community standard, the reason then would be \#2.
 
 \hardsubproblem{The Shapiro-Wilk Test of Normality is used to assess normality of a given sample of data. It is a goodness-of-fit test where 
 
@@ -157,6 +186,7 @@ Which set of hypotheses should be employed and \emph{precisely} why?
 
 Usually, you want to prove normality (e.g. the case of testing the residuals from a linear regression). Why does this test reward small sample sizes?}~\spc{3}
 
+Reference (a). You've begun by believing what you wanted to prove! So not having data is a good thing --- less chance you challenge your beliefs!
 
 \end{enumerate}
 
@@ -167,12 +197,19 @@ Usually, you want to prove normality (e.g. the case of testing the residuals fro
 
 \intermediatesubproblem{Is model extrapolation and model generalizablity the same concept (lecture 3, slide 6)? Discuss.}\spc{3}
 
+Yes. Models generalize to new observations that are within the measurement / covariate space of those  observations previously seen i.e. the rows in the historical dataframe you made use of when you constructed the model. Extrapolation is predicting outside of this range. It is indeed failure to generalize.
 
 \hardsubproblem{Provide an example of a model that you use regularly that does not generalize to the observations you use to predict with it.}\spc{3}
 
+Prediction models for stock returns. Non-stationarity (where $f$ is time-dependent) is another failure to generalize.
+
 \intermediatesubproblem{Run lines 5--27 of the \href{https://github.com/kapelner/Wharton_Stat_422_722/blob/master/lectures/lec03/lec03.R}{lecture 3 R demos}. Which of the three models would be the worst \qu{extrapolator} and why?}\spc{3}
 
+Polynomial regression. The $\hat{f}$ is too erratic outside of the region / range of the historical data. It is less likely that the true $f$ conditional expectation function behaves like this outside of the range. Better extrapolators are linear regression and decision trees.
+
 \hardsubproblem{You are provided a new $\x^*$ with $p$ features in which are to guess $y$. How would assess extrapolation? Explain.}\spc{5}
+
+Check each of the $p$ measurements and see if they are outside of the ranges of those in the historical dataframe. That's a first pass at a solution. But this is a deep problem since it's multidimensional.
 
 \end{enumerate}
 
@@ -183,9 +220,15 @@ Usually, you want to prove normality (e.g. the case of testing the residuals fro
 
 \easysubproblem{In the case of a simple linear regression with $n=20$ points where $x$ ranges from 6 to 17, what would be the optimal design?}\spc{3}
 
+10 observations at $x=6$ and 10 observations at $x=17$.
+
 \intermediatesubproblem{Show that for fixed $n$ under least squares regression that the optimal design is half the points on the minimum and half the points on the maximum.}\spc{8}
 
+The equation for the variance of $\betahat$ in one dimension is a fraction with $\sum (x_i - \xbar)^2$ in the denominator. The way to minimize the fraction is to maximize the denominator. This is done by choosing half of the points at the minimum and half at the maximum.
+
 \easysubproblem{Take the case of $n=20$ and three continuous predictors ranging in $\zeroonecl$. Use JMP to create an optimal design for the model with all factorial interactions and all polynomials up until degree 3. Take the optimal design right click and make data table. Then sort the data table first by $x_1$ then by $x_2$ and by $x_3$. Are they all about the same? Yes/no.}\spc{0}
+
+Yes.
 
 \hardsubproblem{The optimal design in the previous problem is what you'd probably like to do for non-parametric linear model with lots of interactions and curves. What is the takehome message in this case?}\spc{4}
 
