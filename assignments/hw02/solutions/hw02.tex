@@ -314,12 +314,22 @@ $p$ & $\chisq{p}$ critical value \\
 
 \easysubproblem{As we saw in class, the exponential model is not a great real-world model. Nevertheless, assume the model assumptions and run a standard exponetial model with all three predictors. Report overall model fit, each variable's estimate and their significance levels.}\spc{3}
 
+The model is significant: $\chisq{3} = 64.6$ with a significance level of less than 1 in 10,000. Female is significant with $\betahat = 0.089$ and a significance of 0.0165 and age is significant with $\betahat = 0.0059$ and a significance level of less than 1 in 10,000. 
+
 \easysubproblem{Should dredging be considered a problem here when we're looking at all these $H_0: \beta_j = 0$ tests? Yes/no and why.}\spc{3}
 
+Yes. You are running three tests.
 
 \easysubproblem{Interpret the value of the fitted coefficient for coupon.}\spc{3}
 
+With all other variables remaining constant, adding the coupon would account for tenure to be multiplied by $e^{-0.01249} = 0.989$ for a naturally observed customer.
+
 \easysubproblem{Predict the mean survival time for a new female of age 30 without a coupon.}\spc{1}
+
+\beqn
+\hat{y} = e^{\betahat_0 + \betahat_1 x_1^* +  \ldots + \betahat_p x_p^*} = e^{6.466 + 0.0894 (1) + 0.00559 (30) + -0.0125} = e^{6.7106} \approx 821~ \text{days}
+\eeqn
+
 
 \extracreditsubproblem{Calculate a 95\% CI for mean survival time for the new person in (d).}\spc{4}
 
