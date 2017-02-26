@@ -244,13 +244,34 @@ Yes.
 
 \easysubproblem{Give an expression for the conditional mean in a logistic regression problem with $p$ features using the standard logistic regression assumptions.}\spc{3}
 
+\beqn
+\phat = \phat(\x^*) =  \frac{e^{\betahat_0 + \betahat_1 x_1 + \ldots + \betahat_p x_p}}{1 + e^{\betahat_0 + \betahat_1 x_1 + \ldots + \betahat_p x_p}}
+\eeqn
+	
+
 \easysubproblem{Do the multivariable logistic regression in class with target response churn (remember to delete those 6 variables which are fully collinear). Provide an interpretation on the monthly charges coefficient.}\spc{3}
+
+When running the logistic regression, we get $\betahat = 0.0217$. This means that if monthly charges increase by \$1, the log-odds of churning increase by 0.0217 keeping all other variables constant in a naturally observed customer. Note that this interpretation may not be valid if the monthly charges variable has high collinearity with other variables in the regression.
 
 \extracreditsubproblem{If we used the \texttt{cloglog} link function and got the same coefficient, what would be the interpretation?}\spc{4}
 
 
-\easysubproblem{Predict the mean probability of churn for a senior citzen who has been with the company for 36 months and then predict whether or not this person will churn.}\spc{3}
+\easysubproblem{Predict the mean probability of churn for a senior citizen who has been with the company for 36 months and then predict whether or not this person will churn.}\spc{3}
 
+We run another regression now with two variables: senior citizen and tenure and the result using the answer for (a) above is:
+
+
+\beqn
+\phat = \phat(\x^*) =  \frac{e^{-0.123 + 1.047 x_1 + -0.0405 x_2}}{1 + e^{-0.123 + 1.047 x_1 + -0.0405_p x_2}}
+\eeqn
+
+We then substitute 1 for $x_1$ (senior citizen) and 30 for $x_2$ (tenure) and compute:
+	
+\beqn
+\phat = \phat(\x^*) =  \frac{e^{-0.123 + 1.047 + -0.0405 (30)}}{1 + e^{-0.123 + 1.047 + -0.0405 (30)}} = \frac{e^{-0.291}}{1 + e^{-0.291}} = \frac{0.748}{1 + 0.749} = 0.428
+\eeqn
+
+which is the predicted probability of churning. Using the naive classification rule of $p_0=50\%$ we predict the $\yhat = 0$ i.e. this person is not predicted to churn.
 
 \extracreditsubproblem{In my regression output, the $\chi^2$ value for \texttt{senior citizen} is 14.37. Calculate the standard error from this.}\spc{7}
 
@@ -287,10 +308,13 @@ $p$ & $\chisq{p}$ critical value \\
 
 }~\spc{3}
 
+The log likelihood for the full model is -2974.327 and the log likelihood for the reduced model is -2974.343. Thus the chi-squared test statistic is $Q = 2(-2974.327 - -2974.343) = 2 (0.016) = 0.032$. The critical value for this test is 5.99 (it's the value with df = 2) and since 0.032 is less than 5.99 we fail to reject.
 
 
 
 \easysubproblem{Use the model from (b) and use JMP to compute the AUC and misclassification error.}\spc{5}
+
+We get AUC = 0.84037 and we get misclassification error from computing directly from the confusion matrix $\frac{887 + 537}{7032} = 0.203$.
 
 \hardsubproblem{Attach a graph of the false negative proportion versus the false positive proportion. Is this more useful than an ROC curve for the case of churn?}\spc{0}
 
@@ -299,10 +323,15 @@ $p$ & $\chisq{p}$ critical value \\
 
 \intermediatesubproblem{Imagine the cost ratio is 7.5:1 for the more costly mistake. What is the $p_0$ of the optimal model?}\spc{0}
 
+Here, we need to export the ROC table as a dataframe in JMP then make an extra column called \qu{cost} with the formula $7.5 \times FN + FP$ then we sort by this new coumn and the first row's $p_0 = .1512$.
+
 \easysubproblem{Why is this $p_0$ less than the naive value of 50\%?}\spc{3}
+
+In this asymmetric cost scenario, false negatives are much more costly than false positives. Thus, it makes sense to be conservative in what we call a negative. The way to do this is to reduce $p_0$ to obtain fewer predicted negatives.
 
 \intermediatesubproblem{Create a flowchart illustration of the optimal model in (j) similar to lecture 3, slide 35.}\spc{12}
 
+The answer really is on the slide.
 
 \end{enumerate}
 
@@ -352,22 +381,51 @@ With all other variables remaining constant, adding the coupon would account for
 
 \intermediatesubproblem{Let's do an exploratory data analysis. Do Fit y by x in JMP where y is quality and x are all variables. Then, fit polynomials of degree 2 to each of them. Which ones have significant squared terms at $\alpha = 5\%$? Make sure you do a multiple testing correction. }\spc{1}
 
+The multiple testing correction for 11 quadratic tests yields $\alpha = 0.05 / 11 = 0.00455$. 
+
+At this level, the significant squared terms are fixed acidity, volatile acidity, citric acid, residual sugar, free sulfur dioxide, total sulfur dioxide, density, alcohol.
 
 \intermediatesubproblem{Let's now look at all first-order interactions. These are interactions that are between two variables. Use the fit model, highlight all variables and do macros... factorial to degree (the default degree in JMP is two indicating first-order interactions). Which interactions are significant at $\alpha = 5\%$? Make sure you do a multiple testing correction.}\spc{3}
 
+The multiple testing correction for 55 interaction tests yields $\alpha = 0.05 / 55 = 0.00091$.
+
+At this level, the significant squared terms are volatile acid $\times$ alcohol, free sulfur dioxide $\times$ total sulfur dioxide and free sulfur dioxide $\times$ sulphates.
+ 
+
 \easysubproblem{Interpret the coefficient on \texttt{density} $\times$ \texttt{alcohol}.}\spc{3}
+
+Even though this coefficient is not significant, we will interpret it. There are many ways to view this:
+
+\begin{enumerate}
+\item If density increases by one unit, the slope of the alcohol variable will move by -23.18.
+\item If density increases by one unit, the response will move by -23.18 plus the coefficient on density which is -160.37.
+\item If alcohol increases by one unit, the slope of the density variable will decrease by 23.18.
+\item If alcohol increases by one unit, the response will change by -23.18 plus the coefficient on alcohol which is 0.11.
+\end{enumerate}
+
+Always \qu{controlling for everything else} plus the usual other caveats.
 
 \easysubproblem{Based on your answers to (a) and (b) would it be fair to say that the true model is non-linear? Yes/no.}\spc{0}
 
+Yes.
+
 \easysubproblem{Based on your answers to (a) and (b) would it be fair to say that you get better predictive power if you add in some quadratic terms and interactions? Yes/no.}\spc{0}
+
+Yes.
 
 \easysubproblem{If you add some quadratic terms and interactions and interactions, what are the three things you are giving up in your model?}\spc{2}
 
+We give up simplicity, interpretability and inference (on individual effects).
+
 \easysubproblem{The vanilla multivariable regression gives $R^2 = 28\%$. Now fit a model with \textit{all} interactions. Use \qu{full factorial} in the options. What is $R^2$ in this new absurd model? What are the degrees of freedom?}\spc{1}
+
+$R^2 \approx 75.1\%$ and df = 2036.
 
 \extracreditsubproblem{What are the significant variables now? You may have to use a t-calculator.}\spc{6}
 
 \intermediatesubproblem{Prove that you overfitted.}\spc{3}
+
+You can do a $K$-fold CV in JMP by fitting the same model using stepwise, enter all and then click the $K$-fold option in the main menu. It takes awhile to compute but the $R^2$ oos on 5-folds is -1000000 which is not only lower than the in-sample $R^2$ of 75\% but it is a complete disaster!
 
 \end{enumerate}
 
