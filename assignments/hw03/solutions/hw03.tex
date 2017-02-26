@@ -54,17 +54,34 @@ You may collaborate, but hand in your own copy with your own wording. See the \h
 
 \easysubproblem{Give an example of a selection model.}\spc{2}
 
+Let's go back to the banking example of predicting mortgage default. People fill out mortgage applications. Each person gets a secretary randomly. One secretary does not print out page 7 for the mortgage application. All the information elicited on page 7 goes missing. However, this type of missingness should not affect the response in its own right.
+
 \easysubproblem{Give the same example, but change one thing about the missingness that would render it into a pattern mixture model.}\spc{2}
+
+Instead of the secretary not printing out page 7, some individuals deliberately do not fill out page 7 because they are trying to pull a fast one.
 
 \easysubproblem{If $p=10$ in your dataset but only $p=5$ features have missingness and you assume a pattern mixture model for all missingness, how many features would your design matrix have after augmentation \emph{and} imputation?}\spc{1}
 
+10 + 5 = 15
+
 \easysubproblem{Explain two reasons why listwise deletion would not be recommended.}\spc{2}
+
+\begin{enumerate}
+\item You would likely be removing observations non-randomly. The historical dataframe would no long represent the population you likely would want to predict for in the future. Hence, your model will likely have higher generalization error.
+\item By removing samples, your model estimation error increases again leading to higher generalization error.
+\end{enumerate}
 
 \hardsubproblem{Besides imputation, what else could you do?}\spc{4}
 
 \hardsubproblem{Explain why trying to impute in the pattern mixture case can still bear fruit.}\spc{3}
 
 \easysubproblem{Give examples of measurement in real-life that exhibits MCAR, MAR and NMAR.}\spc{1}
+
+\begin{enumerate}
+\item[\textbf{MCAR}] Random digital corruption in a database caused by hard drive failure where each observation only has one feature.
+\item[\textbf{MAR}] Random digital corruption in an image files' pixels. The pixel values can be imputed from the surrounding pixels' color values.
+\item[\textbf{NMAR}] Information revealing square footage of an apartment going missing on the MLSI listing.
+\end{enumerate}
 
 \hardsubproblem{If MCAR is the result of random holes, why can't it be imputed?}\spc{3}
 
@@ -83,20 +100,30 @@ You may collaborate, but hand in your own copy with your own wording. See the \h
 
 \easysubproblem{Give an example of a stationary model and a non-stationary model.}\spc{3}
 
+\textbf{Stationary} A model of predicting voltage in an electric circuit based on inputs. \\
+\textbf{Non-Stationary} Predicting apartment prices in Queens.
+
 \hardsubproblem{JMP practice: use JMP to do 5-fold CV on the white wine data. This is a lot of work! You have to create the folds manually. Report how you made the folds and your oos metrics.}\spc{5}
 
 \easysubproblem{Give an example of a stationary model and a non-stationary model.}\spc{3}
 
+Duplicate question
+
 \easysubproblem{Slide 24 of Lecture 5 --- what precisely is not legal about this procedure?}\spc{3}
+
+Snooped the test set multiple times.
 
 \hardsubproblem{JMP practice: duplicate the exercise and demonstrate model C is the \qu{best}.}\spc{3}
 
 \intermediatesubproblem{In three splits, explain exactly how $\hat{f}$ (the model that is shipped for production) is ultimately created.}\spc{3}
 
+Regardless of the observations in the three splits, the entire dataset is used to produce $\hat{f}$ on the model that was found to be best in the validation set.
 
 \hardsubproblem{Explain the main disadvantage of LOOCV.}\spc{3}
 
 \intermediatesubproblem{Given model candidates $M_1, M_2, \ldots, M_m$, you can find the best one using oos validation as $M^*$. What main issue was ignored here?}\spc{3}
+
+How did you obtain the candidates and how do you know they're any good?
 
 \hardsubproblem{Provide as many ways as you can to expand the predictor set and derive new features beyond the strategies discussed in class.}\spc{3}
 
@@ -109,7 +136,11 @@ You may collaborate, but hand in your own copy with your own wording. See the \h
 
 \intermediatesubproblem{Why does stepwise logistic regression take so long?}\spc{3}
 
+Logistic regression itself is purely numerical which means there are iterations to converge on a local minimum of the log-likelihood function. Now we have to do that procedure for all possible models iteratively.
+
 \intermediatesubproblem{Why would running stepwise regression on the white wine data as-is be of little value?}\spc{3}
+
+There are only 11 features. Here, we can actually find the best subset model since all $2^{11} = 2048$ possible models can be checked explicitly and the best one selected. Thus, stepwise would be suboptimal.
 
 \hardsubproblem{JMP practice: Use the baseball dataset to fit stepwise on a highly expanded menu of derived predictors of your choice. Did you \emph{truly} beat the fit of a simple linear model?}\spc{3}
 
@@ -123,11 +154,11 @@ You may collaborate, but hand in your own copy with your own wording. See the \h
 
 \easysubproblem{What does the AICc metric attempt to correct in the AIC metrc?}\spc{3}
 
-\easysubproblem{What does the AICc metric attempt to correct in the AIC metrc?}\spc{3}
+It attempts to make it more stable for low sample sizes.
 
 \intermediatesubproblem{Why is stepwise based on a $p$-value threshold for an individual predictor not a wise choice in general?}\spc{3}
 
-
+(1) because out-of-sample validation is better at assessing overfitting and (2) AICc is proven to reflect overfitting under some assumptions while the $p$ value threshold I do not believe has been proven to reflect overfitting.
 
 
 
@@ -140,8 +171,11 @@ You may collaborate, but hand in your own copy with your own wording. See the \h
 
 \easysubproblem{When is binning a good idea to do non-parametric regression (if there is enough data)?}\spc{3}
 
+Binning allows for fitting non-linear and interacting functions flexibly.
 
 \easysubproblem{When (and why) does binning break down?}\spc{3}
+
+When there are many features.
 
 \hardsubproblem{What would be the problem with allowing for all bins and all interactions (if of course the computer can crunch the numbers) in a forward stepwise procedure?}\spc{4}
 
@@ -171,13 +205,25 @@ $x$ & $y$ \\
 
 \easysubproblem{Why do you suppose the model in the previous question is overfit?}\spc{3}
 
+No stopping rule will split all the way down to one observation per leaf. Since leaf assignment is $\yhat = \ybar = y$, there will be 100\% $R^2$. Since $\errorrv$ is always assumed in any real-life problem, there is definite overfitting.
+
 \easysubproblem{What is its depth? How many leaves? How many inner nodes?}\spc{3}
+
+5 / 12 / 11
 
 \easysubproblem{Fit the same data using the stopping rule of minimum nodesize of 5.}\spc{3}
 
+There is one split at $x \leq 6$.
+
 \easysubproblem{How would you determine overfittedness to these two trees?}\spc{3}
 
+Keep a hold out set (test set) or use $K$-fold CV.
+
 \easysubproblem{Fit the best tree you can find for the white wine data with 10 total nodes using a stepwise procedure. Which variables were split on?}\spc{3}
+\begin{figure}[htp]
+\centering
+\includegraphics[width=6in]{whitewine_tree.png}
+\end{figure}
 
 \end{enumerate}
 
@@ -193,14 +239,19 @@ $x$ & $y$ \\
 
 \easysubproblem{Fit an RF to the white wine data. Fit a linear model to the white wine data. Why did the RF do better?}\spc{3}
 
+RF can \qu{find} non-linearities and interactions and the linear model cannot.
+
 \hardsubproblem{Report RF's oos $RMSE$ - in-sample $RMSE$. Why is this a large number?}\spc{3}
 
-
 \easysubproblem{Why does RF's in-sample $R^2$ lie?}\spc{3}
+
+The trees are overfit by design. Hence, each observation when dropped down the trees will be in-bag 2/3 of the time (and hence overfit).
 
 \extracreditsubproblem{How would you show the effect of alcohol on quality from the RF model?}\spc{3}
 
 \easysubproblem{Fit an RF to the baseball data. Fit a linear model to the baseball data. Why didn't the RF do better?}\spc{3}
+
+It seems that (remarkably) the model truly is linear.
 
 \hardsubproblem{Fit an RF to the churn dataset (the fixed dataset in the Lec 6 folder). Build an ROC curve and eyeball the AUC.}\spc{3}
 
@@ -208,7 +259,11 @@ $x$ & $y$ \\
 
 \intermediatesubproblem{Why would the RF do worse if you use all variables in each tree?}\spc{3}
 
+The trees would be too correlated and the total variance of the model will increase (i.e. the generalization error).
+
 \intermediatesubproblem{Why would the RF do worse if you use only one variable in each tree?}\spc{3}
+
+The trees would be too weak at fitting the function. Here, you are forcing an additive model by precluding RF's ability to find interactions.
 
 \end{enumerate}
 
