@@ -55,13 +55,35 @@ You may collaborate, but hand in your own copy with your own wording. See the \h
 
 \easysubproblem{Give three examples of \qu{predictions}.}\spc{3}
 
+(1) predicting selling prices of homes in Queens (2) predicting quality ratings of white wines (3) predicting if customers are going to cancel their subscriptions.
+
 \easysubproblem{Considering the etymological definitions, do we \qu{predict} or do we \qu{forecast}? Explain your answer.}\spc{3}
+
+forecast. A predictions (if they are true to the etymological root) uses voodoo, divination, prophecy or otherwise means that are non-scientifically validated (at the time of this writing) to foretell the future.
 
 \easysubproblem{Explain what each row in a dataframe represents. Give every synonym for the rows in a dataframe. Write a sentence as to why each of the particular vocabulary words were employed here.}\spc{10}
 
+\begin{enumerate}
+\item[observation] Each row is \qu{observed}
+\item[unit] The rows are the individual \qu{units} in analysis.
+\item[record] The rows are \qu{recorded} in a database.
+\item[object] The rows consist of information about an individual \qu{object}.
+\item[subject] The rows detail a \qu{subject} (usually a person).\\
+\end{enumerate}
+
 \easysubproblem{Explain what each column in a dataframe represents. Give every synonym for the column. Write a sentence as to why each of the particular vocabulary words were employed here. In the models in this class, there will be \emph{one} special column. Explain what its called and give definitions for all its synonyms.}\spc{11}
 
+\begin{enumerate}
+\item[features] Information is considered to be \qu{features} of an object.
+\item[attributes] ``
+\item[characteristics] `` 
+\item[variables] These are numbers that vary subject-subject.
+\item[measurements] Information is \qu{measured} on an object.
+\end{enumerate}
+
 \easysubproblem{Explain why theories are mathematical (generally speaking).}\spc{6}
+
+It is only way to make statements precise so they can be shared universally and validated through measurements.
 
 \intermediatesubproblem{Below is an excerpt from Box and Draper (1987, page 424) and contains the famous line \qu{all models are wrong, but some are useful}. Explain what this means. }\spc{5}
 
@@ -71,31 +93,48 @@ You may collaborate, but hand in your own copy with your own wording. See the \h
 \includegraphics[width=6in]{box_draper_p424.jpg}
 \end{figure}~\spc{3}}
 
+Models are \qu{wrong} in the sense that they do not accurately represent the measurements precisely but they are \qu{useful} in the sense that they provide approximations that can be good enough to rely on to make decisions or engineer systems.
 
 \intermediatesubproblem{What did we call $\delta(\xi)$ in class (ibid, Equation 13.1.7)?}\spc{1}
+
+Misspecification error.
 
 \extracreditsubproblem{If the true model were to be found and estimated from the a finite sample dataframe, would it be better for inference than a simple model? Yes / no explain. Would it be better for prediction? Yes / no explain. }\spc{7}
 
 \intermediatesubproblem{In many sciences there is a belief in the so-called \qu{tapering effect} which means that there are large effects, then small effects, then really small effects. How can this be used to explain the success of linear regression in predicting responses with likely myriad inputs (a la slide 32, Lecture 2)?}\spc{5}
 
+As long as the predictors are responsible for the large effects, linear regression can be quite a useful approximation for predicting the response.
 
 \extracreditsubproblem{Why will \qu{full reality always remain elusive in the biological sciences}? (Burnham and Anderson, 1998) What does that say about the softer sciences such as economics, psychology, sociology, etc?}\spc{6}
 
 \intermediatesubproblem{Explain why non-parametric models can give you lower misspecification error but possibly higher model estimation error.}\spc{6}
 
+This should have been marked as extra credit. Ignore.
+
 \intermediatesubproblem{I got a phone call from a startup founder who described the idea for a company that predicts startup success. The founder told me their model was that they assign 5 points to a startup for having two or more C-level founders, 10 points for closing an angel round, 5 points for the first employee, etc. What kind of model is this? Why would you trust / not trust its predictions?}\spc{7}
+
+This is not a data-driven model. There is no historical dataframe nor validation against a gold-standard. It is a made-up model. However, if the person making it up is doing so through experience, then there could be some value in it. However, these types of models are not ones humans are good at making.
 
 
 \easysubproblem{Look at slide 32 in lecture 2 but not slide 33. Write down all observations you have about this picture.}\spc{6}
 
+(1) We never can figure out the true response function. (2) Many variables are non-causal and only correlational. (3) Some variables are unrelated.
 
 \extracreditsubproblem{If you find a confounding / lurking variable $Z$, does that mean $Z$ is causal? If yes, explain; if not, provide a counterexample.}\spc{3}
 
 \intermediatesubproblem{Given a model with one response and 10 variables where the 10 variables are realized simultaneously but the response is realized afterwards, how many models can be posited? Ignore the fact that each functional relationship can be different. See slide 35 lecture 2.}\spc{3}
 
-\easysubproblem{Why advantage does a \qu{real} correlation have over a \emph{spurious} correlation?}\spc{3}
+\beqn
+4^{\binom{10}{2}} 2^{10}
+\eeqn
+
+\easysubproblem{What advantage does a \qu{real} correlation have over a \emph{spurious} correlation?}\spc{3}
+
+Real correlations can be put to use for prediction.
 
 \intermediatesubproblem{My friend has six children, all born on Wednesday. Is this \qu{significant}? Discuss.}\spc{5}
+
+If this is the only data you have ever seen or thought about in your life, yes. Chances are though, you look at data in some form all day everyday so after you correct for multiple tests, this is likely not significant.
 
 \end{enumerate}
 
@@ -141,9 +180,21 @@ You may collaborate, but hand in your own copy with your own wording. See the \h
 
 \easysubproblem{If you were to do a regression of $y:$ earnings on $x_1:$ employee height, what would the results look like and why? Report the p-values on each $\betahat_j$'s and the omnibus $F$ statistic's $p$ value.}\spc{5}
 
+The $\betahat$ would be positive, the $t$ test and the $F$ test would be significant (and have the same values).
+
 \easysubproblem{Build a causal model for $y$: earnings and $x_1$: employee height and $x_2:$ employee gender. No need to include unknown variables.}\spc{8}
 
+There are two models students considered here. 
+
+The first links gender to both earnings and height (thus assuming that height is non-causal and that gender is the lurking variable). 
+
+The second is the same as the first except height also links to earnings.
+
 \easysubproblem{If you were to do a regression of $y:$ earnings on $x_1:$ employee height and $x_2$ gender, what would the results look like? Report the p-values on each $\betahat_j$'s and the omnibus $F$ statistic. Also say if the $\betahat_j$ values changed and which direction vs. the regression in part (a).}\spc{8}
+
+In model 1, there would be no effect of height once gender is entered into the model. The coefficient would be near zero with an insignificant $p$ value. The omnibus $F$ test is still significant at around the same level as (a).
+
+In model 2, height is still causal but once gender is controlled for the coefficient shrinks closer to zero but remains significant. The $F$ test would be more significant than (a).
 
 \end{enumerate}
 
@@ -161,15 +212,21 @@ You may collaborate, but hand in your own copy with your own wording. See the \h
 
 \easysubproblem{What does $\theta$ represent in this model?}\spc{1}
 
+The probability the coin flips heads.
+
 \intermediatesubproblem{Find the joint probability density / mass function for these three events.}\\
 
-$\prob{Y_1, Y_2, Y_3} = $\spc{2}
+$\prob{Y_1, Y_2, Y_3} = \theta^{x_1 + x_2 + x_3} \tothepow{1-\theta}{3 - (x_1 + x_2 + x_3)}$\spc{2}
 
 \easysubproblem{Find the likelihood function.}\spc{1}
+
+Same as in (b).
 
 \extracreditsubproblem{Find the maximum likelihood estimator for $\theta$.}\spc{3}
 
 \easysubproblem{If your data was heads, heads, tails (in the image above). What is the maximum likelihood estimate? This will allow you to locate the best possible model given your parametric assumptions.}\spc{1}
+
+2/3
 
 \extracreditsubproblem{If your maximum likelihood estimate in (e) was indeed the value of $\theta$, what data would be most probable? Note: this is the inverse question of likelihood and it is meant to trick you.}\spc{12}
 
@@ -189,11 +246,19 @@ All cells are stained using immunohistochemistry using a compound which appears 
 
 \easysubproblem{What type of AI would work the best here? No need to discuss.}\spc{1}
 
+Deep learning.
+
 \easysubproblem{What is the raw data representation?}\spc{2}
+
+The pixel values as represented inside the computer.
 
 \intermediatesubproblem{What is the unit of analysis?}\spc{3}
 
+The pixel.
+
 \intermediatesubproblem{Why is it easy for you to find the cell centers but difficult for a computer?}\spc{3}
+
+We are good at building such models using our senses that both know what information is important and can filter out all irrelevant information. The computer needs an explicit algorithm to do so.
 
 \hardsubproblem{Consider the situation where you employ classic machine learning. What features would you collect on the units of analysis? Enumerate and describe these features.}\spc{8}
 
@@ -201,10 +266,15 @@ All cells are stained using immunohistochemistry using a compound which appears 
 
 \intermediatesubproblem{Once you built the dataframe, would a human be able to use that dataframe to create a predictive model? Yes / no and discuss.}\spc{3}
 
+No. Humans are poor at building models from numerical features of high dimension.
+
 \easysubproblem{Considering you selected features in (e) and sampled in (f), would this entire enterprise be considered \qu{good machine learning}? Explain.}\spc{3}
 
+Yes. Thought was given to features that are important in determining whether or not the pixel is pictured in a cancer cell. Thought was also given to which examples are entered in. There will be many diverse examples of cancer cells and many diverse examples of non-cancer cells.
 
 \easysubproblem{Now you have the dataframe. Given the problem context, which worldview would you select --- the parametric or the nonparametric and why?}\spc{3}
+
+Likely your bottom line is accuracy in finding cancer cells and you don't care which of your features is driving the predictions, then the non-parametric modeling approach would be employed.
 
 \hardsubproblem{Assume you went the parametric model route and you built a vanilla linear model. Explain where it would be wrong. Be explicit by referencing your predictors in (e).}\spc{10}
 
@@ -218,7 +288,11 @@ All cells are stained using immunohistochemistry using a compound which appears 
 
 \easysubproblem{Think of three loss functions $L(e_1, \ldots, e_n)$. Do not list any that we did in class.}\spc{3}
 
+There are many. Simple ones can be taken by using sums of even powers.
+
 \intermediatesubproblem{You are building a data-driven model and choose to use the linear parametric assumption but not necessarily the other three OLS assumptions. Describe a situation where fitting this model using $L = SSE$ is \emph{not} a good idea because it does not accuractely reflect the loss function in your situation at hand.}\spc{3}
+
+Imagine the typical utility function where if you act on a prediction that losing \$1 is a higher loss than making \$1. SSE will fit the best function where these two scenarios are equal.
 
 \extracreditsubproblem{Prove that the MLE of the $\beta$'s is the same solution as minimizing SSE.}\spc{10}
 
@@ -235,13 +309,23 @@ All cells are stained using immunohistochemistry using a compound which appears 
 
 \easysubproblem{Fit a linear model with reponse variable $y:$ salary in thousands. Use all available predictors. Provide a valid interpretation on $\betahat_j$ for the feature \qu{number of RBI's}.}\spc{3}
 
+If RBIs increase by one unit, the salary will increase by \$17,415 for another naturally-observed baseball player with all other characteristics being the same. 
+
 \easysubproblem{Is this interpretation reasonable given what you know about number of RBI's and how it is related to other predictors? You may need to ask someone who knows a bit about baseball.}\spc{6}
+
+This interpretation is probably not realistic as there is a large degree of collinearity between RBIs and some of the other predictors.
 
 \easysubproblem{Does a causal additive model for number of RBI's make sense? Yes / no.}\spc{1}
 
+The answer here can be both yes/no.
+
 \easysubproblem{Would you be able to make a randomized experiment to find the additive causal effect of number of RBI's? Yes / no.}\spc{1}
 
+No.
+
 \easysubproblem{Some of these variables may be significant because we dredged. Why is this likely \emph{not} the case?}\spc{3}
+
+After making a Bonferroni adjustment, only one previously significant variable is no longer significant.
 
 \extracreditsubproblem{Use a likelihood ratio test to test the effect of number of RBI's and Number of Walks.}\spc{10}
 
